@@ -44,8 +44,8 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item active ">
-                    <a href="index.html" class='sidebar-link'>
+                <li class="sidebar-item {{ <?php echo $title === 'Dashboard' ? 'active' : ''; ?> }}">
+                    <a href="/dashboard" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -53,8 +53,8 @@
 
                 <li class="sidebar-title">Data Master</li>
 
-                <li class="sidebar-item">
-                    <a href="index.html" class='sidebar-link'>
+                <li class="sidebar-item {{ <?php echo $title === 'Pengguna' ? 'active' : ''; ?> }}">
+                    <a href="/pengguna" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Data User</span>
                     </a>
@@ -104,7 +104,7 @@
                 <li class="sidebar-item">
                     <a href="index.html" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
-                        <span>Tanda Bukti Pengeluaran</span>
+                        <span>Bukti Pengeluaran</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

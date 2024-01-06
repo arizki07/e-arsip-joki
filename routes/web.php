@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/', 'index');
+});
+
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/dashboard', 'index');
+});
+
+Route::controller(PenggunaController::class)->group(function () {
+    Route::get('/pengguna', 'index');
 });
