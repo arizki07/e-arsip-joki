@@ -1,8 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BPController;
+use App\Http\Controllers\BPPController;
+use App\Http\Controllers\BuktiPengeluaranController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KPAController;
+use App\Http\Controllers\PAController;
+use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PPKController;
+use App\Http\Controllers\SpjController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +38,36 @@ Route::controller(DashboardController::class)->group(function () {
 
 Route::controller(PenggunaController::class)->group(function () {
     Route::get('/pengguna', 'index');
+});
+
+Route::controller(BPController::class)->group(function () {
+    Route::get('/bp', 'index');
+});
+
+Route::controller(BPPController::class)->group(function () {
+    Route::get('/bpp', 'index');
+});
+
+Route::controller(KPAController::class)->group(function () {
+    Route::get('/kpa', 'index');
+});
+
+Route::controller(PAController::class)->group(function () {
+    Route::get('/pa', 'index');
+});
+
+Route::controller(PPKController::class)->group(function () {
+    Route::get('/ppk', 'index');
+});
+
+Route::controller(PengajuanController::class)->group(function () {
+    Route::get('/pengajuan', 'index');
+});
+
+Route::controller(BuktiPengeluaranController::class)->group(function () {
+    Route::get('/bukti-pengeluaran', 'index');
+});
+
+Route::controller(SpjController::class)->group(function () {
+    Route::get('/spj', 'index');
 });

@@ -46,7 +46,7 @@
 
                 <li class="sidebar-item {{ <?php echo $title === 'Dashboard' ? 'active' : ''; ?> }}">
                     <a href="/dashboard" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -55,67 +55,71 @@
 
                 <li class="sidebar-item {{ <?php echo $title === 'Pengguna' ? 'active' : ''; ?> }}">
                     <a href="/pengguna" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-people-fill"></i>
                         <span>Data User</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-hexagon-fill"></i>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Document</span>
                     </a>
 
                     <ul class="submenu ">
 
-                        <li class="submenu-item  ">
-                            <a href="form-element-input.html" class="submenu-link">Document BP</a>
+                        <li class="submenu-item {{ <?php echo $title === 'Bp' ? 'active' : ''; ?> }} ">
+                            <a href="/bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
+                                Document BP</a>
 
                         </li>
 
-                        <li class="submenu-item  ">
-                            <a href="form-element-input-group.html" class="submenu-link">Document BPP</a>
+                        <li class="submenu-item {{ <?php echo $title === 'Bpp' ? 'active' : ''; ?> }}">
+                            <a href="/bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Document
+                                BPP</a>
 
                         </li>
 
-                        <li class="submenu-item  ">
-                            <a href="form-element-select.html" class="submenu-link">Document KPA</a>
+                        <li class="submenu-item {{ <?php echo $title === 'Kpa' ? 'active' : ''; ?> }}">
+                            <a href="/kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Document KPA</a>
 
                         </li>
 
-                        <li class="submenu-item  ">
-                            <a href="form-element-radio.html" class="submenu-link">Document PA</a>
+                        <li class="submenu-item {{ <?php echo $title === 'Pa' ? 'active' : ''; ?> }}">
+                            <a href="/pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
+                                Document PA</a>
 
                         </li>
 
-                        <li class="submenu-item  ">
-                            <a href="form-element-checkbox.html" class="submenu-link">Document PPK</a>
+                        <li class="submenu-item {{ <?php echo $title === 'Ppk' ? 'active' : ''; ?> }}">
+                            <a href="/ppk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i> Document
+                                PPK</a>
                         </li>
                     </ul>
                 </li>
 
 
-                <li class="sidebar-item">
-                    <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                <li class="sidebar-item {{ <?php echo $title === 'Pengajuan' ? 'active' : ''; ?> }}">
+                    <a href="/pengajuan" class='sidebar-link'>
+                        <i class="bi bi-box-arrow-right"></i>
                         <span>Pengajuan</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                <li class="sidebar-item {{ <?php echo $title === 'Bukti-pengeluaran' ? 'active' : ''; ?> }}">
+                    <a href="/bukti-pengeluaran" class='sidebar-link'>
+                        <i class="bi bi-box-arrow-left"></i>
                         <span>Bukti Pengeluaran</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                <li class="sidebar-item {{ <?php echo $title === 'Spj' ? 'active' : ''; ?> }}">
+                    <a href="/spj" class='sidebar-link'>
+                        <i class="bi bi-journal-text"></i>
                         <span>SPJ</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-door-closed-fill"></i>
                         <span>Logout</span>
                     </a>
                 </li>
