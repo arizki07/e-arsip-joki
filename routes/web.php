@@ -11,6 +11,7 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PPKController;
 use App\Http\Controllers\SpjController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,44 +31,56 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'index');
+    Route::post('/login', 'authenticate');
+    Route::post('/logout', 'logout');
 });
 
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('/dashboard', 'index');
-});
+Route::group(['middleware' => ['auth']], function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/dashboard', 'index');
+    });
 
-Route::controller(PenggunaController::class)->group(function () {
-    Route::get('/pengguna', 'index');
-});
+    Route::group(['middleware' => ['CekLogin:admin']], function () {
 
-Route::controller(BPController::class)->group(function () {
-    Route::get('/bp', 'index');
-});
+        Route::controller(PenggunaController::class)->group(function () {
+            Route::get('/pengguna', 'index');
+        });
 
-Route::controller(BPPController::class)->group(function () {
-    Route::get('/bpp', 'index');
-});
+        Route::controller(BPController::class)->group(function () {
+            Route::get('/bp', 'index');
+        });
 
-Route::controller(KPAController::class)->group(function () {
-    Route::get('/kpa', 'index');
-});
+        Route::controller(BPPController::class)->group(function () {
+            Route::get('/bpp', 'index');
+        });
 
-Route::controller(PAController::class)->group(function () {
-    Route::get('/pa', 'index');
-});
+        Route::controller(KPAController::class)->group(function () {
+            Route::get('/kpa', 'index');
+        });
 
-Route::controller(PPKController::class)->group(function () {
-    Route::get('/ppk', 'index');
-});
+        Route::controller(PAController::class)->group(function () {
+            Route::get('/pa', 'index');
+        });
 
-Route::controller(PengajuanController::class)->group(function () {
-    Route::get('/pengajuan', 'index');
-});
+        Route::controller(PPKController::class)->group(function () {
+            Route::get('/ppk', 'index');
+        });
 
-Route::controller(BuktiPengeluaranController::class)->group(function () {
-    Route::get('/bukti-pengeluaran', 'index');
-});
+        Route::controller(PengajuanController::class)->group(function () {
+            Route::get('/pengajuan', 'index');
+        });
 
-Route::controller(SpjController::class)->group(function () {
-    Route::get('/spj', 'index');
+        Route::controller(BuktiPengeluaranController::class)->group(function () {
+            Route::get('/bukti-pengeluaran', 'index');
+        });
+
+        Route::controller(SpjController::class)->group(function () {
+            Route::get('/spj', 'index');
+        });
+    });
+    Route::group(['middleware' => ['CekLogin:bp']], function () {
+        Route::controller(PengajuanController::class)->group(function () {
+            Route::get('/pengajuan', 'index');
+        });
+    });
 });
