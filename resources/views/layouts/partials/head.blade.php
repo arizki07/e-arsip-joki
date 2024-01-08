@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('template/dist/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('template/dist/assets/compiled/css/iconly.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('template/assets/extensions/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dits/assets/extensions/sweetalert2/sweetalert2.min.css') }}">
 
     <link rel="stylesheet"
         href="{{ asset('template/dist/assets/extensions/@fortawesome/fontawesome-free/css/all.min.css') }}">

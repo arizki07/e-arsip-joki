@@ -6,24 +6,18 @@
             <i class="bi bi-justify fs-3"></i>
         </a>
     </header>
-
-    <div class="page-heading">
-        <h3>Selamat Datang</h3>
-    </div>
-
-    <div class="col-md-4 col-12">
-        <button id="success" class="btn btn-outline-success btn-lg btn-block">Success</button>
-    </div>
-    <div class="col-md-4 col-12">
-        <button id="error" class="btn btn-outline-danger btn-lg btn-block">Error</button>
-    </div>
-    <div class="col-md-4 col-12">
-        <button id="warning" class="btn btn-outline-warning btn-lg btn-block">Warning</button>
-    </div>
+    @if (session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {(session('success'))}
+            <div class="page-heading">
+                <h3>Selamat Datang</h3>
+            </div>
+        </div>
+    @endif
 
     <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-10">
+            <div class="col-12 col-lg-9">
                 <div class="card">
                     <div class="card-body py-4 px-4">
                         <div class="d-flex align-items-center">

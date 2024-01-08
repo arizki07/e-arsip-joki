@@ -5,9 +5,7 @@
 
 <body>
     <div id="app">
-
         @include('layouts.partials.sidebar')
-
         <div id="main">
             @yield('content')
 
