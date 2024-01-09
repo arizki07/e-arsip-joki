@@ -59,6 +59,38 @@
                             <span>Data User</span>
                         </a>
                     </li>
+                    <li class="sidebar-item has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-people"></i>
+                            <span>Biodata</span>
+                        </a>
+
+                        <ul class="submenu ">
+
+                            <li class="submenu-item {{ <?php echo $title === 'Data-Bp' ? 'active' : ''; ?> }} ">
+                                <a href="/data-bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
+                                    Data BP</a>
+                            </li>
+                            <li class="submenu-item {{ <?php echo $title === 'Data-Bpp' ? 'active' : ''; ?> }}">
+                                <a href="/data-bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Data
+                                    BPP</a>
+                            </li>
+
+                            <li class="submenu-item {{ <?php echo $title === 'Data-Kpa' ? 'active' : ''; ?> }}">
+                                <a href="/data-kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Data
+                                    KPA</a>
+                            </li>
+                            <li class="submenu-item {{ <?php echo $title === 'Data-Pa' ? 'active' : ''; ?> }}">
+                                <a href="/data-pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
+                                    Data PA</a>
+                            </li>
+                            <li class="submenu-item {{ <?php echo $title === 'Data-Pptk' ? 'active' : ''; ?> }}">
+                                <a href="/data-pptk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
+                                    Data
+                                    PPTK</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="sidebar-item  has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-file-earmark-medical-fill"></i>

@@ -12,4 +12,11 @@ class PAController extends Controller
             'title' => 'Pa',
         ]);
     }
+
+    public function pa()
+    {
+        return view('pages.admin.pengguna.pa', [
+            'title' => 'Data Pa',
+        ]);
+    }
 }

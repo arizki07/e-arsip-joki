@@ -10,6 +10,7 @@ use App\Http\Controllers\PAController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PPKController;
+use App\Http\Controllers\PPTKController;
 use App\Http\Controllers\SpjController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -48,18 +49,26 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(BPController::class)->group(function () {
             Route::get('/bp', 'index');
+            Route::get('/data-bp', 'bp');
         });
 
         Route::controller(BPPController::class)->group(function () {
             Route::get('/bpp', 'index');
+            Route::get('/data-bpp', 'bpp');
         });
 
         Route::controller(KPAController::class)->group(function () {
             Route::get('/kpa', 'index');
+            Route::get('/data-kpa', 'kpa');
         });
 
         Route::controller(PAController::class)->group(function () {
             Route::get('/pa', 'index');
+            Route::get('/data-pa', 'pa');
+        });
+
+        Route::controller(PPTKController::class)->group(function () {
+            Route::get('/data-pptk', 'index');
         });
 
         Route::controller(PPKController::class)->group(function () {

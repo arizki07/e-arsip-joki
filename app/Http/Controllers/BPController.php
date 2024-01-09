@@ -12,4 +12,11 @@ class BPController extends Controller
             'title' => 'Bp',
         ]);
     }
+
+    public function bp()
+    {
+        return view('pages.admin.pengguna.bp', [
+            'title' => 'Data Bp',
+        ]);
+    }
 }

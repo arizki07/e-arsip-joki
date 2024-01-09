@@ -213,7 +213,7 @@
     <div class="context">
         <div id="auth" class="d-flex justify-content-center align-items-center vh-100">
             <div class="card">
-                <h3 class="auth-title text-black">Log in.</h3>
+                <h3 class="auth-title text-black">E-ARSIP.</h3>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
                 <form action="/login" method="POST">
                     @if ($errors->any())

@@ -12,4 +12,11 @@ class KPAController extends Controller
             'title' => 'Kpa',
         ]);
     }
+
+    public function kpa()
+    {
+        return view('pages.admin.pengguna.kpa', [
+            'title' => 'Data Kpa',
+        ]);
+    }
 }

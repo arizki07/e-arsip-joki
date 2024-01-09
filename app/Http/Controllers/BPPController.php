@@ -12,4 +12,11 @@ class BPPController extends Controller
             'title' => 'Bpp',
         ]);
     }
+
+    public function bpp()
+    {
+        return view('pages.admin.pengguna.bpp', [
+            'title' => 'Data Bpp',
+        ]);
+    }
 }
