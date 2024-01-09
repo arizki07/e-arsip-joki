@@ -213,20 +213,25 @@
     <div class="context">
         <div id="auth" class="d-flex justify-content-center align-items-center vh-100">
             <div class="card">
-                <h1 class="auth-title text-black">Log in.</h1>
+                <h3 class="auth-title text-black">Log in.</h3>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
                 <form action="/login" method="POST">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
                         <input type="text" class="form-control form-control-xl" name="email" placeholder="Email">
                         <div class="form-control-icon">
                             <i class="bi bi-envelope"></i>
                         </div>
-                        {{-- @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror --}}
+
                     </div>
                     <div class="form-group position-relative has-icon-left mb-4">
                         <input type="password" class="form-control form-control-xl" name="password"

@@ -85,7 +85,7 @@ class AuthController extends Controller
         $request->session()->put('last_failed_attempt', time());
 
         if ($failedAttempts === 1 || $failedAttempts === 2) {
-            return redirect()->back()->withErrors(['LoginErro', 'Email atau Password Salah'])->withInput();
+            return redirect()->back()->withErrors(['Login Error', 'Email atau Password Salah'])->withInput();
         } elseif ($failedAttempts >= 3) {
             $remainingTime = 300;
             return redirect()->back()->withErrors(['error' => 'Anda telah mencapai batas percobaan login. Silahkan coba lagi dalam' . $remainingTime . ' detik.'])->withInput();
