@@ -61,18 +61,22 @@ class AuthController extends Controller
                 $user = Auth::user();
 
                 //sesuaikan dengan role
-                if ($user->role == 'admin') {
+                // if ($user->role == 'admin') {
+                //     return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
+                // } elseif ($user->role == 'bp') {
+                //     return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
+                // } elseif ($user->role == 'bpp') {
+                //     return redirect()->intended('/bpp')->with('succes', 'Login berhasil. Selamat datang!');
+                // } elseif ($user->role == 'kpa') {
+                //     return redirect()->intended('/kpa')->with('succes', 'Login berhasil. Selamat datang!');
+                // } elseif ($user->role == 'pa') {
+                //     return redirect()->intended('/pa')->with('succes', 'Login berhasil. Selamat datang!');
+                // } elseif ($user->role == 'ppk') {
+                //     return redirect()->intended('/ppk')->with('succes', 'Login berhasil. Selamat Datang!');
+                // }
+                // return redirect()->intended('/');
+                if ($user->role) {
                     return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
-                } elseif ($user->role == 'bp') {
-                    return redirect()->intended('/bp')->with('succes', 'Login berhasil. Selamat datang!');
-                } elseif ($user->role == 'bpp') {
-                    return redirect()->intended('/bpp')->with('succes', 'Login berhasil. Selamat datang!');
-                } elseif ($user->role == 'kpa') {
-                    return redirect()->intended('/kpa')->with('succes', 'Login berhasil. Selamat datang!');
-                } elseif ($user->role == 'pa') {
-                    return redirect()->intended('/pa')->with('succes', 'Login berhasil. Selamat datang!');
-                } elseif ($user->role == 'ppk') {
-                    return redirect()->intended('/ppk')->with('succes', 'Login berhasil. Selamat Datang!');
                 }
                 return redirect()->intended('/');
             }
