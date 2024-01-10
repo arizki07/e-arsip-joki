@@ -57,6 +57,7 @@
                                     <td>076 4820 8838</td>
                                     <td>Offenburg</td>
                                     <td>
+                                        <a href="#" class="btn icon btn-light"><i class="bi bi-eye"></i></a>
                                         <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
                                     </td>
