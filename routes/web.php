@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/ppk', 'index');
         });
 
+
         Route::controller(PengajuanController::class)->group(function () {
             Route::get('/pengajuan', 'index');
         });
@@ -88,8 +89,10 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
     Route::group(['middleware' => ['CekLogin:bp']], function () {
-        Route::controller(PengajuanController::class)->group(function () {
-            Route::get('/pengajuan', 'index');
-        });
+        // Route::controller(PengajuanController::class)->group(function () {
+        //     Route::get('/pengajuan', 'index');
+        // });
+
+            // cek
     });
 });

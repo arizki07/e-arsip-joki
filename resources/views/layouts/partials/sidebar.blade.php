@@ -44,7 +44,7 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item {{ <?php echo $title === 'Dashboard' ? 'active' : ''; ?> }}">
+                <li class="sidebar-item {{ $title === 'Dashboard' ? 'active' : '' }}">
                     <a href="/dashboard" class='sidebar-link'>
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
@@ -52,8 +52,10 @@
                 </li>
 
                 <li class="sidebar-title">Data Master</li>
+
+                {{-- Admin Sidebar --}}
                 @if (Auth::user() && Auth::user()->role === 'admin')
-                    <li class="sidebar-item {{ <?php echo $title === 'Pengguna' ? 'active' : ''; ?> }}">
+                    <li class="sidebar-item {{ $title === 'Pengguna' ? 'active' : '' }}">
                         <a href="/pengguna" class='sidebar-link'>
                             <i class="bi bi-people-fill"></i>
                             <span>Data User</span>
@@ -62,29 +64,29 @@
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-people"></i>
-                            <span>Biodata</span>
+                            <span>Pegawai</span>
                         </a>
 
                         <ul class="submenu ">
 
-                            <li class="submenu-item {{ <?php echo $title === 'Data-Bp' ? 'active' : ''; ?> }} ">
+                            <li class="submenu-item {{ $title === 'Data-Bp' ? 'active' : '' }} ">
                                 <a href="/data-bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
                                     Data BP</a>
                             </li>
-                            <li class="submenu-item {{ <?php echo $title === 'Data-Bpp' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Data-Bpp' ? 'active' : '' }}">
                                 <a href="/data-bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Data
                                     BPP</a>
                             </li>
 
-                            <li class="submenu-item {{ <?php echo $title === 'Data-Kpa' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Data-Kpa' ? 'active' : '' }}">
                                 <a href="/data-kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Data
                                     KPA</a>
                             </li>
-                            <li class="submenu-item {{ <?php echo $title === 'Data-Pa' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Data-Pa' ? 'active' : '' }}">
                                 <a href="/data-pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
                                     Data PA</a>
                             </li>
-                            <li class="submenu-item {{ <?php echo $title === 'Data-Pptk' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Data-Pptk' ? 'active' : '' }}">
                                 <a href="/data-pptk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
                                     Data
                                     PPTK</a>
@@ -99,60 +101,153 @@
 
                         <ul class="submenu ">
 
-                            <li class="submenu-item {{ <?php echo $title === 'Bp' ? 'active' : ''; ?> }} ">
+                            <li class="submenu-item {{ $title === 'Bp' ? 'active' : '' }} ">
                                 <a href="/bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
                                     Document BP</a>
 
                             </li>
 
-                            <li class="submenu-item {{ <?php echo $title === 'Bpp' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Bpp' ? 'active' : '' }}">
                                 <a href="/bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Document
                                     BPP</a>
 
                             </li>
 
-                            <li class="submenu-item {{ <?php echo $title === 'Kpa' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Kpa' ? 'active' : '' }}">
                                 <a href="/kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Document
                                     KPA</a>
 
                             </li>
 
-                            <li class="submenu-item {{ <?php echo $title === 'Pa' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Pa' ? 'active' : '' }}">
                                 <a href="/pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
                                     Document PA</a>
 
                             </li>
 
-                            <li class="submenu-item {{ <?php echo $title === 'Ppk' ? 'active' : ''; ?> }}">
+                            <li class="submenu-item {{ $title === 'Ppk' ? 'active' : '' }}">
                                 <a href="/ppk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
                                     Document
                                     PPK</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item {{ <?php echo $title === 'Pengajuan' ? 'active' : ''; ?> }}">
+
+                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
                         <a href="/pengajuan" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ <?php echo $title === 'Bukti-pengeluaran' ? 'active' : ''; ?> }}">
+                    <li class="sidebar-item {{ $title === 'Bukti-pengeluaran' ? 'active' : '' }}">
                         <a href="/bukti-pengeluaran" class='sidebar-link'>
                             <i class="bi bi-box-arrow-left"></i>
                             <span>Bukti Pengeluaran</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ <?php echo $title === 'Spj' ? 'active' : ''; ?> }}">
+                    <li class="sidebar-item {{ $title === 'Spj' ? 'active' : '' }}">
                         <a href="/spj" class='sidebar-link'>
                             <i class="bi bi-journal-text"></i>
                             <span>SPJ</span>
                         </a>
                     </li>
+
+                    {{-- BP Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'bp')
-                    <li class="sidebar-item {{ <?php echo $title === 'Pengajuan' ? 'active' : ''; ?> }}">
-                        <a href="/pengajuan" class='sidebar-link'>
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ</span>
+                        </a>
+                    </li>
+
+                    {{-- BPP Sidebar --}}
+                @elseif (Auth::user() && Auth::user()->role === 'bpp')
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class='fas fa fa-user'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Pengajuan (mengajukan)</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Tanda Bukti' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="fas fa fa-check-circle"></i>
+                            <span>Tanda Bukti</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user() && Auth::user()->role === 'kpa')
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class='fas fa fa-user'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Pengajuan (mengajukan)</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Tanda Bukti' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="fas fa fa-check-circle"></i>
+                            <span>Tanda Bukti</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user() && Auth::user()->role === 'pa')
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class='fas fa fa-user'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ (CUMA BISA LIHAT)</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user() && Auth::user()->role === 'pptk')
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class='fas fa fa-user'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ (CUMA BISA LIHAT)</span>
                         </a>
                     </li>
                 @endif

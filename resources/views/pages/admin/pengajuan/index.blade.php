@@ -57,7 +57,6 @@
                                         <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
 
-
                                     </td>
                                 </tr>
                             </tbody>
