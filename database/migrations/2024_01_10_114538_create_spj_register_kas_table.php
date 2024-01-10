@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('spjr_jml_pengeluaran', 150);
             $table->string('spjr_saldo_buku', 150);
             $table->string('spjr_saldo_kas', 150);
-            $table->string('spjr_min-plus', 150);
+            $table->string('spjr_min_plus', 150);
             $table->text('spjr_uraian_kertas');
             $table->text('spjr_uraian_logam');
             $table->text('spjr_uraian_kertas_berharga');
