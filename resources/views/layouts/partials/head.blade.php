@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('template/dist/assets/compiled/css/extra-component-comment.css') }}">
 
     {{-- <link rel="stylesheet" href="{{ asset('template/dits/assets/extensions/sweetalert2/sweetalert2.min.css') }}"> --}}
-
     <link rel="stylesheet"
         href="{{ asset('template/dist/assets/extensions/@fortawesome/fontawesome-free/css/all.min.css') }}">
 

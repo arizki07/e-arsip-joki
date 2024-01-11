@@ -64,6 +64,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(PenggunaController::class)->group(function () {
             Route::get('/pengguna', 'index');
+            Route::post('/pengguna/store', 'store');
+            Route::get('/pengguna/edit/{id}', 'edit');
+            Route::post('/pengguna/edit/{id}', 'update');
+            Route::delete('/pengguna/destroy/{id}', 'destroy');
         });
 
         Route::controller(BPController::class)->group(function () {
@@ -108,6 +112,6 @@ Route::group(['middleware' => ['auth']], function () {
         //     Route::get('/pengajuan', 'index');
         // });
 
-            // cek
+        // cek
     });
 });
