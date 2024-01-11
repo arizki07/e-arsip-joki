@@ -14,6 +14,7 @@
 </script>
 <script src="{{ asset('template/dist/assets/static/js/pages/datatables.js') }}"></script>
 
+
 {{-- sweetalert --}}
-<script src="{{ asset('template/dist/assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('template/dist/assets/static/js/pages/sweetalert2.js') }}"></script>
+<script src="{{ asset('template/dist/assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
