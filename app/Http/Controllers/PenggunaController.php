@@ -16,6 +16,7 @@ class PenggunaController extends Controller
 
         return view('pages.admin.pengguna.index', [
             'title' => 'Pengguna',
+            'active' => 'Pengguna',
             'pengguna' => $pengguna,
 
         ]);

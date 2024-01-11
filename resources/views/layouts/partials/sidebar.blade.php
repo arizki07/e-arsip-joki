@@ -44,7 +44,7 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item {{ $title === 'Dashboard' ? 'active' : '' }}">
+                <li class="sidebar-item {{ $active === 'Dashboard' ? 'active' : '' }}">
                     <a href="/dashboard" class='sidebar-link'>
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
@@ -55,41 +55,50 @@
 
                 {{-- Admin Sidebar --}}
                 @if (Auth::user() && Auth::user()->role === 'admin')
-                    <li class="sidebar-item {{ $title === 'Pengguna' ? 'active' : '' }}">
-                        <a href="/pengguna" class='sidebar-link'>
+                    <li class="sidebar-item {{ $active === 'Pengguna' ? 'active' : '' }}">
+                        <a href="{{ url('pengguna') }}" class='sidebar-link'>
                             <i class="bi bi-people-fill"></i>
                             <span>Data User</span>
                         </a>
                     </li>
-                    <li class="sidebar-item has-sub">
+                    <li class="sidebar-item {{ ($active == 'Jabatan' ? 'active' : '') }}">
+                        <a href="{{ url('jabatan') }}" class='sidebar-link'>
+                            <i class="bi bi-people-fill"></i>
+                            <span>Data Jabatan</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item has-sub {{ ($active == 'BP' || $active == 'BPP' || $active == 'PPK' || $active == 'PPTK' || $active == 'KPA' || $active == 'PA') ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-people"></i>
                             <span>Pegawai</span>
                         </a>
 
-                        <ul class="submenu ">
+                        <ul class="submenu {{ ($active == 'BP' || $active == 'BPP' || $active == 'PPK' || $active == 'PPTK' || $active == 'KPA' || $active == 'PA') ? 'active' : '' }}">
 
-                            <li class="submenu-item {{ $title === 'Data-Bp' ? 'active' : '' }} ">
-                                <a href="/data-bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
+                            <li class="submenu-item {{ ($active == 'BP') ? 'active' : '' }} ">
+                                <a href="{{ route('data-bp') }}" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
                                     Data BP</a>
                             </li>
-                            <li class="submenu-item {{ $title === 'Data-Bpp' ? 'active' : '' }}">
-                                <a href="/data-bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Data
+                            <li class="submenu-item {{ ($active == 'BPP') ? 'active' : '' }}">
+                                <a href="{{ route('data-bpp') }}" class="submenu-link"><i class="bi bi-file-earmark-fill"></i> Data
                                     BPP</a>
                             </li>
 
-                            <li class="submenu-item {{ $title === 'Data-Kpa' ? 'active' : '' }}">
-                                <a href="/data-kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Data
+                            <li class="submenu-item {{ ($active == 'KPA') ? 'active' : '' }}">
+                                <a href="{{ route('data-kpa') }}" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Data
                                     KPA</a>
                             </li>
-                            <li class="submenu-item {{ $title === 'Data-Pa' ? 'active' : '' }}">
-                                <a href="/data-pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
+                            <li class="submenu-item {{ ($active == 'PA') ? 'active' : '' }}">
+                                <a href="{{ route('data-pa') }}" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
                                     Data PA</a>
                             </li>
-                            <li class="submenu-item {{ $title === 'Data-Pptk' ? 'active' : '' }}">
-                                <a href="/data-pptk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
-                                    Data
-                                    PPTK</a>
+                            <li class="submenu-item {{ ($active == 'PPTK') ? 'active' : '' }}">
+                                <a href="{{ route('data-pptk') }}" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
+                                    Data PPTK</a>
+                            </li>
+                            <li class="submenu-item {{ ($active == 'PPK') ? 'active' : '' }}">
+                                <a href="{{ route('data-ppk') }}" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
+                                    Data PPK</a>
                             </li>
                         </ul>
                     </li>
