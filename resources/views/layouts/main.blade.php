@@ -10,8 +10,8 @@
             @yield('content')
 
             @include('layouts.partials.footer')
-            @include('layouts.partials.script')
         </div>
+        @include('layouts.partials.script')
     </div>
 
 </body>

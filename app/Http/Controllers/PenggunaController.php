@@ -32,15 +32,12 @@ class PenggunaController extends Controller
         ]);
 
         try {
-            // Enkripsi password sebelum menyimpan
             $validatedData['password'] = bcrypt($validatedData['password']);
 
-            // Buat entitas Pengguna baru dengan data yang valid
             user::create($validatedData);
 
             return redirect('/pengguna')->with('success', 'Data Pengguna Berhasil Disimpan!');
         } catch (\Exception $e) {
-            // Tangkap dan tangani kesalahan, contoh: redirect kembali dengan pesan kesalahan
             return redirect()->back()->with('error', 'Terjadi kesalahan. ' . $e->getMessage());
         }
     }
@@ -72,40 +69,38 @@ class PenggunaController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'role' => 'required',
-            // Add validation rules for other fields as needed
+            'password' => 'required|max:13',
         ]);
 
-        // If validation fails, redirect back with errors
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Find the user by ID
         $pengguna = User::findOrFail($id);
 
-        // Update user data
         $pengguna->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'role' => $request->input('role'),
-            // Update other fields as needed
+            'password' => $request->input('password'),
         ]);
 
-        // Redirect back with a success message
         return redirect('/pengguna')->with('success', 'User updated successfully.');
     }
 
     public function destroy($id)
     {
         try {
+            $pengguna = User::find($id);
 
-            user::where('id_users', $id)->delete();
+            if (!$pengguna) {
+                return redirect('/pengguna')->with('error', 'Data pengguna tidak ditemukan.');
+            }
+            $pengguna->delete();
 
-            return response()->json(['message' => 'Data berhasil dihapus.']);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['message' => 'Data tidak ditemukan.'], 404);
+            return redirect('/pengguna')->with('success', 'Data pengguna berhasil dihapus!');
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan saat menghapus data.'], 500);
+            return redirect('/pengguna')->with('error', 'Gagal menghapus data pengguna. Error: ' . $e->getMessage());
         }
     }
 }
