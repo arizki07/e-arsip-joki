@@ -139,6 +139,12 @@
                             <span>Pengajuan</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $title === 'Jabatan' ? 'active' : '' }}">
+                        <a href="/jabatan" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Jabatan</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $title === 'Bukti-pengeluaran' ? 'active' : '' }}">
                         <a href="/bukti-pengeluaran" class='sidebar-link'>
                             <i class="bi bi-box-arrow-left"></i>

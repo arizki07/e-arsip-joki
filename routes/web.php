@@ -5,6 +5,7 @@ use App\Http\Controllers\BPController;
 use App\Http\Controllers\BPPController;
 use App\Http\Controllers\BuktiPengeluaranController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KPAController;
 use App\Http\Controllers\PAController;
 use App\Http\Controllers\PengajuanController;
@@ -47,9 +48,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/pengguna', 'index');
         });
 
+        Route::controller(JabatanController::class)->group(function () {
+            Route::get('/jabatan', 'index');
+            Route::post('/jabatan/store', 'store');
+        });
+
         Route::controller(BPController::class)->group(function () {
             Route::get('/bp', 'index');
             Route::get('/data-bp', 'bp');
+            Route::post('/data-bp/store', 'store');
         });
 
         Route::controller(BPPController::class)->group(function () {
