@@ -12,6 +12,8 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PPKController;
 use App\Http\Controllers\PPTKController;
 use App\Http\Controllers\SpjController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\BiodataController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -43,36 +45,49 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['CekLogin:admin']], function () {
 
+        // Routes JABATAN
+        Route::controller(JabatanController::class)->group(function () {
+            Route::get('jabatan', 'index');
+            Route::post('jabatan/add', 'add')->name('add-jabatan');
+            Route::post('jabatan/edit/{id}', 'edit')->name('edit-jabatan');
+            Route::get('jabatan/delete/{id}', 'delete')->name('delete-jabatan');
+        });
+
+        // Routes Biodata
+        Route::controller(BiodataController::class)->group(function () {
+            // Route::get('biodata', 'index')->name('biodata');
+            Route::get('biodata/add', 'add')->name('add-biodata');
+            Route::post('biodata/create', 'create')->name('create-biodata');
+            Route::post('biodata/edit/{id}', 'edit')->name('edit-biodata');
+            Route::get('biodata/delete/{id}', 'delete')->name('delete-biodata');
+        });
+
         Route::controller(PenggunaController::class)->group(function () {
             Route::get('/pengguna', 'index');
         });
 
         Route::controller(BPController::class)->group(function () {
-            Route::get('/bp', 'index');
-            Route::get('/data-bp', 'bp');
+            Route::get('data-bp', 'index')->name('data-bp');
         });
 
         Route::controller(BPPController::class)->group(function () {
-            Route::get('/bpp', 'index');
-            Route::get('/data-bpp', 'bpp');
+            Route::get('data-bpp', 'index')->name('data-bpp');
         });
 
         Route::controller(KPAController::class)->group(function () {
-            Route::get('/kpa', 'index');
-            Route::get('/data-kpa', 'kpa');
+            Route::get('data-kpa', 'index')->name('data-kpa');
         });
 
         Route::controller(PAController::class)->group(function () {
-            Route::get('/pa', 'index');
-            Route::get('/data-pa', 'pa');
+            Route::get('data-pa', 'index')->name('data-pa');
         });
 
         Route::controller(PPTKController::class)->group(function () {
-            Route::get('/data-pptk', 'index');
+            Route::get('data-pptk', 'index')->name('data-pptk');
         });
 
         Route::controller(PPKController::class)->group(function () {
-            Route::get('/ppk', 'index');
+            Route::get('data-ppk', 'index')->name('data-ppk');
         });
 
 

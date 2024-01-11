@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use App\Models\BiodataModel;
+use App\Models\JabatanModel;
+use App\Models\User;
 
 class PAController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.document.pa.index', [
-            'title' => 'Pa',
+        $biodata = BiodataModel::all();
+        $jabatan = JabatanModel::all();
+
+        return view('pages.admin.biodata.pa', [
+            'title' => 'Biodata Pegawai PA',
+            'active' => 'PA',
+            'biodata' => $biodata,
+            'jabatan' => $jabatan
         ]);
     }
 
