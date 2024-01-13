@@ -80,4 +80,36 @@ class BiodataController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil ditambahkan beserta dengan generate akun.');
     }
+
+    public function edit($id)
+    {
+        $jabatan = JabatanModel::all();
+        $biodata = BiodataModel::findOrFail($id);
+
+        return view('pages.admin.biodata.crud.edit', [
+            'title' => 'Edit Pegawai BP',
+            'active' => 'BP',
+            'jabatan'    => $jabatan,
+            'item'     => $biodata
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validation rules here
+
+        $biodata = BiodataModel::findOrFail($id);
+
+        $biodata->nama = $request->input('nama');
+        $biodata->jabatan_id = $request->input('jabatan_id');
+        $biodata->nip = $request->input('nip');
+        $biodata->email = $request->input('email');
+        $biodata->tgl_lahir = $request->input('tgl_lahir');
+        $biodata->alamat = $request->input('alamat');
+
+        // Save the updated data
+        $biodata->save();
+
+        return redirect('/data-bp')->with('success', 'Data berhasil diperbarui.');
+    }
 }
