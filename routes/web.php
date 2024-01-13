@@ -58,7 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
             // Route::get('biodata', 'index')->name('biodata');
             Route::get('biodata/add', 'add')->name('add-biodata');
             Route::post('biodata/create', 'create')->name('create-biodata');
-            Route::post('biodata/edit/{id}', 'edit')->name('edit-biodata');
+            Route::get('biodata/edit/{id}', 'edit')->name('edit-biodata');
+            Route::post('biodata/update/{id}', 'update')->name('update-biodata');
             Route::get('biodata/delete/{id}', 'delete')->name('delete-biodata');
         });
 
