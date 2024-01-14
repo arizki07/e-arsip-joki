@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('biodata/create', 'create')->name('create-biodata');
             Route::get('biodata/edit/{id}', 'edit')->name('edit-biodata');
             Route::post('biodata/update/{id}', 'update')->name('update-biodata');
-            Route::get('biodata/delete/{id}', 'delete')->name('delete-biodata');
+            Route::delete('/delete-biodata/{id}', 'delete')->name('delete-biodata');
         });
 
         Route::controller(PenggunaController::class)->group(function () {

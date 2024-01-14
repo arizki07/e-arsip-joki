@@ -112,4 +112,11 @@ class BiodataController extends Controller
 
         return redirect('/data-bp')->with('success', 'Data berhasil diperbarui.');
     }
+
+    public function delete($id)
+    {
+        BiodataModel::where('id_biodata', $id)->delete();
+
+        return redirect('/data-bp')->with('success', 'Data berhasil diperbarui.');
+    }
 }
