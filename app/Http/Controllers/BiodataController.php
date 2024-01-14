@@ -63,23 +63,30 @@ class BiodataController extends Controller
         $modelBiodata->tgl_lahir = $data['tgl_lahir'];
         $modelBiodata->alamat = $data['alamat'];
 
-        $password = $data['nip'];
-        $passwordHash = bcrypt($password);
+        // Fetch jabatan based on jabatan_id
+        $jabatan = JabatanModel::find($data['jabatan_id']);
 
-        $userData = [
-            'email' => $data['email'],
-            'password' => $passwordHash,
-            'name' => $data['nama'],
-            'role' => 'bp',
-        ];
+        if ($jabatan) {
+            // Use the role from the fetched jabatan
+            $userData = [
+                'email' => $data['email'],
+                'password' => bcrypt($data['nip']),
+                'name' => $data['nama'],
+                'role' => $jabatan->kode, // Assuming 'kode' is the field in JabatanModel that holds the role
+            ];
 
-        $user = $modelUser->create($userData);
+            $user = $modelUser->create($userData);
 
-        $modelBiodata->user_id = $user->id_users;
-        $modelBiodata->save();
+            $modelBiodata->user_id = $user->id_users;
+            $modelBiodata->save();
 
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan beserta dengan generate akun.');
+            return redirect()->back()->with('success', 'Data berhasil ditambahkan beserta dengan generate akun.');
+        } else {
+            // Handle the case where jabatan is not found
+            return redirect()->back()->with('error', 'Jabatan not found.');
+        }
     }
+
 
     public function edit($id)
     {
