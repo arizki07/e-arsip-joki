@@ -73,9 +73,16 @@
                                         <td>
                                             <a href="{{ route('edit-biodata', ['id' => $item->id_biodata]) }}"
                                                 class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
-                                            <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#delete-{{ $item['id_biodata'] }}"
-                                                class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                            <form id="deleteForm{{ $item->id_biodata }}"
+                                                action="/delete-biodata/{{ $item->id_biodata }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="#" class="btn icon btn-danger"
+                                                    onclick="confirmDelete({{ $item->id_biodata }})">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endif
@@ -86,4 +93,31 @@
             </div>
         </div>
     </section>
+    {{-- modal delete --}}
+    @foreach ($biodata as $item)
+        <div class="modal fade" id="delete-{{ $item->id_biodata }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data {{ $title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/delete-biodata/{{ $item->id_biodata }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            Apakah anda yakin ingin menghapus data ini?
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Hapus</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

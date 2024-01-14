@@ -73,9 +73,16 @@
                                         <td>
                                             <a href="{{ route('edit-biodata', ['id' => $item->id_biodata]) }}"
                                                 class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
-                                            <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#delete-{{ $item['id_biodata'] }}"
-                                                class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                            <form id="deleteForm{{ $item->id_biodata }}"
+                                                action="/delete-biodata/{{ $item->id_biodata }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="#" class="btn icon btn-danger"
+                                                    onclick="confirmDelete({{ $item->id_biodata }})">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endif
