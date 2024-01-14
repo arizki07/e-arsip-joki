@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\NotaDinasModel;
 use App\Models\PengajuanModel;
 use App\Models\BiodataModel;
+use App\Models\JabatanModel;
 
 class PengajuanController extends Controller
 {
@@ -33,7 +34,6 @@ class PengajuanController extends Controller
     }
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            // 'nd_kpa_id'             => 'required',
             'nd_nama_kegiatan'      => 'required',
             'nd_sub_kegiatan'       => 'required',
             'nd_perihal'            => 'required',
@@ -41,8 +41,6 @@ class PengajuanController extends Controller
             'nd_uraian_kegiatan'    => 'required',
             'nd_tanggal'            => 'required|date',
             'nd_jumlah_biaya'       => 'required',
-            // 'p_pa_id'               => 'required',
-            // 'p_bpp_id'              => 'required',
         ], [
                 'required' => 'Kolom :attribute harus diisi.',
                 'max' => [
@@ -62,30 +60,14 @@ class PengajuanController extends Controller
             }
             $validatedData = $validator->validated();
 
-            $idBiodata = null;
-            $biodatas = BiodataModel::all();
+            $idBiodataKPA = BiodataModel::getBiodataByJabatanKode('KPA')->first()->id_biodata;
+            $idBiodataPA = BiodataModel::getBiodataByJabatanKode('PA')->first()->id_biodata;
+            $idBiodataBPP = BiodataModel::getBiodataByJabatanKode('BPP')->first()->id_biodata;
 
-            foreach ($biodatas as $item) {
-                if ($item->jabatan->kode == 'KPA') {
-                    $idBiodata = $item->id_biodata;
-                    break;
-                }elseif ($item->jabatan->kode == 'PA') {
-                    $idBiodata = $item->id_biodata;
-                    break;
-                }elseif ($item->jabatan->kode == 'BPP') {
-                    $idBiodata = $item->id_biodata;
-                    break;
-                }
-            }
-
-            // Tambahkan id_biodata ke $validatedData
-            $validatedData['nd_kpa_id'] = $idBiodata;
-            $validatedData['p_pa_id'] = $idBiodata;
-            $validatedData['p_bpp_id'] = $idBiodata;
-
-            // Simpan 'p_pa_id' dan 'p_bpp_id' dalam variabel terpisah
-            $pPaId = $validatedData['p_pa_id'];
-            $pBppId = $validatedData['p_bpp_id'];
+            // Set the values for nd_kpa_id, p_pa_id, and p_bpp_id
+            $validatedData['nd_kpa_id'] = $idBiodataKPA;
+            $validatedData['p_pa_id'] = $idBiodataPA;
+            $validatedData['p_bpp_id'] = $idBiodataBPP;
 
             // Hilangkan 'p_pa_id' dan 'p_bpp_id' dari $validatedData
             unset($validatedData['p_pa_id']);
@@ -95,8 +77,8 @@ class PengajuanController extends Controller
 
             PengajuanModel::create([
                 'p_kpa_id' => $validatedData['nd_kpa_id'],
-                'p_pa_id'  => $pPaId,
-                'p_bpp_id' => $pBppId,
+                'p_pa_id'  => $idBiodataPA,
+                'p_bpp_id' => $idBiodataBPP,
                 'p_nama_kegiatan' => $validatedData['nd_nama_kegiatan'],
                 'p_sub_kegiatan' => $validatedData['nd_sub_kegiatan'],
                 'p_tanggal' => $validatedData['nd_tanggal'],
