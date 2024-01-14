@@ -14,6 +14,7 @@ use App\Http\Controllers\PPTKController;
 use App\Http\Controllers\SpjController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\ExportController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -97,7 +98,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::controller(PengajuanController::class)->group(function () {
-            Route::get('/pengajuan', 'index');
+            Route::get('/pengajuan', 'index')->name('pengajuan');
+            Route::get('/pengajuan/create', 'create')->name('pengajuan.create');
+            Route::post('/pengajuan/store', 'store')->name('pengajuan.store');
+        });
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
+            Route::get('/export/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan');
+            Route::get('/export/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan');
+
         });
 
         Route::controller(BuktiPengeluaranController::class)->group(function () {
