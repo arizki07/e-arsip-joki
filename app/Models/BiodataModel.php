@@ -24,4 +24,11 @@ class BiodataModel extends Model
     {
         return $this->belongsTo(JabatanModel::class, 'jabatan_id', 'id_jabatan');
     }
+
+    public static function getBiodataByJabatanKode($kode)
+    {
+        return static::whereHas('jabatan', function ($query) use ($kode) {
+            $query->where('kode', $kode);
+        })->get();
+    }
 }
