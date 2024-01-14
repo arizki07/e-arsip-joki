@@ -18,4 +18,11 @@ class BiodataModel extends Model
         'tgl_lahir',
         'alamat',
     ];
+
+
+    public function jabatan()
+    {
+        return $this->belongsTo(JabatanModel::class, 'jabatan_id', 'id_jabatan');
+    }
+
 }
