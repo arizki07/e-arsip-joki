@@ -118,10 +118,14 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
     Route::group(['middleware' => ['CekLogin:bp']], function () {
-        // Route::controller(PengajuanController::class)->group(function () {
-        //     Route::get('/pengajuan', 'index');
-        // });
+        Route::controller(BPController::class)->group(function () {
+            Route::get('/profile', 'profile');
+            Route::post('biodata/update/{id}', 'update')->name('update-biodata');
+        });
 
-        // cek
+        Route::controller(PPTKController::class)->group(function () {
+            Route::get('/profile-pptk', 'profile');
+            Route::post('biodata/update/{id}', 'update')->name('update-biodata');
+        });
     });
 });

@@ -43,27 +43,27 @@
     </script>
 @endif
 
-@foreach ($biodata as $item)
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Hapus Data {{ $title }}',
-                text: 'Apakah anda yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Hapus',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit the corresponding form
-                    document.getElementById('deleteForm' + id).submit();
-                }
-            });
-        }
-    </script>
-@endforeach
+{{-- @foreach ($biodata as $item) --}}
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Hapus Data {{ $title }}',
+            text: 'Apakah anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the corresponding form
+                document.getElementById('deleteForm' + id).submit();
+            }
+        });
+    }
+</script>
+{{-- @endforeach --}}
 
 
 

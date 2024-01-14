@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class BiodataModel extends Model
 {
-       protected $table = 'biodatas';
-       protected $primaryKey = 'id_biodata';
-       protected $fillable = [
+    protected $table = 'biodatas';
+    protected $primaryKey = 'id_biodata';
+    protected $fillable = [
         'user_id',
         'jabatan_id',
         'nama',
@@ -24,5 +24,4 @@ class BiodataModel extends Model
     {
         return $this->belongsTo(JabatanModel::class, 'jabatan_id', 'id_jabatan');
     }
-
 }
