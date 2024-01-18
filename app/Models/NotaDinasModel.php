@@ -24,6 +24,6 @@ class NotaDinasModel extends Model
 
     public function kpa()
     {
-        return $this->belongsTo(BiodataModel::class, 'nd_kpa_id', 'id_biodata');
+        return $this->hasOne(NotaDinasModel::class);
     }
 }

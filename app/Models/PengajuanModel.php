@@ -38,4 +38,9 @@ class PengajuanModel extends Model
     {
         return $query->join('biodatas', 'pengajuans.p_bpp_id', '=', 'biodatas.id_biodata');
     }
+
+    public function notaDinas()
+    {
+        return $this->hasOne(NotaDinasModel::class, 'id_pengajuan', 'id_pengajuan');
+    }
 }

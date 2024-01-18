@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\NotaDinasModel;
 use App\Models\PengajuanModel;
 use App\Models\BiodataModel;
-use App\Models\JabatanModel;
+use Illuminate\Support\Facades\DB;
 
 class PengajuanController extends Controller
 {
@@ -33,26 +33,6 @@ class PengajuanController extends Controller
         ]);
     }
     public function store(Request $request){
-        // $validator = Validator::make($request->all(), [
-        //     'nd_nama_kegiatan'      => 'required',
-        //     'nd_sub_kegiatan'       => 'required',
-        //     'nd_perihal'            => 'required',
-        //     'nd_nomor_nota'         => 'required',
-        //     'nd_uraian_kegiatan'    => 'required',
-        //     'nd_tanggal'            => 'required|date',
-        //     'nd_jumlah_biaya'       => 'required',
-        // ],
-        // [
-        //     'required' => 'Kolom :attribute harus diisi.',
-        //     'max' => [
-        //         'string' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
-        //     ],
-        //     'image' => 'Kolom :attribute harus berupa file gambar.',
-        //     'mimes' => 'Kolom :attribute harus memiliki format: :values.',
-        //     'integer' => 'Kolom :attribute harus berupa angka.',
-        //     'numeric' => 'Kolom :attribute harus berupa angka.',
-        //     'unique' => 'Nama pengajuan sudah ada. Harap pilih nama pengajuan yang lain.',
-        // ]);
         $validator = Validator::make($request->all(), [
             'nd_nama_kegiatan' => 'required|string|max:200|unique:nota_dinas',
             'nd_sub_kegiatan' => 'required|string|max:200|unique:nota_dinas',
@@ -66,7 +46,6 @@ class PengajuanController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
 
         try {
             if ($validator->fails()) {
@@ -111,6 +90,87 @@ class PengajuanController extends Controller
             }
 
             return redirect()->back()->with('error', 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.');
+        }
+    }
+
+    public function edit($id){
+        $pengajuan = PengajuanModel::findOrFail($id);
+
+        // Ganti 'created_at' dengan kolom yang sesuai di dalam model NotaDinasModel
+        $notaDinas = NotaDinasModel::where('created_at', $pengajuan->created_at)->firstOrFail();
+
+        return view('pages.admin.pengajuan.edit', [
+            'title' => 'Edit Data Pengajuan',
+            'active' => 'Pengajuan',
+            'pengajuan' => $pengajuan,
+            'notaDinas' => $notaDinas,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'nd_nama_kegiatan' => 'required|string|max:200',
+            'nd_sub_kegiatan' => 'required|string|max:200',
+            'nd_perihal' => 'required|string|max:50',
+            'nd_nomor_nota' => 'required|string|max:50',
+            'nd_uraian_kegiatan' => 'required|string',
+            'nd_tanggal' => 'required|string',
+            'nd_jumlah_biaya' => 'required|string|max:50',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            $validatedData = $validator->validated();
+
+            // Dapatkan data pengajuan
+            $pengajuan = PengajuanModel::findOrFail($id);
+
+            // Update data pengajuan
+            $pengajuan->update([
+                'p_nama_kegiatan' => $validatedData['nd_nama_kegiatan'],
+                'p_sub_kegiatan' => $validatedData['nd_sub_kegiatan'],
+                'p_tanggal' => $validatedData['nd_tanggal'],
+                'p_biaya' => $validatedData['nd_jumlah_biaya'],
+            ]);
+
+            // Dapatkan dan update data nota dinas yang terkait
+            $notaDinas = NotaDinasModel::where('created_at', $pengajuan->created_at)
+                                        ->firstOrFail();
+
+            $notaDinas->update($validatedData);
+
+            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil diperbarui!');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui data pengajuan.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $pengajuan = PengajuanModel::findOrFail($id);
+
+            $notaDinas = NotaDinasModel::where('created_at', $pengajuan->created_at)->firstOrFail();
+
+            $pengajuan->delete();
+
+            $notaDinas->delete();
+
+            DB::commit();
+
+            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil dihapus!');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data pengajuan.');
         }
     }
 }

@@ -101,7 +101,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/pengajuan', 'index')->name('pengajuan');
             Route::get('/pengajuan/create', 'create')->name('pengajuan.create');
             Route::post('/pengajuan/store', 'store')->name('pengajuan.store');
+            Route::get('/pengajuan/edit/{id}', 'edit')->name('pengajuan.edit');
+            Route::post('/pengajuan/update/{id}', 'update')->name('pengajuan.update');
+            Route::delete('/pengajuan/delete/{id}', 'destroy')->name('pengajuan.delete');
         });
+
         Route::controller(ExportController::class)->group(function () {
             Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
             Route::get('/export/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan');
