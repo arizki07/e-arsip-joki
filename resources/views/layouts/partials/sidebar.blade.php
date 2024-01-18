@@ -151,7 +151,7 @@
                         </ul>
                     </li>
 
-                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
+                    <li class="sidebar-item {{ $active === 'Pengajuan' ? 'active' : '' }}">
                         <a href="/pengajuan" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan</span>

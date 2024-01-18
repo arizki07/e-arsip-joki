@@ -33,25 +33,39 @@ class PengajuanController extends Controller
         ]);
     }
     public function store(Request $request){
+        // $validator = Validator::make($request->all(), [
+        //     'nd_nama_kegiatan'      => 'required',
+        //     'nd_sub_kegiatan'       => 'required',
+        //     'nd_perihal'            => 'required',
+        //     'nd_nomor_nota'         => 'required',
+        //     'nd_uraian_kegiatan'    => 'required',
+        //     'nd_tanggal'            => 'required|date',
+        //     'nd_jumlah_biaya'       => 'required',
+        // ],
+        // [
+        //     'required' => 'Kolom :attribute harus diisi.',
+        //     'max' => [
+        //         'string' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
+        //     ],
+        //     'image' => 'Kolom :attribute harus berupa file gambar.',
+        //     'mimes' => 'Kolom :attribute harus memiliki format: :values.',
+        //     'integer' => 'Kolom :attribute harus berupa angka.',
+        //     'numeric' => 'Kolom :attribute harus berupa angka.',
+        //     'unique' => 'Nama pengajuan sudah ada. Harap pilih nama pengajuan yang lain.',
+        // ]);
         $validator = Validator::make($request->all(), [
-            'nd_nama_kegiatan'      => 'required',
-            'nd_sub_kegiatan'       => 'required',
-            'nd_perihal'            => 'required',
-            'nd_nomor_nota'         => 'required',
-            'nd_uraian_kegiatan'    => 'required',
-            'nd_tanggal'            => 'required|date',
-            'nd_jumlah_biaya'       => 'required',
-        ], [
-                'required' => 'Kolom :attribute harus diisi.',
-                'max' => [
-                'string' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
-            ],
-            'image' => 'Kolom :attribute harus berupa file gambar.',
-            'mimes' => 'Kolom :attribute harus memiliki format: :values.',
-            'integer' => 'Kolom :attribute harus berupa angka.',
-            'numeric' => 'Kolom :attribute harus berupa angka.',
-            'unique' => 'Nama pengajuan sudah ada. Harap pilih nama pengajuan yang lain.',
+            'nd_nama_kegiatan' => 'required|string|max:200|unique:nota_dinas',
+            'nd_sub_kegiatan' => 'required|string|max:200|unique:nota_dinas',
+            'nd_perihal' => 'required|string|max:50|unique:nota_dinas',
+            'nd_nomor_nota' => 'required|string|max:50|unique:nota_dinas',
+            'nd_uraian_kegiatan' => 'required|string',
+            'nd_tanggal' => 'required|string',
+            'nd_jumlah_biaya' => 'required|string|max:50',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
 
         try {
@@ -93,10 +107,10 @@ class PengajuanController extends Controller
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             if ($request->expectsJson()) {
-                return response()->json(['error' => 'Gagal menyimpan data. Silakan coba lagi.'], 500);
+                return response()->json(['error' => 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.'], 500);
             }
 
-            return redirect()->back()->with('error', 'Gagal menyimpan data. Silakan coba lagi.');
+            return redirect()->back()->with('error', 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.');
         }
     }
 }

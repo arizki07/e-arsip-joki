@@ -13,7 +13,7 @@
         </div>
         @include('layouts.partials.script')
     </div>
-
+    @yield('scripts')
 </body>
 
 </html>
