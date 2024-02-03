@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(BPController::class)->group(function () {
             Route::get('data-bp', 'index')->name('data-bp');
+            Route::get('data-document-bp', 'bpdoc')->name('data-document-bp');
         });
 
         Route::controller(BPPController::class)->group(function () {
@@ -106,7 +107,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
             Route::get('/export/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan');
             Route::get('/export/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan');
-
         });
 
         Route::controller(BuktiPengeluaranController::class)->group(function () {
@@ -117,12 +117,26 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj', 'index');
         });
     });
+
     Route::group(['middleware' => ['CekLogin:bp']], function () {
+
         Route::controller(BPController::class)->group(function () {
             Route::get('/profile', 'profile');
-            Route::post('biodata/update/{id}', 'update')->name('update-biodata');
+            Route::post('biodata/update/{id}', 'update')->name('biodata-update');
         });
+    });
 
+    Route::group(['middleware' => ['CekLogin:bpp']], function () {
+
+        Route::controller(BPPController::class)->group(function () {
+        });
+    });
+
+    Route::group(['middleware' => ['CekLogin:kpa']], function () {
+    });
+    Route::group(['middleware' => ['CekLogin:pa']], function () {
+    });
+    Route::group(['middleware' => ['CekLogin:pptk']], function () {
         Route::controller(PPTKController::class)->group(function () {
             Route::get('/profile-pptk', 'profile');
             Route::post('biodata/update/{id}', 'update')->name('update-biodata');

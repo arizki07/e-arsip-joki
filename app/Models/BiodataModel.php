@@ -19,6 +19,15 @@ class BiodataModel extends Model
         'alamat',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id_users');
+    }
+
+    public function ByUserId($query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
 
     public function jabatan()
     {

@@ -28,82 +28,82 @@
         <div class="row">
             <!-- User Sidebar -->
             @foreach ($biodata as $item)
-                <div class="row">
-                    <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
-                        <!-- User Card -->
-                        <div class="card mb-5" style="width: 250px;">
-                            <div class="card-body">
-                                <div class="user-avatar-section text-center">
-                                    <div class="d-flex align-items-center flex-column">
-                                        <img class="img-fluid rounded-circle mb-3"
-                                            src="{{ asset('template/dist/assets/img/avatars/5.png') }}" height="100"
-                                            width="100" alt="User avatar" />
-                                        <div class="user-info">
-                                            <h4 class="mb-2">Hello {{ $item->nama }} 🎉</h4>
-                                            <span class="badge bg-label-secondary mt-1">Author</span>
-                                        </div>
+                <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+                    <!-- User Card -->
+                    <div class="card mb-5" style="width: 250px;">
+                        <div class="card-body">
+                            <div class="user-avatar-section text-center">
+                                <div class="d-flex align-items-center flex-column">
+                                    <img class="img-fluid rounded-circle mb-3"
+                                        src="{{ asset('template/dist/assets/img/avatars/5.png') }}" height="100"
+                                        width="100" alt="User avatar" />
+                                    <div class="user-info">
+                                        <h4 class="mb-2">Hello {{ $item->nama }} 🎉</h4>
+                                        <span class="badge bg-label-secondary mt-1">Author</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- /User Card -->
                     </div>
-                    <!--/ User Sidebar -->
+                    <!-- /User Card -->
+                </div>
 
-                    <!-- User Content -->
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                        <div class="card mb-4">
-                            <h5 class="card-header">{{ $title }}</h5>
-                            <div class="card-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="nama" class="form-label">Nama Lengkap</label>
-                                            <input type="text" class="form-control" id="nama"
-                                                value="{{ $item->nama }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="jabatan" class="form-label">Jabatan</label>
-                                            <input type="text" class="form-control" id="jabatan"
-                                                value="{{ $item->jabatan->kode }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="email"
-                                                value="{{ $item->email }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="nip" class="form-label">NIP</label>
-                                            <input type="text" class="form-control" id="nip"
-                                                value="{{ $item->nip }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                            <input type="text" class="form-control" id="tgl_lahir"
-                                                value="{{ $item->tgl_lahir }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="mb-3 col-12 col-sm-6">
-                                            <label for="alamat" class="form-label">Alamat</label>
-                                            <input type="text" class="form-control" id="alamat"
-                                                value="{{ $item->alamat }}" aria-describedby="defaultFormControlHelp"
-                                                readonly />
-                                        </div>
-                                        <div class="col-12">
-                                            <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
-                                                data-bs-toggle="modal">Edit</a>
-                                        </div>
+
+                <!--/ User Sidebar -->
+
+                <!-- User Content -->
+                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                    <div class="card mb-4">
+                        <h5 class="card-header">{{ $title }}</h5>
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="nama" class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" id="nama"
+                                            value="{{ $item->nama }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="jabatan" class="form-label">Jabatan</label>
+                                        <input type="text" class="form-control" id="jabatan"
+                                            value="{{ $item->jabatan->kode }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
+                                    </div>
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="email"
+                                            value="{{ $item->email }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
+                                    </div>
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="nip" class="form-label">NIP</label>
+                                        <input type="text" class="form-control" id="nip"
+                                            value="{{ $item->nip }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
+                                    </div>
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                                        <input type="text" class="form-control" id="tgl_lahir"
+                                            value="{{ $item->tgl_lahir }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
+                                    </div>
+                                    <div class="mb-3 col-12 col-sm-6">
+                                        <label for="alamat" class="form-label">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat"
+                                            value="{{ $item->alamat }}" aria-describedby="defaultFormControlHelp"
+                                            readonly />
+                                    </div>
+                                    <div class="col-12">
+                                        <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
+                                            data-bs-toggle="modal">Edit</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <!--/ User Content -->
                 </div>
+                <!--/ User Content -->
             @endforeach
         </div>
 
