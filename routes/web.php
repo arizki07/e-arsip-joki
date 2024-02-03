@@ -113,9 +113,23 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/verifikasi/{id}', 'verifikasi')->name('verifikasi');
         });
 
+        Route::controller(App\Http\Controllers\Admin\DocumentBppController::class)->group(function () {
+            Route::get('/acc-bpp', 'index')->name('acc.bpp.index');
+            Route::post('/acc-bpp/{id}', 'verifikasi')->name('acc.bpp');
+        });
+
         Route::controller(App\Http\Controllers\Admin\DocumentKPA::class)->group(function () {
             Route::get('/acc-kpa', 'index')->name('acc.kpa.index');
             Route::post('/acc-kpa/{id}', 'verifikasi')->name('acc.kpa');
+        });
+
+        Route::controller(App\Http\Controllers\Admin\DocumentBpController::class)->group(function () {
+            Route::get('/doc-bp', 'index')->name('doc.bp.index');
+        });
+
+        Route::controller(App\Http\Controllers\Admin\DocumentPaController::class)->group(function () {
+            Route::get('/acc-pa', 'index')->name('acc.pa.index');
+            Route::post('/acc-pa/{id}', 'verifikasi')->name('acc.pa');
         });
 
         Route::controller(ExportController::class)->group(function () {
@@ -124,9 +138,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan');
         });
 
-        Route::controller(BuktiPengeluaranController::class)->group(function () {
-            Route::get('/bukti-pengeluaran', 'index');
+        Route::controller(App\Http\Controllers\Admin\BuktiPengeluaranController::class)->group(function () {
+            Route::get('/bukti-pengeluaran', 'index')->name('bukti.pengeluaran');
         });
+
 
         Route::controller(SpjController::class)->group(function () {
             Route::get('/spj', 'index');
