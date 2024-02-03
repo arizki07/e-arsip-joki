@@ -119,7 +119,8 @@
                         <ul class="submenu ">
 
                             <li class="submenu-item {{ $title === 'Bp' ? 'active' : '' }} ">
-                                <a href="/bp" class="submenu-link"> <i class="bi bi-file-earmark-text-fill"></i>
+                                <a href="data-document-bp" class="submenu-link"> <i
+                                        class="bi bi-file-earmark-text-fill"></i>
                                     Document BP</a>
 
                             </li>
@@ -195,13 +196,13 @@
                     {{-- BPP Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'bpp')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/profile" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/pengajuan-index" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan (mengajukan)</span>
                         </a>
@@ -218,6 +219,8 @@
                             <span>SPJ</span>
                         </a>
                     </li>
+
+                    {{-- Kpa Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'kpa')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
