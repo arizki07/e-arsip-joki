@@ -76,6 +76,7 @@ class PengajuanController extends Controller
                 'p_sub_kegiatan' => $validatedData['nd_sub_kegiatan'],
                 'p_tanggal' => $validatedData['nd_tanggal'],
                 'p_biaya' => $validatedData['nd_jumlah_biaya'],
+                'status' => 1, // status Pending verivikasi
             ]);
 
             return redirect('/pengajuan')->with('success', 'Data pengajuan Berhasil Disimpan!');
@@ -88,7 +89,6 @@ class PengajuanController extends Controller
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.'], 500);
             }
-
             return redirect()->back()->with('error', 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.');
         }
     }

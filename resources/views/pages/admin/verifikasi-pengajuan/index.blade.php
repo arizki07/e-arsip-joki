@@ -78,11 +78,11 @@
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('acc.kpa', ['id' => $item->id_pengajuan]) }}" method="POST"
+                                            action="{{ route('verifikasi', ['id' => $item->id_pengajuan]) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 2)
+                                            @if ($item->status == 1)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-check"></i>
                                                 </button>

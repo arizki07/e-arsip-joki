@@ -63,7 +63,27 @@
         });
     }
 </script>
-{{-- @endforeach --}}
+
+<script>
+    function confirm(id) {
+        Swal.fire({
+            title: '{{ $title }}',
+            text: 'Apakah anda yakin ingin verifikasi pengajuan ini?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Verifikasi',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // consol.log(result)
+                // Submit the corresponding form
+                document.getElementById('verifikasiForm' + id).submit();
+            }
+        });
+    }
+</script>
 
 
 

@@ -132,8 +132,9 @@
 
                             </li>
 
-                            <li class="submenu-item {{ $title === 'Kpa' ? 'active' : '' }}">
-                                <a href="/kpa" class="submenu-link"><i class="bi bi-file-diff-fill"></i> Document
+                            <li class="submenu-item {{ $title === 'acc_kpa' ? 'active' : '' }}">
+                                <a href="{{ route('acc.kpa.index') }}" class="submenu-link"><i
+                                        class="bi bi-file-diff-fill"></i> Document
                                     KPA</a>
 
                             </li>
@@ -156,6 +157,12 @@
                         <a href="/pengajuan" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $active === 'verifikasi' ? 'active' : '' }}">
+                        <a href="{{ route('verifikasi.index') }}" class='sidebar-link'>
+                            <i class="bi bi-check-square"></i>
+                            <span>Verifikasi</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'Bukti-pengeluaran' ? 'active' : '' }}">

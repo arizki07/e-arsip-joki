@@ -17,8 +17,19 @@ class PengajuanModel extends Model
         'p_nama_kegiatan',
         'p_sub_kegiatan',
         'p_tanggal',
-        'p_biaya'
+        'p_biaya',
+        'status'
     ];
+
+    // @if ($item->status == 1)
+    //     <span class="badge bg-warning">Pending Verifikasi</span>
+    // @elseif ($item->status == 2)
+    //     <span class="badge bg-warning">Pending KPA</span>
+    // @elseif ($item->status == 3)
+    //     <span class="badge bg-warning">Pending PA</span>
+    // @elseif ($item->status == 4)
+    //     <span class="badge bg-primary">Selesai</span>
+    // @endif
 
     public function kpa()
     {
