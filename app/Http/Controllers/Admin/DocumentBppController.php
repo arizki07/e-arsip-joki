@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PengajuanModel;
 use Illuminate\Http\Request;
+use App\Models\PengajuanModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class DocumentKPA extends Controller
+class DocumentBppController extends Controller
 {
     public function index()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();
 
-        // dd($pengajuans);
-        return view('pages.admin.document.kpa.index', [
-            'title' => 'Terima Pengajuan',
-            'active' => 'acc_kpa',
+        return view('pages.admin.document.bpp.index', [
+            'title' => 'Pembuat Pengajuan',
+            'active' => 'acc_bpp',
             'pengajuan' => $pengajuans,
         ]);
     }

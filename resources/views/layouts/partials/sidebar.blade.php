@@ -51,7 +51,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-title">Data Master</li>
+                <li class="sidebar-title">Data User</li>
 
                 {{-- Admin Sidebar --}}
                 @if (Auth::user() && Auth::user()->role === 'admin')
@@ -61,6 +61,14 @@
                             <span>Data User</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $active === 'verifikasi' ? 'active' : '' }}">
+                        <a href="{{ route('verifikasi.index') }}" class='sidebar-link'>
+                            <i class="bi bi-check-square"></i>
+                            <span>Verifikasi</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-title">Data Master</li>
+
                     <li class="sidebar-item {{ $active == 'Jabatan' ? 'active' : '' }}">
                         <a href="{{ url('jabatan') }}" class='sidebar-link'>
                             <i class="bi bi-people-fill"></i>
@@ -119,14 +127,15 @@
                         <ul class="submenu ">
 
                             <li class="submenu-item {{ $title === 'Bp' ? 'active' : '' }} ">
-                                <a href="data-document-bp" class="submenu-link"> <i
+                                <a href="{{ route('doc.bp.index') }}" class="submenu-link"> <i
                                         class="bi bi-file-earmark-text-fill"></i>
                                     Document BP</a>
 
                             </li>
 
                             <li class="submenu-item {{ $title === 'Bpp' ? 'active' : '' }}">
-                                <a href="/bpp" class="submenu-link"><i class="bi bi-file-earmark-fill"></i>
+                                <a href="{{ route('acc.bpp.index') }}" class="submenu-link"><i
+                                        class="bi bi-file-earmark-fill"></i>
                                     Document
                                     BPP</a>
 
@@ -140,7 +149,8 @@
                             </li>
 
                             <li class="submenu-item {{ $title === 'Pa' ? 'active' : '' }}">
-                                <a href="/pa" class="submenu-link"> <i class="bi bi-file-earmark-plus-fill"></i>
+                                <a href="{{ route('acc.pa.index') }}" class="submenu-link"> <i
+                                        class="bi bi-file-earmark-plus-fill"></i>
                                     Document PA</a>
 
                             </li>
@@ -159,14 +169,8 @@
                             <span>Pengajuan</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $active === 'verifikasi' ? 'active' : '' }}">
-                        <a href="{{ route('verifikasi.index') }}" class='sidebar-link'>
-                            <i class="bi bi-check-square"></i>
-                            <span>Verifikasi</span>
-                        </a>
-                    </li>
                     <li class="sidebar-item {{ $title === 'Bukti-pengeluaran' ? 'active' : '' }}">
-                        <a href="/bukti-pengeluaran" class='sidebar-link'>
+                        <a href="{{ route('bukti.pengeluaran') }}" class='sidebar-link'>
                             <i class="bi bi-box-arrow-left"></i>
                             <span>Bukti Pengeluaran</span>
                         </a>

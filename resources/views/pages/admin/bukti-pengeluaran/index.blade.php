@@ -41,9 +41,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Role</th>
-                                    <th>Email</th>
+                                    <th>Pengajuan</th>
+                                    <th>Jabatan</th>
+                                    <th>Biaya</th>
+                                    <th>Jumlah Biaya</th>
+                                    <th>Uraian</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -52,6 +54,8 @@
                                     <td>Graiden</td>
                                     <td>vehicula.aliquet@semconsequat.co.uk</td>
                                     <td>076 4820 8838</td>
+                                    <td>Offenburg</td>
+                                    <td>Offenburg</td>
                                     <td>Offenburg</td>
                                     <td>
                                         <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
