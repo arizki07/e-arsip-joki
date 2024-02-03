@@ -14,6 +14,7 @@ use App\Http\Controllers\PPTKController;
 use App\Http\Controllers\SpjController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\ExportController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -104,6 +105,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/pengajuan/edit/{id}', 'edit')->name('pengajuan.edit');
             Route::post('/pengajuan/update/{id}', 'update')->name('pengajuan.update');
             Route::delete('/pengajuan/delete/{id}', 'destroy')->name('pengajuan.delete');
+        });
+
+        Route::controller(App\Http\Controllers\Admin\VerifikasiController::class)->group(function () {
+            Route::get('/verifikasi', 'index')->name('verifikasi.index');
+            Route::post('/verifikasi/{id}', 'verifikasi')->name('verifikasi');
+        });
+
+        Route::controller(App\Http\Controllers\Admin\DocumentKPA::class)->group(function () {
+            Route::get('/acc-kpa', 'index')->name('acc.kpa.index');
+            Route::post('/acc-kpa/{id}', 'verifikasi')->name('acc.kpa');
         });
 
         Route::controller(ExportController::class)->group(function () {

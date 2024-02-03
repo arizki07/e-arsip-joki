@@ -19,7 +19,6 @@ class BiodataModel extends Model
         'alamat',
     ];
 
-
     public function jabatan()
     {
         return $this->belongsTo(JabatanModel::class, 'jabatan_id', 'id_jabatan');

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('p_bpp_id');
             $table->string('p_nama_kegiatan');
             $table->string('p_sub_kegiatan');
+            $table->string('status')->default('1');
             $table->date('p_tanggal');
             $table->string('p_biaya', 50);
             $table->timestamps();
