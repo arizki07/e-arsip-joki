@@ -48,15 +48,15 @@
                                     <td>{{ $item->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
-                                    <td>export
-                                        {{-- <a href="{{ route('export.pengajuan') }}" type="button"
+                                    <td>
+                                        <a href="{{ route('export.pengajuan') }}" type="button"
                                             class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
                                         <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
                                         <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
-                                                class="fas fa fa-file-pdf"></i></a> --}}
+                                                class="fas fa fa-file-pdf"></i></a>
                                     </td>
                                     <td>
                                         @if ($item->status == 1)
@@ -66,11 +66,14 @@
                                         @elseif ($item->status == 3)
                                             <span class="badge bg-warning">Pending PA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-primary">Selesai</span>
+                                            <span class="badge bg-success">Approve</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#detailModal{{ $item->id }}">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
                                             action="{{ route('acc.kpa', ['id' => $item->id_pengajuan]) }}" method="POST"
@@ -97,4 +100,70 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    @foreach ($pengajuan as $item)
+        <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1"
+            aria-labelledby="detailModalLabel{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel{{ $item->id }}">Detail Pengajuan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="p_nama_kegiatan" class="col-form-label">Nama Kegiatan:</label>
+                                <input type="text" class="form-control" id="p_nama_kegiatan"
+                                    value="{{ $item->p_nama_kegiatan }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bpp" class="col-form-label">Badan Pengeluaran Pembantu:</label>
+                                <input type="text" class="form-control" id="bpp" value="{{ $item->bpp->nama }}"
+                                    readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="p_tanggal" class="col-form-label">Tanggal:</label>
+                                <input type="text" class="form-control" id="p_tanggal" value="{{ $item->p_tanggal }}"
+                                    readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="col-form-label">Status:</label>
+                                <div class="input-group">
+                                    <span class="form-control">
+                                        @if ($item->status == 1)
+                                            <span class="badge bg-warning">Pending Verifikasi</span>
+                                        @elseif ($item->status == 2)
+                                            <span class="badge bg-warning">Pending KPA</span>
+                                        @elseif ($item->status == 3)
+                                            <span class="badge bg-warning">Pending PA</span>
+                                        @elseif ($item->status == 4)
+                                            <span class="badge bg-success">Approve</span>
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a href="{{ route('export.pengajuan') }}" type="button" class="btn btn-outline-success">
+                                    <i class="fas fa-file-excel"></i> Export to Excel
+                                </a>
+                                <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-primary">
+                                    <i class="fas fa-file-word"></i> Export to Word
+                                </a>
+                                <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-danger">
+                                    <i class="fas fa-file-pdf"></i> Export to PDF
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

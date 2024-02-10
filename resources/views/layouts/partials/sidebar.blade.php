@@ -88,33 +88,33 @@
                             <li class="submenu-item {{ $active == 'BP' ? 'active' : '' }} ">
                                 <a href="{{ route('data-bp') }}" class="submenu-link"> <i
                                         class="bi bi-file-earmark-text-fill"></i>
-                                    Data BP</a>
+                                    Biodata BP</a>
                             </li>
                             <li class="submenu-item {{ $active == 'BPP' ? 'active' : '' }}">
                                 <a href="{{ route('data-bpp') }}" class="submenu-link"><i
-                                        class="bi bi-file-earmark-fill"></i> Data
+                                        class="bi bi-file-earmark-fill"></i> Biodata
                                     BPP</a>
                             </li>
 
                             <li class="submenu-item {{ $active == 'KPA' ? 'active' : '' }}">
                                 <a href="{{ route('data-kpa') }}" class="submenu-link"><i
-                                        class="bi bi-file-diff-fill"></i> Data
+                                        class="bi bi-file-diff-fill"></i> Biodata
                                     KPA</a>
                             </li>
                             <li class="submenu-item {{ $active == 'PA' ? 'active' : '' }}">
                                 <a href="{{ route('data-pa') }}" class="submenu-link"> <i
                                         class="bi bi-file-earmark-plus-fill"></i>
-                                    Data PA</a>
+                                    Biodata PA</a>
                             </li>
                             <li class="submenu-item {{ $active == 'PPTK' ? 'active' : '' }}">
                                 <a href="{{ route('data-pptk') }}" class="submenu-link"><i
                                         class="bi bi-file-earmark-text-fill"></i>
-                                    Data PPTK</a>
+                                    Biodata PPTK</a>
                             </li>
                             <li class="submenu-item {{ $active == 'PPK' ? 'active' : '' }}">
                                 <a href="{{ route('data-ppk') }}" class="submenu-link"><i
                                         class="bi bi-file-earmark-text-fill"></i>
-                                    Data PPK</a>
+                                    Biodata PPK</a>
                             </li>
                         </ul>
                     </li>

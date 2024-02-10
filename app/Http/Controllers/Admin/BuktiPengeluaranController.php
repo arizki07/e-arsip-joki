@@ -12,7 +12,7 @@ class BuktiPengeluaranController extends Controller
 
     public function index()
     {
-        $pengajuanMo
+
         return view('pages.admin.bukti-pengeluaran.index', [
             'title' => 'Bukti-pengeluaran',
             'active' => 'Bukti-pengeluaran'
