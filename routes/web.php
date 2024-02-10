@@ -125,6 +125,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(App\Http\Controllers\Admin\DocumentBpController::class)->group(function () {
             Route::get('/doc-bp', 'index')->name('doc.bp.index');
+            Route::get('/detail/pengajuan/pdf/{id}', 'detailPengajuanPdf')->name('detail.pdf.pengajuan');
         });
 
         Route::controller(App\Http\Controllers\Admin\DocumentPaController::class)->group(function () {

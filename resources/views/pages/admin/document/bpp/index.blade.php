@@ -46,15 +46,15 @@
                                     <td>{{ $item->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
-                                    <td>export
-                                        {{-- <a href="{{ route('export.pengajuan') }}" type="button"
+                                    <td>
+                                        <a href="{{ route('export.pengajuan') }}" type="button"
                                             class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
                                         <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
                                         <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
-                                                class="fas fa fa-file-pdf"></i></a> --}}
+                                                class="fas fa fa-file-pdf"></i></a>
                                     </td>
                                     <td>
                                         @if ($item->status == 1)
