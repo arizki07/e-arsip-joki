@@ -154,12 +154,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(BPController::class)->group(function () {
             Route::get('/profile', 'profile');
             Route::post('biodata/update/{id}', 'update')->name('biodata-update');
+            Route::get('/doc-bp', 'document')->name('doc.bp.index');
+            Route::get('/detail/pengajuan/pdf/{id}', 'detailPengajuanPdf')->name('detail.pdf.pengajuan');
         });
     });
 
     Route::group(['middleware' => ['CekLogin:bpp']], function () {
 
         Route::controller(BPPController::class)->group(function () {
+            Route::get('/profile', 'profilee');
+            Route::get('/pengajuan-index', 'pengajuan');
+            Route::get('/pengajuan/create', 'create')->name('pengajuan.create');
+            Route::post('/pengajuan/store', 'store')->name('pengajuan.store');
+            Route::get('/pengajuan/edit/{id}', 'edit')->name('pengajuan.edit');
+            Route::post('/pengajuan/update/{id}', 'update')->name('pengajuan.update');
+            Route::delete('/pengajuan/delete/{id}', 'destroy')->name('pengajuan.delete');
         });
     });
 

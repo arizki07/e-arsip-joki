@@ -190,6 +190,13 @@
                             <span>Profile</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item {{ $title === 'Document-Bp' ? 'active' : '' }}">
+                        <a href="/doc-bp" class='sidebar-link'>
+                            <i class="bi bi-people"></i>
+                            <span>Document</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
