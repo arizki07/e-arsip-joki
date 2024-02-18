@@ -140,6 +140,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(App\Http\Controllers\Admin\BuktiPengeluaranController::class)->group(function () {
             Route::get('/bukti-pengeluaran', 'index')->name('bukti.pengeluaran');
+            Route::get('/bukti-pengeluaran/create', 'create')->name('bukti.create');
+            Route::post('/bukti-pengeluaran/store', 'store')->name('bukti.store');
+            Route::get('/bukti-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
         });
 
 

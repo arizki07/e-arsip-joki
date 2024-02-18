@@ -26,4 +26,9 @@ class NotaDinasModel extends Model
     {
         return $this->hasOne(NotaDinasModel::class);
     }
+
+     public function pengajuan()
+    {
+        return $this->belongsTo(PengajuanModel::class, 'nd_nama_kegiatan', 'p_nama_kegiatan');
+    }
 }

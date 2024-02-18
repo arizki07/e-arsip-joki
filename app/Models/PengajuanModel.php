@@ -31,6 +31,36 @@ class PengajuanModel extends Model
     //     <span class="badge bg-primary">Selesai</span>
     // @endif
 
+    public function getStatusBadge()
+    {
+        $status = $this->status;
+
+        switch ($status) {
+            case 1:
+                return 'Pending Verifikasi';
+            case 2:
+                return 'Pending KPA';
+            case 3:
+                return 'Pending PA';
+            case 4:
+                return 'Selesai';
+            default:
+                return '';
+        }
+        // switch ($status) {
+        //     case 1:
+        //         return '<span class="badge bg-warning">Pending Verifikasi</span>';
+        //     case 2:
+        //         return '<span class="badge bg-warning">Pending KPA</span>';
+        //     case 3:
+        //         return '<span class="badge bg-warning">Pending PA</span>';
+        //     case 4:
+        //         return '<span class="badge bg-primary">Selesai</span>';
+        //     default:
+        //         return '';
+        // }
+    }
+
     public function kpa()
     {
         return $this->belongsTo(BiodataModel::class, 'p_kpa_id', 'id_biodata');
@@ -52,6 +82,8 @@ class PengajuanModel extends Model
 
     public function notaDinas()
     {
-        return $this->hasOne(NotaDinasModel::class, 'id_pengajuan', 'id_pengajuan');
+        return $this->hasOne(NotaDinasModel::class, 'nd_nama_kegiatan', 'p_nama_kegiatan');
     }
+
+
 }
