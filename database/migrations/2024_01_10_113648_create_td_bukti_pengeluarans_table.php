@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('td_bp_id');
             $table->string('td_biaya', 50);
             $table->string('td_jumlah_biaya', 50);
-            $table->string('td_uraian');
+            $table->json('td_uraian');
             $table->timestamps();
 
             $table->foreign('td_id_pengajuan')->references('id_pengajuan')->on('pengajuans');
