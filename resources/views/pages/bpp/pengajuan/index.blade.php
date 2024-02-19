@@ -64,8 +64,18 @@
                                     </td>
                                     <td>
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
-                                        <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                        <a href="{{ route('pengajuan.edit', ['id' => $item->id_pengajuan]) }}"
+                                            class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
+                                        <form id="deleteForm{{ $item->id_pengajuan }}"
+                                            action="{{ route('pengajuan.delete', ['id' => $item->id_pengajuan]) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="#" class="btn icon btn-danger"
+                                                onclick="confirmDelete({{ $item->id_pengajuan }})">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -18,10 +18,11 @@ class BuktiPengeluaranController extends Controller
     public function index()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();
+
         return view('pages.admin.bukti-pengeluaran.index', [
             'title' => 'Bukti-pengeluaran',
             'active' => 'Bukti-pengeluaran',
-            'pengajuan' => $pengajuans,
+            'pengajuans' => $pengajuans,
         ]);
     }
 

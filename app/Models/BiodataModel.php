@@ -17,6 +17,7 @@ class BiodataModel extends Model
         'nip',
         'tgl_lahir',
         'alamat',
+        'foto_ttd'
     ];
 
     public function user()

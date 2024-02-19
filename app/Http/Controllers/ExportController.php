@@ -63,7 +63,6 @@ class ExportController extends Controller
             $template->saveAs($outputPath);
 
             return response()->download($outputPath);
-
         } else {
             return response()->json(['error' => 'Template file not found.']);
         }
@@ -80,11 +79,11 @@ class ExportController extends Controller
             $pengajuanID = $pengajuanData['id_pengajuan'];
 
             $laporanPengajuan = $model->select('pengajuans.*', 'pa.nama as nama_pa', 'pa.nip as nip_pa', 'kpa.nama as nama_kpa', 'kpa.nip as nip_kpa', 'bpp.nama as nama_bpp', 'bpp.nip as nip_bpp')
-            ->leftJoin('biodatas as pa', 'pa.id_biodata', '=', 'pengajuans.p_pa_id')
-            ->leftJoin('biodatas as kpa', 'kpa.id_biodata', '=', 'pengajuans.p_kpa_id')
-            ->leftJoin('biodatas as bpp', 'bpp.id_biodata', '=', 'pengajuans.p_bpp_id')
-            ->where('pengajuans.id_pengajuan', $pengajuanID)
-            ->first();
+                ->leftJoin('biodatas as pa', 'pa.id_biodata', '=', 'pengajuans.p_pa_id')
+                ->leftJoin('biodatas as kpa', 'kpa.id_biodata', '=', 'pengajuans.p_kpa_id')
+                ->leftJoin('biodatas as bpp', 'bpp.id_biodata', '=', 'pengajuans.p_bpp_id')
+                ->where('pengajuans.id_pengajuan', $pengajuanID)
+                ->first();
 
             $view = view('doc/nota-dinas', ['laporanPengajuan' => $laporanPengajuan]);
 
@@ -121,6 +120,4 @@ class ExportController extends Controller
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
     }
-
-
 }

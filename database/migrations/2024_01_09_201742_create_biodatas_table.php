@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('nip', 12);
             $table->date('tgl_lahir');
             $table->text('alamat');
+            $table->string('foto_ttd', 200);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id_users')->on('users');

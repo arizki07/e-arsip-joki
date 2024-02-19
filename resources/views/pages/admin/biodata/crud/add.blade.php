@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('create-biodata') }}" method="post">
+                <form action="{{ route('create-biodata') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="basicInput">Nama Lengkap</label>
@@ -68,11 +68,16 @@
                         <textarea type="text" rows="3" class="form-control mt-1" name="alamat" id="basicInput"
                             placeholder="Alamat Lengkap">{{ old('alamat') }}</textarea>
                     </div>
+                    <div class="mb-3">
+                        <label for="foto_ttd" class="form-label">Foto TTD</label>
+                        <input class="form-control form-control-sm" id="foto_ttd" name="foto_ttd" type="file">
+                    </div>
                     <div class="col-sm-12 mt-4">
                         <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                         <a type="button" href="{{ url('biodata') }}" class="btn btn-warning me-1 mb-1">Kembali</a>
                     </div>
+
                 </form>
             </div>
         </div>

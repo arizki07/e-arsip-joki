@@ -31,42 +31,43 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('pengajuan.store') }}" method="post">
+                <form action="{{ route('pengajuan.update', ['id' => $pengajuan->id_pengajuan]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="basicInput">Nama Kegiatan</label>
                         <input type="text" class="form-control mt-1" name="nd_nama_kegiatan" id="basicInput"
-                            value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan">
+                            value="{{ $notaDinas->nd_nama_kegiatan }}" placeholder="Nama Kegiatan">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Sub Kegiatan</label>
                         <input type="text" class="form-control mt-1" name="nd_sub_kegiatan" id="basicInput"
-                            value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan">
+                            value="{{ $notaDinas->nd_sub_kegiatan }}" placeholder="Sub Kegiatan">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Perihal</label>
                         <input type="text" class="form-control mt-1" name="nd_perihal" id="basicInput"
-                            value="{{ old('nd_perihal') }}" placeholder="Perihal">
+                            value="{{ $notaDinas->nd_perihal }}" placeholder="Perihal">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Nomor Nota</label>
                         <input type="text" class="form-control mt-1" name="nd_nomor_nota" id="basicInput"
-                            value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota">
+                            value="{{ $notaDinas->nd_nomor_nota }}" placeholder="Nomor Nota">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Tanggal</label>
                         <input type="date" class="form-control mt-1" name="nd_tanggal" id="basicInput"
-                            placeholder="Tanggal" value="{{ old('nd_tanggal') }}">
+                            placeholder="Tanggal" value="{{ $notaDinas->nd_tanggal }}">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Jumlah Biaya</label>
                         <input type="text" class="form-control mt-1" name="nd_jumlah_biaya" id="basicInput"
-                            value="{{ old('nd_jumlah_biaya') }}" placeholder="Jumlah Biaya" oninput="formatRupiah(this)">
+                            value="{{ $notaDinas->nd_jumlah_biaya }}" placeholder="Jumlah Biaya"
+                            oninput="formatRupiah(this)">
                     </div>
                     <div class="form-group">
                         <label for="basicInput">Uraian Kegiatan</label>
                         <textarea type="text" rows="3" class="form-control mt-1" name="nd_uraian_kegiatan" id="basicInput"
-                            placeholder="Uraian Kegiatan">{{ old('nd_uraian_kegiatan') }}</textarea>
+                            placeholder="Uraian Kegiatan">{{ $notaDinas->nd_uraian_kegiatan }}</textarea>
                     </div>
                     <div class="col-sm-12 mt-4">
                         <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>

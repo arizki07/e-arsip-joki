@@ -9,6 +9,8 @@ use Illuminate\Validation\Rule;
 use App\Models\BiodataModel;
 use App\Models\JabatanModel;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BiodataController extends Controller
 {
@@ -50,7 +52,22 @@ class BiodataController extends Controller
             'email' => 'required|string|max:150|unique:biodatas|unique:users',
             'tgl_lahir' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
+            'foto_ttd' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
+
+        if ($request->hasFile('foto_ttd')) {
+            $filename = Str::random(20) . '.' . $request->file('foto_ttd')->getClientOriginalExtension();
+
+            // Create the directory if it doesn't exist
+            Storage::disk('public')->makeDirectory('upload/ttd');
+
+            $imagePath = $request->file('foto_ttd')->storeAs('upload/ttd', $filename, 'public');
+
+            if (!$imagePath) {
+                return redirect()->back()->with('error', 'Error uploading the photo');
+            }
+        }
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -62,6 +79,7 @@ class BiodataController extends Controller
         $modelBiodata->email = $data['email'];
         $modelBiodata->tgl_lahir = $data['tgl_lahir'];
         $modelBiodata->alamat = $data['alamat'];
+        $modelBiodata->foto_ttd = $imagePath ?? null;
 
         // Fetch jabatan based on jabatan_id
         $jabatan = JabatanModel::find($data['jabatan_id']);
