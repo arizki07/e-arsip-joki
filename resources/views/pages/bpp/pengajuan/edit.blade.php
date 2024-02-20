@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('pengajuan.update', ['id' => $pengajuan->id_pengajuan]) }}" method="post">
+                <form action="{{ route('pengajuans.update', ['id' => $pengajuan->id_pengajuan]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="basicInput">Nama Kegiatan</label>

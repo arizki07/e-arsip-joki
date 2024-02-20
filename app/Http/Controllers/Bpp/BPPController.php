@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Bpp;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,7 @@ class BPPController extends Controller
         ]);
     }
 
+    //View pengguna bpp
     public function bpp()
     {
         return view('pages.admin.pengguna.bpp', [
@@ -36,6 +38,7 @@ class BPPController extends Controller
         ]);
     }
 
+    //view profile bpp
     public function profilee()
     {
         $biodata = BiodataModel::all();
@@ -68,6 +71,7 @@ class BPPController extends Controller
         return redirect('/profile')->with('success', 'Data berhasil diperbarui.');
     }
 
+    //view pengajuan Bpp
     public function pengajuan()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();

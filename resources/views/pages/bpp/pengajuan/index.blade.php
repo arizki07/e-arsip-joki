@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
-                        <a type="button" href="{{ route('pengajuan.create') }}" class="btn btn-primary"
+                        <a type="button" href="{{ route('pengajuans.create') }}" class="btn btn-primary"
                             style="float: right;">
                             <i class="bi bi-user"></i> Tambah Data Pengajuan
                         </a>
@@ -64,10 +64,10 @@
                                     </td>
                                     <td>
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        <a href="{{ route('pengajuan.edit', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('pengajuans.edit', ['id' => $item->id_pengajuan]) }}"
                                             class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <form id="deleteForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('pengajuan.delete', ['id' => $item->id_pengajuan]) }}"
+                                            action="{{ route('pengajuans.delete', ['id' => $item->id_pengajuan]) }}"
                                             method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')

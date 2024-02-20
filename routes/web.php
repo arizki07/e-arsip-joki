@@ -164,14 +164,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['CekLogin:bpp']], function () {
 
-        Route::controller(BPPController::class)->group(function () {
+        Route::controller(App\Http\Controllers\Bpp\BPPController::class)->group(function () {
             Route::get('/profile', 'profilee');
             Route::get('/pengajuan-index', 'pengajuan');
-            Route::get('/pengajuan/create', 'create')->name('pengajuan.create');
-            Route::post('/pengajuan/store', 'store')->name('pengajuan.store');
-            Route::get('/pengajuan/edit/{id}', 'edit')->name('pengajuan.edit');
-            Route::post('/pengajuan/update/{id}', 'update')->name('pengajuan.update');
-            Route::delete('/pengajuan/delete/{id}', 'destroy')->name('pengajuan.delete');
+            Route::get('/pengajuans/create', 'create')->name('pengajuans.create');
+            Route::post('/pengajuans/store', 'store')->name('pengajuans.store');
+            Route::get('/pengajuans/edit/{id}', 'edit')->name('pengajuans.edit');
+            Route::post('/pengajuans/update/{id}', 'update')->name('pengajuans.update');
+            Route::delete('/pengajuans/delete/{id}', 'destroy')->name('pengajuans.delete');
         });
     });
 

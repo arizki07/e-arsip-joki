@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             <?php $i = 1; ?>
-                            @foreach ($pengajuan as $item)
+                            @foreach ($pengajuans as $item)
                                 <tr>
                                     <td><?= $i++ ?></td>
                                     <td>{{ $item->p_nama_kegiatan }}</td>
