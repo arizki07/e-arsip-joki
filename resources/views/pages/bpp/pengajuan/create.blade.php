@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('pengajuans.store') }}" method="post">
+                <form action="{{ route('store.pengajuans') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="basicInput">Nama Kegiatan</label>

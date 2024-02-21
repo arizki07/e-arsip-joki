@@ -19,7 +19,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
-                        <a type="button" href="{{ route('bukti.create') }}" class="btn btn-primary" style="float: right;">
+                        <a type="button" href="{{ route('bukti-bpp.tambah') }}" class="btn btn-primary"
+                            style="float: right;">
                             <i class="bi bi-user"></i> Tambah {{ $title }}
                         </a>
                     </div>
