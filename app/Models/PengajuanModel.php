@@ -9,8 +9,8 @@ class PengajuanModel extends Model
 {
     use HasFactory;
     protected $table = 'pengajuans';
-       protected $primaryKey = 'id_pengajuan';
-       protected $fillable = [
+    protected $primaryKey = 'id_pengajuan';
+    protected $fillable = [
         'p_kpa_id',
         'p_pa_id',
         'p_bpp_id',
@@ -85,5 +85,8 @@ class PengajuanModel extends Model
         return $this->hasOne(NotaDinasModel::class, 'nd_nama_kegiatan', 'p_nama_kegiatan');
     }
 
-
+    public function buktiPengeluaran()
+    {
+        return $this->hasMany(BuktiPengeluaranModel::class, 'td_id_pengajuan', 'id_pengajuan');
+    }
 }

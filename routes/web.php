@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('data-document-bp', 'bpdoc')->name('data-document-bp');
         });
 
-        Route::controller(BPPController::class)->group(function () {
+        Route::controller(App\Http\Controllers\Bpp\BPPController::class)->group(function () {
             Route::get('data-bpp', 'index')->name('data-bpp');
         });
 
@@ -144,6 +144,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/bukti-pengeluaran/create', 'create')->name('bukti.create');
             Route::post('/bukti-pengeluaran/store', 'store')->name('bukti.store');
             Route::get('/bukti-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
+            Route::get('/bukti-pengeluaran/edit/{id}', 'edit')->name('bukti-pengeluaran.edit');
+            Route::put('/bukti-pengeluaran/{id}', 'update')->name('bukti-pengeluaran.update');
         });
 
 
@@ -168,10 +170,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/profile', 'profilee');
             Route::get('/pengajuan-index', 'pengajuan');
             Route::get('/pengajuans/create', 'create')->name('pengajuans.create');
-            Route::post('/pengajuans/store', 'store')->name('pengajuans.store');
+            Route::post('/pengajuans/store', 'store')->name('store.pengajuans');
             Route::get('/pengajuans/edit/{id}', 'edit')->name('pengajuans.edit');
             Route::post('/pengajuans/update/{id}', 'update')->name('pengajuans.update');
             Route::delete('/pengajuans/delete/{id}', 'destroy')->name('pengajuans.delete');
+        });
+
+        Route::controller(App\Http\Controllers\Bpp\BuktiPengeluaranBppController::class)->group(function () {
+            Route::get('/bukti-bpp', 'index');
+            Route::get('/bukti-bpp/tambah', 'tambah')->name('bukti-bpp.tambah');
         });
     });
 
