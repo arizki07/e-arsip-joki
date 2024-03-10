@@ -16,6 +16,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\TestingController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -151,7 +152,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(SpjController::class)->group(function () {
             Route::get('/spj', 'index');
+            Route::get('/spj/create', 'create');
         });
+
+        Route::post('/import', [TestingController::class, 'import'])->name('import');
     });
 
     Route::group(['middleware' => ['CekLogin:bp']], function () {

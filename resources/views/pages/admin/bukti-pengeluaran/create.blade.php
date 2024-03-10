@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <select class="form-control mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
+                    <select class="form-select mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
                         <option disabled selected>-- Pilih Pengajuan --</option>
                         @foreach ($pengajuans as $pengajuan)
                             <option value="{{ $pengajuan->id_pengajuan }}">{{ $pengajuan->p_nama_kegiatan }} -
@@ -55,26 +55,26 @@
                 <div id="pengajuanDetails">
                     <form action="{{ route('bukti.store') }}" method="post">
                         @csrf
-                        <input type="text" id="pengajuan" name="td_id_pengajuan">
+                        <input type="hidden" id="pengajuan" name="td_id_pengajuan">
                         <div class="form-group">
                             <label for="basicInput">Nama Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_nama_kegiatan" id="nd_nama_kegiatan"
-                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan">
+                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Sub Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_sub_kegiatan" id="nd_sub_kegiatan"
-                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan">
+                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Nomor Nota</label>
                             <input type="text" class="form-control mt-1" name="td_nomor_nota" id="nd_nomor_nota"
-                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota">
+                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Tanggal</label>
                             <input type="date" class="form-control mt-1" name="td_tanggal" id="nd_tanggal"
-                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}">
+                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Jumlah Biaya</label>

@@ -117,13 +117,13 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item  has-sub">
+                    <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-file-earmark-medical-fill"></i>
                             <span>Document</span>
                         </a>
 
-                        <ul class="submenu ">
+                        <ul class="submenu">
 
                             <li class="submenu-item {{ $title === 'Bp' ? 'active' : '' }} ">
                                 <a href="{{ route('doc.bp.index') }}" class="submenu-link"> <i
@@ -266,7 +266,7 @@
                     <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>SPJ (CUMA BISA LIHAT)</span>
+                            <span>SPJ (On Progress)</span>
                         </a>
                     </li>
                 @elseif (Auth::user() && Auth::user()->role === 'pptk')
