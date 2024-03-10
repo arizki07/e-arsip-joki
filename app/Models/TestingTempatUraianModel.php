@@ -18,9 +18,4 @@ class TestingTempatUraianModel extends Model
         'penerimaan',
         'pengeluaran',
     ];
-
-    public function header()
-    {
-        return $this->belongsTo(TestingModel::class, 'testing_id');
-    }
 }

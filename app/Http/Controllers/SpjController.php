@@ -10,12 +10,9 @@ class SpjController extends Controller
     public function index()
     {
         return view('pages.admin.spj.index', [
-<<<<<<< Updated upstream
             'title' => 'Spj',
             'active' => 'SPJ',
-=======
             'title' => 'Spj', 'active' => 'spj'
->>>>>>> Stashed changes
         ]);
     }
 

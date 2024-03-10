@@ -19,12 +19,5 @@ class TestingModel extends Model
         'tgl',
         'total_biaya',
         'status',
-        'updated_at',
-        'created_at',
     ];
-
-    public function uraian()
-    {
-        return $this->hasMany(TestingTempatUraianModel::class, 'testing_id');
-    }
 }
