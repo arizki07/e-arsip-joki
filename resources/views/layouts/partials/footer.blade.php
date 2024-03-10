@@ -1,11 +1,11 @@
 <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
-            <p>{{ date('Y') }} &copy; Mazer</p>
+            <p>{{ date('Y') }} &copy; E-arsip</p>
         </div>
         <div class="float-end">
             <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="https://webcrafser.com" target="_blank">Web Crafser</a></p>
+                by <a href="#" target="_blank">Satpol PP</a></p>
         </div>
     </div>
 </footer>

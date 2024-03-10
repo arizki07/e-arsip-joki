@@ -25,6 +25,6 @@ class CekLogin
         if ($user->role == $rules) {
             return $next($request);
         }
-        return redirect('login')->with('error', 'Anda Tidak Memiliki Akses ');
+        return redirect()->back()->with('error', 'Anda Tidak Memiliki Akses ');
     }
 }
