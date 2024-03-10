@@ -23,6 +23,6 @@ class Import implements WithMultipleSheets
 
     public function onUnknownSheet($sheetName)
     {
-        info("Sheet {$sheetName} was skipped");
+        info("Sheet {$sheetName} di skip :p");
     }
 }

@@ -87,7 +87,7 @@
                 <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
                     @csrf
                     <label for="import">Upload Excel File</label>
-                    <input type="file" name="file" class="form-control mt-2" required>
+                    <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-2" required>
                     {{-- <button type="submit" class="btn btn-primary mt-2">Import Data</button> --}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-secondary"

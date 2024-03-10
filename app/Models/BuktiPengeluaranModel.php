@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BuktiPengeluaranModel extends Model
 {
     use HasFactory;
-
+    public $incrementing = false;
     protected $table = 'td_bukti_pengeluarans';
     protected $primaryKey = 'id_td_bukti';
     protected $fillable = [
@@ -21,6 +21,17 @@ class BuktiPengeluaranModel extends Model
         'td_jumlah_biaya',
         'td_uraian',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_td_bukti = '200000' . random_int(10000, 99999);
+            while (BuktiPengeluaranModel::where('id_td_bukti', $model->id_td_bukti)->exists()) {
+                $model->id_td_bukti = '200000' . random_int(10000, 99999);
+            }
+        });
+    }
 
     public function bukti()
     {
