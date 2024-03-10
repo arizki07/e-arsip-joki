@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PengajuanModel;
 use App\Models\NotaDinasModel;
 use Dompdf\Dompdf;
+// use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class DocumentBpController extends Controller
@@ -13,6 +14,7 @@ class DocumentBpController extends Controller
 
     public function index()
     {
+        die;
         $pengajuans = PengajuanModel::joinBiodata()->get();
 
         return view('pages.admin.document.bp.index', [

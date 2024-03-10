@@ -10,6 +10,7 @@ class SpjController extends Controller
     {
         return view('pages.admin.spj.index', [
             'title' => 'Spj',
+            'active' => 'SPJ',
         ]);
     }
 }
