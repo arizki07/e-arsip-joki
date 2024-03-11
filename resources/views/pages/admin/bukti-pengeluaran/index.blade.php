@@ -52,13 +52,15 @@
                                     <td>{{ $item->bukti->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>
-                                    <td>export
-                                        {{-- <a href="{{ route('export.pengajuan') }}" type="button"
-                                        class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
-                                    <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}" type="button"
-                                        class="btn btn-outline-primary"><i class="fas fa fa-file-word"></i></a>
-                                    <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}" type="button"
-                                        class="btn btn-outline-danger"><i class="fas fa fa-file-pdf"></i></a> --}}
+                                    <td>
+                                        <a href="{{ route('export.buktiPeng') }}" type="button"
+                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                        <a href="{{ route('export.word.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                            type="button" class="btn btn-outline-primary"><i
+                                                class="fas fa fa-file-word"></i></a>
+                                        <a href="{{ route('export.pdf.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                            type="button" class="btn btn-outline-danger"><i
+                                                class="fas fa fa-file-pdf"></i></a>
                                     </td>
                                     <td>
                                         @if ($item->bukti->status == 1)
