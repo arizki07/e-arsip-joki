@@ -81,9 +81,9 @@
             <div class="modal-header bg-primary">
                 <h5 class="modal-title white" id="myModalLabel160">Input Excel SPJ
                 </h5>
-                <button type="button" class="btn btn-light btn-sm" href="#">
+                <a type="button" class="btn btn-light btn-sm" href="{{ asset('dokumen/excel/TEMPLATE_SPJ.xlsx') }}" download>
                     Download Template
-                </button>
+                </a>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
