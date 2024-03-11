@@ -13,15 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('testing_tempat_uraian', function (Blueprint $table) {
-            $table->id('id_uraian');
-            $table->unsignedBigInteger('testing_id');
+        Schema::create('spj_bku_uraian', function (Blueprint $table) {
+            $table->id('id_bku_uraian');
+            $table->unsignedBigInteger('id_bku');
+            $table->string('no_urut');
+            $table->date('tanggal');
+            $table->string('uraian');
             $table->string('kode_rekening');
-            $table->string('rekening');
-            $table->date('tgl');
             $table->string('penerimaan');
             $table->string('pengeluaran');
+            $table->string('saldo');
+            $table->string('keterangan');
             $table->timestamps();
+
+            $table->foreign('id_bku')->references('id_bku')->on('spj_bku');
         });
     }
 
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('testing_tempat_uraian');
+        Schema::dropIfExists('spj_bku_uraian');
     }
 };

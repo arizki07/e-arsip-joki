@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PengajuanModel extends Model
 {
     use HasFactory;
+    public $incrementing = false;
     protected $table = 'pengajuans';
     protected $primaryKey = 'id_pengajuan';
     protected $fillable = [
@@ -20,6 +21,17 @@ class PengajuanModel extends Model
         'p_biaya',
         'status'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_pengajuan = '400000' . random_int(10000, 99999);
+            while (PengajuanModel::where('id_pengajuan', $model->id_pengajuan)->exists()) {
+                $model->id_pengajuan = '400000' . random_int(10000, 99999);
+            }
+        });
+    }
 
     // @if ($item->status == 1)
     //     <span class="badge bg-warning">Pending Verifikasi</span>

@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Import;
 // use App\Imports\UraianImport;
 
-class TestingController extends Controller
+class ImportSpjController extends Controller
 {
     public function import(Request $request)
     {

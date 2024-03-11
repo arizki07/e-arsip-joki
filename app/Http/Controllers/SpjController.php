@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SpjModel;
+use App\Models\SuratPengantarModel;
 
 class SpjController extends Controller
 {
     public function index()
     {
+        $spj = SuratPengantarModel::all();
         return view('pages.admin.spj.index', [
             'title' => 'Spj',
             'active' => 'SPJ',
+            'spj' => $spj,
             'title' => 'Spj', 'active' => 'spj'
         ]);
     }

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+@include('component.alerts')
     <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
             <i class="bi bi-justify fs-3"></i>
@@ -43,25 +44,26 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Role</th>
-                                    <th>Email</th>
+                                    <th>No Surat</th>
+                                    <th>No Spj</th>
+                                    <th>Perihal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($spj as $item)
                                 <tr>
-                                    <td>Graiden</td>
-                                    <td>vehicula.aliquet@semconsequat.co.uk</td>
-                                    <td>076 4820 8838</td>
-                                    <td>Offenburg</td>
+                                    <td>{{ $i++; }}</td>
+                                    <td>{{ $item->nomor_surat }}</td>
+                                    <td>{{ $item->id_surat_pengantar }}</td>
+                                    <td>{{ $item->perihal }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
-
-
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -87,7 +89,7 @@
                 <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
                     @csrf
                     <label for="import">Upload Excel File</label>
-                    <input type="file" name="file" class="form-control mt-2" required>
+                    <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-2" required>
                     {{-- <button type="submit" class="btn btn-primary mt-2">Import Data</button> --}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-secondary"

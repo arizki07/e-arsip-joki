@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NotaDinasModel extends Model
 {
     use HasFactory;
-
+    public $incrementing = false;
     protected $table = 'nota_dinas';
        protected $primaryKey = 'id_nota_dinas';
        protected $fillable = [
@@ -21,6 +21,17 @@ class NotaDinasModel extends Model
         'nd_tanggal',
         'nd_jumlah_biaya'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_nota_dinas = '300000' . random_int(10000, 99999);
+            while (NotaDinasModel::where('id_nota_dinas', $model->id_nota_dinas)->exists()) {
+                $model->id_nota_dinas = '300000' . random_int(10000, 99999);
+            }
+        });
+    }
 
     public function kpa()
     {
