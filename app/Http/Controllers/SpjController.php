@@ -38,6 +38,24 @@ class SpjController extends Controller
         $uraianRegister = UraianSpjRegisterModel::all();
         $biodata = BiodataModel::all();
 
+            $totalPenerimaan = 0;
+            $totalPengeluaran = 0;
+            $totalSaldo = 0;
+            foreach ($uraianBku as $urBKU) {
+                if ($urBKU->id_surat_pengantar == $id){
+                    
+                    if (is_numeric($urBKU->penerimaan)) {
+                        $totalPenerimaan += $urBKU->penerimaan;
+                    }
+                    if (is_numeric($urBKU->pengeluaran)) {
+                        $totalPengeluaran += $urBKU->pengeluaran;
+                    }
+                    if (is_numeric($urBKU->saldo)) {
+                        $totalSaldo += $urBKU->saldo;
+                    }
+                }
+            }
+
         return view('pages.admin.spj.view', [
             'title' => 'Detail SPJ',
             'suratPengantar' => $suratPengantar,
@@ -49,7 +67,10 @@ class SpjController extends Controller
             'uraianFungsional' => $uraianFungsional,
             'uraianRegister' => $uraianRegister,
             'biodata' => $biodata,
-            'active' => 'Spj'
+            'totalPenerimaan' => $totalPenerimaan,
+            'totalPengeluaran' => $totalPengeluaran,
+            'totalSaldo' => $totalSaldo,
+            'active' => 'SPJ'
         ]);
     }
 }

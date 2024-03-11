@@ -38,7 +38,7 @@
                                             SPJ SURAT PENGANTAR
                                             </button>
                                         </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
                                                     <table class="table">
@@ -93,19 +93,114 @@
                                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Satuan Perangkat Kerja Daerah</th>
-                                                                <td>Satuan Polisi Pamong Praja</td>
-                                                            </tr>
+                                                    <div class="card-body">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Satuan Perangkat Kerja Daerah</th>
+                                                                    <td>Satuan Polisi Pamong Praja</td>
+                                                                </tr>
 
-                                                            <tr>
-                                                                <th>Nama & Kode Program</th>
-                                                                <td>PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA</td>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
+                                                                <tr>
+                                                                    <th>Nama & Kode Program</th>
+                                                                    <td>PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th>Nama Kegiatan</th>
+                                                                    <td>{{ $suratPengantar->kegiatan }}</td>
+                                                                </tr>
+                                                                @foreach ($buktiPengeluaran as $bukti)
+                                                                    @if ($bukti->id_td_bukti == $suratPengantar->id_td_bukti)
+                                                                        @foreach ($biodata as $bio)
+                                                                            @if ($bio->id_biodata == $bukti->td_kpa_id)
+                                                                                <tr>
+                                                                                    <th>Kuasa Pengguna Anggaran</th>
+                                                                                    <td>{{ $bio->nama }}</td>
+                                                                                </tr>
+                                                                            @endif
+
+                                                                            @if ($bio->id_biodata == $bukti->td_pa_id)
+                                                                                <tr>
+                                                                                    <th>Pengguna Anggaran</th>
+                                                                                    <td>{{ $bio->nama }}</td>
+                                                                                </tr>
+                                                                            @endif
+
+                                                                            @if ($bio->id_biodata == $bukti->td_bpp_id)
+                                                                                <tr>
+                                                                                    <th>Badan Pengeluaran Pembantu</th>
+                                                                                    <td>{{ $bio->nama }}</td>
+                                                                                </tr>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+
+                                                        <div class="card-header text-center">
+                                                            <h5 class="card-title">
+                                                                Data Detail SPJ BKU
+                                                            </h5>
+                                                        </div>
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No Urut</th>
+                                                                    <th>Tanggal</th>
+                                                                    <th>Uraian</th>
+                                                                    <th>K.Rekening</th>
+                                                                    <th>Penerimaan</th>
+                                                                    <th>Pengeluaran</th>
+                                                                    <th>Saldo</th>
+                                                                    <th>Ket</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($uraianBku as $urBKU)
+                                                                    @if ($urBKU->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
+                                                                        <tr>
+                                                                            <td>{{ $urBKU->no_urut }}</td>
+                                                                            <td>{{ \Carbon\Carbon::parse($urBKU->tanggal)->format('d M Y') }}</td>
+                                                                            <td>{{ $urBKU->uraian }}</td>
+                                                                            <td>{{ $urBKU->kode_rekening }}</td>
+                                                                            <td>
+                                                                                @if ($urBKU->penerimaan !== '-')
+                                                                                    Rp {{ number_format($urBKU->penerimaan, 0, ',', '.') }}
+                                                                                @else
+                                                                                    {{ $urBKU->penerimaan }}
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>
+                                                                                @if ($urBKU->pengeluaran !== '-')
+                                                                                    Rp {{ number_format($urBKU->pengeluaran, 0, ',', '.') }}
+                                                                                @else
+                                                                                    {{ $urBKU->pengeluaran }}
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>
+                                                                                @if ($urBKU->saldo !== '-')
+                                                                                    Rp {{ number_format($urBKU->saldo, 0, ',', '.') }}
+                                                                                @else
+                                                                                    {{ $urBKU->saldo }}
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>{{ $urBKU->keterangan }}</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th colspan="4" class="text-center">Jumlah</th>
+                                                                    <th>Rp {{ number_format($totalPenerimaan, 0, ',', '.') }}</th>
+                                                                    <th>Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</th>
+                                                                    <th>Rp {{ number_format($totalSaldo, 0, ',', '.') }}</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
