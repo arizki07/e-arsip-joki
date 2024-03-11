@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\TestingModel;
 use Carbon\Carbon;
 
-class HeaderImport implements ToModel, WithStartRow
+class SuratPengantarImport implements ToModel, WithStartRow
 {
     /**
      * @param array $row

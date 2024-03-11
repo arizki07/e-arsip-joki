@@ -9,7 +9,7 @@ use App\Models\TestingTempatUraianModel;
 use App\Models\TestingModel;
 use Carbon\Carbon;
 
-class UraianImport implements ToModel, WithStartRow
+class BkuImport implements ToModel, WithStartRow
 {
     /**
      * @param array $row

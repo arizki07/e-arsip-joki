@@ -16,8 +16,13 @@ class Import implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            'HEADER' => new HeaderImport(),
-            'URAIAN' => new UraianImport(),
+            'SURAT PENGANTAR' => new SuratPengantarImport(),
+            'BKU' => new BkuImport(),
+            'URAIAN BKU' => new UraianBkuImport(),
+            'SPJ FUNGSIONAL' => new SpjFungsionalImport(),
+            'URAIAN SPJ FUNGSIONAL' => new UraianSpjFungsionalImport(),
+            'REGISTER KAS' => new RegisterKasImport(),
+            'URAIAN REGISTER' => new UraianRegisterKasImport(),
         ];
     }
 
