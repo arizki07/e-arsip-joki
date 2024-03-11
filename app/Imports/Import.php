@@ -22,7 +22,7 @@ class Import implements WithMultipleSheets
             'SPJ FUNGSIONAL' => new SpjFungsionalImport(),
             'URAIAN SPJ FUNGSIONAL' => new UraianSpjFungsionalImport(),
             'REGISTER KAS' => new RegisterKasImport(),
-            'URAIAN REGISTER' => new UraianRegisterKasImport(),
+            'URAIAN REGISTER KAS' => new UraianRegisterKasImport(),
         ];
     }
 

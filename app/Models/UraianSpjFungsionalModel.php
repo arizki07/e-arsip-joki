@@ -12,7 +12,7 @@ class UraianSpjFungsionalModel extends Model
     protected $table = 'spj_fungsional_uraian';
     protected $primaryKey = 'id_fungsional_uraian';
     protected $fillable = [
-        'id_fungisonal',
+        'id_fungsional',
         'kode_rekening',
         'tipe',
         'uraian',

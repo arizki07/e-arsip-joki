@@ -5,8 +5,7 @@ namespace App\Imports;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-use App\Models\TestingTempatUraianModel;
-use App\Models\TestingModel;
+use App\Models\BkuModel;
 use Carbon\Carbon;
 
 class BkuImport implements ToModel, WithStartRow
@@ -18,16 +17,23 @@ class BkuImport implements ToModel, WithStartRow
      */
     public function model(array $row)
     {
-        $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[2]));
-        $id_testing = Session::get('ses_id');
-        return new TestingTempatUraianModel([
-            'testing_id' => $id_testing,
-            'kode_rekening' => $row[0],
-            'rekening' => $row[1],
-            'tgl' => $tgl->toDateString(),
-            'penerimaan' => $row[3],
-            'pengeluaran' => $row[4],
+        // dd ($row); die;
+        $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+        $model = new BkuModel([
+            'id_td_bukti' => $row[0],
+            'id_kpa' => $row[1],
+            'id_pptk' => $row[2],
+            'id_bpp' => $row[3],
+            'tanggal' => $tgl->toDateString(),
+            'kas' => $row[5],
+            'tunai' => $row[6],
+            'saldo_bank' => $row[7],
+            'sp2d' => $row[8],
         ]);
+        // dd ($model); die;
+        $model->save();
+
+        Session::put('SESS_ID_BKU', $model->id_bku);
     }
 
     /**

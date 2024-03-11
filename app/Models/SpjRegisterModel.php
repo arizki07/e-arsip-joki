@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SpjResgiterModel extends Model
+class SpjRegisterModel extends Model
 {
     use HasFactory;
     public $incrementing = false;
@@ -28,7 +28,7 @@ class SpjResgiterModel extends Model
         parent::boot();
         self::creating(function ($model) {
             $model->id_register_kas = '530000' . random_int(10000, 99999);
-            while (SpjResgiterModel::where('id_register_kas', $model->id_register_kas)->exists()) {
+            while (SpjRegisterModel::where('id_register_kas', $model->id_register_kas)->exists()) {
                 $model->id_register_kas = '530000' . random_int(10000, 99999);
             }
         });

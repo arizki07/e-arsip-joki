@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UraianSpjResgiterModel extends Model
+class UraianSpjRegisterModel extends Model
 {
     use HasFactory;
     public $incrementing = false;
@@ -33,7 +33,7 @@ class UraianSpjResgiterModel extends Model
         parent::boot();
         self::creating(function ($model) {
             $model->id_register_uraian = '533000' . random_int(10000, 99999);
-            while (UraianSpjResgiterModel::where('id_register_uraian', $model->id_register_uraian)->exists()) {
+            while (UraianSpjRegisterModel::where('id_register_uraian', $model->id_register_uraian)->exists()) {
                 $model->id_register_uraian = '533000' . random_int(10000, 99999);
             }
         });
