@@ -15,6 +15,7 @@ class SpjRegisterModel extends Model
         'id_bku',
         'id_fungsional',
         'id_biodata',
+        'id_surat_pengantar',
         'tgl_penutupan_lalu',
         'saldo_buku',
         'saldo_kas',

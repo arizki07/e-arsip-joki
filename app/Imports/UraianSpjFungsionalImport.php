@@ -20,9 +20,11 @@ class UraianSpjFungsionalImport implements ToModel, WithStartRow
         // $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[1]));
         $SESS_ID_BKU = Session::get('SESS_ID_BKU');
         $SESS_ID_FUNGSIONAL = Session::get('SESS_ID_FUNGSIONAL');
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         return new UraianSpjFungsionalModel ([
             'id_bku' => $SESS_ID_BKU,
             'id_fungsional' => $SESS_ID_FUNGSIONAL,
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'kode_rekening' => $row[0],
             'tipe' => $row[1],
             'uraian' => $row[2],

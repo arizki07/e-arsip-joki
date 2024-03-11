@@ -30,7 +30,7 @@ class SuratPengantarImport implements ToModel, WithStartRow
         ]);
         $model->save();
 
-        // Session::put('SESS_SURAT_PENGANTAR', $model->id_surat_pengantar);
+        Session::put('SESS_ID_SURAT_PENGANTAR', $model->id_surat_pengantar);
 
         return $model;
     }

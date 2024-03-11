@@ -59,6 +59,7 @@
                                     <td>{{ $item->id_surat_pengantar }}</td>
                                     <td>{{ $item->perihal }}</td>
                                     <td>
+                                        <a href="spj/view/{{ $item->id_surat_pengantar }}" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
                                         <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
                                     </td>

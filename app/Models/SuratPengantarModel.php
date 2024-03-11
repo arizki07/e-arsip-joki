@@ -13,6 +13,7 @@ class SuratPengantarModel extends Model
     protected $primaryKey = 'id_surat_pengantar';
     protected $fillable = [
         'id_td_bukti',
+        'id_surat_pengantar',
         'nomor_surat',
         'sifat',
         'lampiran',

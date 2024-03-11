@@ -20,8 +20,10 @@ class SpjFungsionalImport implements ToModel, WithStartRow
         // dd ($row); die;
         // $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
         $SESS_ID_BKU = Session::get('SESS_ID_BKU');
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         $model = new SpjFungsionalModel ([
             'id_bku' => $SESS_ID_BKU,
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'urusan' => $row[0],
             'organisasi' => $row[1],
             'program' => $row[2],
