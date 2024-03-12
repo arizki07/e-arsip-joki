@@ -13,6 +13,7 @@ class SpjFungsionalModel extends Model
     protected $primaryKey = 'id_fungsional';
     protected $fillable = [
         'id_bku',
+        'id_surat_pengantar',
         'urusan',
         'organisasi',
         'program',

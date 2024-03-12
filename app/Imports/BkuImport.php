@@ -19,7 +19,9 @@ class BkuImport implements ToModel, WithStartRow
     {
         // dd ($row); die;
         $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         $model = new BkuModel([
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'id_td_bukti' => $row[0],
             'id_kpa' => $row[1],
             'id_pptk' => $row[2],

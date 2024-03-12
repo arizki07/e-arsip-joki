@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('spj_fungsional_uraian', function (Blueprint $table) {
             $table->id('id_fungsional_uraian');
             $table->unsignedBigInteger('id_fungsional');
+            $table->unsignedBigInteger('id_surat_pengantar');
             $table->string('kode_rekening');
             $table->string('tipe');
             $table->string('uraian');
@@ -27,7 +28,8 @@ return new class extends Migration
             $table->string('sisa_pagu_anggaran');
             $table->timestamps();
 
-            $table->foreign('id_fungsional')->references('id_fungsional')->on('spj_fungsional');
+            $table->foreign('id_fungsional')->references('id_fungsional')->on('spj_fungsional')->onDelete('cascade');;
+            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar')->onDelete('cascade');;
         });
     }
 

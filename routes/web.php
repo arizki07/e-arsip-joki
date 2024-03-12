@@ -156,6 +156,8 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::post('/import', [ImportSpjController::class, 'import'])->name('import');
+        Route::get('/spj/view/{id}', [SpjController::class, 'view']);
+        Route::get('/spj/delete/{id}', [SpjController::class, 'delete']);
     });
 
     Route::group(['middleware' => ['CekLogin:bp']], function () {

@@ -21,9 +21,11 @@ class RegisterKasImport implements ToModel, WithStartRow
         // $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
         $SESS_ID_BKU = Session::get('SESS_ID_BKU');
         $SESS_ID_FUNGSIONAL = Session::get('SESS_ID_FUNGSIONAL');
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         $model = new SpjRegisterModel([
             'id_bku' => $SESS_ID_BKU,
             'id_fungsional' => $SESS_ID_FUNGSIONAL,
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'tgl_penutupan_lalu' => $row[0],
             'id_biodata' => $row[1],
             'saldo_buku' => $row[2],
