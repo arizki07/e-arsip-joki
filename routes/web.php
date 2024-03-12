@@ -41,6 +41,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
+
 Route::group(['middleware' => ['auth']], function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index');
@@ -165,8 +166,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['CekLogin:bp']], function () {
 
+        // Route::get('/test/bp', function () {
+        //     echo 'bp';
+        // });
+
+        // Route::get('/profile', [BPController::class, 'profile'])->name('profile');
+
         Route::controller(BPController::class)->group(function () {
-            Route::get('/profile', 'profile');
+            Route::get('/profile-bp', 'profile'); // cek
             Route::post('biodata/update/{id}', 'update')->name('biodata-update');
             Route::get('/doc-bp', 'document')->name('doc.bp.index');
             Route::get('/detail/pengajuan/pdf/{id}', 'detailPengajuanPdf')->name('detail.pdf.pengajuan');
@@ -176,7 +183,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CekLogin:bpp']], function () {
 
         Route::controller(App\Http\Controllers\Bpp\BPPController::class)->group(function () {
-            Route::get('/profile', 'profilee');
+            Route::get('/profile-bpp', 'profilee'); //cek
             Route::get('/pengajuan-index', 'pengajuan');
             Route::get('/pengajuans/create', 'create')->name('pengajuans.create');
             Route::post('/pengajuans/store', 'store')->name('store.pengajuans');

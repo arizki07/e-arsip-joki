@@ -184,7 +184,7 @@
                     {{-- BP Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'bp')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="/profile" class='sidebar-link'>
+                        <a href="/profile-bp" class='sidebar-link'>
                             <i class="bi bi-people"></i>
                             <span>Profile</span>
                         </a>
@@ -206,7 +206,7 @@
                     {{-- BPP Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'bpp')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="/profile" class='sidebar-link'>
+                        <a href="/profile-bpp" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
                         </a>
