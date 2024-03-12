@@ -40,6 +40,5 @@ class CekLogin
 
         Log::info('Pengguna ' . $user->name . ' tidak memiliki akses yang diperlukan. Role: ' . $user->role);
         return redirect('login')->withErrors(['error' => 'Anda Tidak Memiliki Akses']);
-
     }
 }

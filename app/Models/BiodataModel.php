@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str; // Import the Str class
 
 class BiodataModel extends Model
 {
+    use HasFactory;
+
+    public $incrementing = false;
     protected $table = 'biodatas';
     protected $primaryKey = 'id_biodata';
     protected $fillable = [
@@ -17,8 +21,22 @@ class BiodataModel extends Model
         'nip',
         'tgl_lahir',
         'alamat',
-        'foto_ttd'
+        'foto_ttd',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_biodata = '100000' . random_int(10000, 99999);
+            while (BiodataModel::where('id_biodata', $model->id_biodata)->exists()) {
+                $model->id_biodata = '100000' . random_int(10000, 99999);
+            }
+        });
+    }
+    
+    protected $keyType = 'int';
+    protected $increment = 10;
 
     public function user()
     {
