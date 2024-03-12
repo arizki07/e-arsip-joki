@@ -60,8 +60,9 @@
                                     <td>{{ $item->perihal }}</td>
                                     <td>
                                         <a href="spj/view/{{ $item->id_surat_pengantar }}" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
-                                        <a href="#" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                        {{-- <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a> --}}
+                                        <a href="#" class="btn icon btn-danger"  data-bs-toggle="modal"
+                                        data-bs-target="#delete-{{ $item->id_surat_pengantar }}"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -108,4 +109,32 @@
         </div>
     </div>
 </div>
+
+@foreach ($spj as $item)
+<div class="modal fade text-left" id="delete-{{ $item->id_surat_pengantar }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+        role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title white" id="myModalLabel160">Konfirmasi Penghapusan Data SPJ
+                </h5>
+            </div>
+            <div class="modal-body">
+                <p>Yakin ingin menghapus data SPJ ini? Data akan terhapus secarra permanen.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary"
+                    data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Close</span>
+                </button>
+                <a type="button" href="/spj/delete/{{ $item->id_surat_pengantar }}" class="btn btn-danger ms-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hapus</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection

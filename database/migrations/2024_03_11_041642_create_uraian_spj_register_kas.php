@@ -32,8 +32,8 @@ return new class extends Migration
             $table->string('logam_5');
             $table->timestamps();
 
-            $table->foreign('id_register_kas')->references('id_register_kas')->on('spj_register_kas');
-            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar');
+            $table->foreign('id_register_kas')->references('id_register_kas')->on('spj_register_kas')->onDelete('cascade');;
+            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar')->onDelete('cascade');;
         });
     }
 

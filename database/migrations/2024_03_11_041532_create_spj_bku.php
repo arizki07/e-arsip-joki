@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_td_bukti')->references('id_td_bukti')->on('td_bukti_pengeluarans');
-            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar');
+            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar')->onDelete('cascade');;
             $table->foreign('id_kpa')->references('id_biodata')->on('biodatas');
             $table->foreign('id_pptk')->references('id_biodata')->on('biodatas');
             $table->foreign('id_bpp')->references('id_biodata')->on('biodatas');
