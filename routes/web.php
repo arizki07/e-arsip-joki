@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('login');
     Route::post('/login', 'authenticate');
     Route::post('/logout', 'logout');
 });
@@ -138,6 +138,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
             Route::get('/export/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan');
             Route::get('/export/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan');
+            Route::get('/export/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng');
+            Route::get('/export/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng');
+            Route::get('/export/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng');
         });
 
         Route::controller(App\Http\Controllers\Admin\BuktiPengeluaranController::class)->group(function () {

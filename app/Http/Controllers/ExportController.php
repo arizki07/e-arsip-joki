@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuktiPengeluaranModel;
 use App\Models\PengajuanModel;
 use App\Models\NotaDinasModel;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Support\Facades\View;
 use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Response;
 
@@ -68,7 +70,6 @@ class ExportController extends Controller
         }
     }
 
-
     public function exportPengajuanPdf($id)
     {
         $model = new PengajuanModel();
@@ -120,4 +121,109 @@ class ExportController extends Controller
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
     }
+
+    public function exportBuktiPengPdf($id)
+    {
+        $model = new BuktiPengeluaranModel();
+
+        $buktiPengeluaran = $model->find($id);
+        if ($buktiPengeluaran) {
+            $buktiPengID = $buktiPengeluaran['id_td_bukti'];
+
+            $data = $model->select(
+                            'td_bukti_pengeluarans.*',
+                            'pa.nama as nama_pa',
+                            'pa.nip as nip_pa',
+                            'kpa.nama as nama_kpa',
+                            'kpa.nip as nip_kpa',
+                            'bpp.nama as nama_bpp',
+                            'bpp.nip as nip_bpp',
+                            'peng.p_nama_kegiatan',
+                            'peng.p_sub_kegiatan',
+                            'peng.p_tanggal',
+                            )
+                            ->leftJoin('biodatas as pa', 'pa.id_biodata', '=', 'td_bukti_pengeluarans.td_pa_id')
+                            ->leftJoin('biodatas as kpa', 'kpa.id_biodata', '=', 'td_bukti_pengeluarans.td_kpa_id')
+                            ->leftJoin('biodatas as bpp', 'bpp.id_biodata', '=', 'td_bukti_pengeluarans.td_bpp_id')
+                            ->leftJoin('biodatas as bp', 'bp.id_biodata', '=', 'td_bukti_pengeluarans.td_bp_id')
+                            ->join('pengajuans as peng', 'peng.id_pengajuan', '=', 'td_bukti_pengeluarans.td_id_pengajuan')
+                            ->where('td_bukti_pengeluarans.id_td_bukti', $buktiPengID)
+                            ->first();
+                            $amountString = preg_replace("/[^0-9]/", "", $data->td_biaya);
+
+                            $terbilang = $this->terbilangRupiah($amountString);
+            $pdf = PDF::setOptions([
+                'isPhpEnabled' => true,
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isHtml5PhpEnabled' => true,
+                'isPhp7' => true,
+                'isHtml5' => true,
+                'isPaperSizeEnabled' => true,
+                'isFontSubsettingEnabled' => true,
+                'defaultFont' => 'times'
+            ])->loadview('doc.bukti-pengeluaran', [
+                'data' => $data,
+                'terbilangRupiah' => $terbilang,
+            ])->setPaper('a4', 'potrait');
+
+            // Return the PDF content without triggering download
+            return response($pdf->output())
+                ->header('Content-Type', 'application/pdf');
+
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+    }
+
+    function terbilangRupiah($angka)
+    {
+        // dd($angka);
+        $bilangan = abs((int)$angka);
+        $huruf = array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
+        $tingkat = array('', 'Ribu', 'Juta', 'Miliar', 'Triliun');
+
+        $hasil_terbilang = '';
+        $jumlah_kata = 0;
+
+        while ($bilangan > 0) {
+            $bagian = $bilangan % 1000;
+
+            if ($bagian > 0) {
+                $str = '';
+                $ratusan = floor($bagian / 100);
+                $puluhan = floor(($bagian % 100) / 10);
+                $satuan = $bagian % 10;
+
+                if ($ratusan > 0) {
+                    $str .= $huruf[$ratusan] . ' Ratus ';
+                }
+
+                if ($puluhan > 0) {
+                    if ($puluhan == 1) {
+                        $str .= 'Sebelas ';
+                    } elseif ($puluhan == 0) {
+                        $str .= $huruf[$satuan] . ' ';
+                    } else {
+                        $str .= $huruf[$puluhan] . ' Puluh ';
+                    }
+                }
+
+                if ($satuan > 0 && $puluhan != 1) {
+                    $str .= $huruf[$satuan] . ' ';
+                }
+
+                $str .= $tingkat[$jumlah_kata];
+                $hasil_terbilang = $str . $hasil_terbilang;
+            }
+
+            $bilangan = floor($bilangan / 1000);
+            $jumlah_kata++;
+        }
+
+        return ($hasil_terbilang == '') ? 'Nol' : $hasil_terbilang;
+    }
+
+
+
 }
