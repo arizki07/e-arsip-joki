@@ -94,8 +94,8 @@
                                                 readonly />
                                         </div>
                                         <div class="col-12">
-                                            <a href="javascript:;" class="btn btn-success me-3" data-bs-target="#editUser"
-                                                data-bs-toggle="modal"><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
+                                                data-bs-toggle="modal">Edit</a>
                                         </div>
                                     </div>
                                 </form>
@@ -118,7 +118,7 @@
                             <h3 class="mb-2">Edit Profile Biodata</h3>
                             <p class="text-muted">Silahkan Edit Profile Anda.</p>
                         </div>
-                        <form action="{{ route('biodata-update', ['id' => $item->id_biodata]) }}" id="editUserForm"
+                        <form action="{{ route('kpa.update', ['id' => $item->id_biodata]) }}" id="editUserForm"
                             class="row g-3" method="post">
                             @csrf
 

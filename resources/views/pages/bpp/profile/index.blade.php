@@ -118,7 +118,7 @@
                             <h3 class="mb-2">Edit Profile Biodata</h3>
                             <p class="text-muted">Silahkan Edit Profile Anda.</p>
                         </div>
-                        <form action="{{ route('update-biodata', ['id' => $item->id_biodata]) }}" id="editUserForm"
+                        <form action="{{ route('bpp.update', ['id' => $item->id_biodata]) }}" id="editUserForm"
                             class="row g-3" method="post">
                             @csrf
 

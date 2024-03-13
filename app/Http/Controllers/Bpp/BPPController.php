@@ -14,6 +14,7 @@ use App\Models\PengajuanModel;
 use App\Models\BiodataModel;
 use App\Models\JabatanModel;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class BPPController extends Controller
 {
@@ -41,7 +42,8 @@ class BPPController extends Controller
     //view profile bpp
     public function profilee()
     {
-        $biodata = BiodataModel::all();
+        $user = Auth::user();
+        $biodata = BiodataModel::where('user_id', $user->id_users)->get();
         $jabatan = JabatanModel::all();
 
         return view('pages.bpp.profile.index', [
@@ -68,7 +70,7 @@ class BPPController extends Controller
         // Save the updated data
         $biodata->save();
 
-        return redirect('/profile')->with('success', 'Data berhasil diperbarui.');
+        return redirect('/profile-bpp')->with('success', 'Data berhasil diperbarui.');
     }
 
     //view pengajuan Bpp

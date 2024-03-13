@@ -59,7 +59,7 @@
                                         <td>{{ $item->id_surat_pengantar }}</td>
                                         <td>{{ $item->perihal }}</td>
                                         <td>
-                                            <a href="spj/view/{{ $item->id_surat_pengantar }}"
+                                            <a href="/spj-bpp-view/{{ $item->id_surat_pengantar }}"
                                                 class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
                                             {{-- <a href="#" class="btn icon btn-success"><i class="bi bi-pencil"></i></a> --}}
                                             <a href="#" class="btn icon btn-danger" data-bs-toggle="modal"
@@ -91,7 +91,7 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('impor.spj') }}" enctype="multipart/form-data">
                         @csrf
                         <label for="import">Upload Excel File</label>
                         <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-2" required>
