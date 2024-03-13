@@ -157,11 +157,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(SpjController::class)->group(function () {
             Route::get('/spj', 'index');
             Route::get('/spj/create', 'create');
+            Route::get('/spj/view/{id}', 'view');
+            Route::get('/spj/delete/{id}', 'delete');
+
+            Route::get('/spj/export/surat_pengantar', 'export_surat_pengantar');
+
+            // AREA CETAK SPJ
+            Route::get('/spj/pdf/surat_pengantar', 'pdf_surat_pengantar');
+            Route::get('/spj/pdf/bku', 'pdf_bku');
+            Route::get('/spj/pdf/fungsional', 'pdf_fungsional');
+            Route::get('/spj/pdf/register_kas', 'pdf_register_kas');
+            Route::get('/spj/pdf/all_spj', 'pdf_all_spj');
         });
 
         Route::post('/import', [ImportSpjController::class, 'import'])->name('import');
-        Route::get('/spj/view/{id}', [SpjController::class, 'view']);
-        Route::get('/spj/delete/{id}', [SpjController::class, 'delete']);
     });
 
     Route::group(['middleware' => ['CekLogin:bp']], function () {

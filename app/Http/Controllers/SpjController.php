@@ -13,6 +13,8 @@ use App\Models\UraianBkuModel;
 use App\Models\UraianSpjFungsionalModel;
 use App\Models\UraianSpjRegisterModel;
 use App\Models\BiodataModel;
+use App\Exports\SPExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SpjController extends Controller
 {
@@ -175,5 +177,10 @@ class SpjController extends Controller
         SuratPengantarModel::where('id_surat_pengantar', $id)->delete();
 
         return redirect('/spj')->with('success', 'Data berhasil dihapus.');
+    }
+
+    public function export_surat_pengantar() 
+    {
+        return Excel::download(new SPExport, 'spj.xlsx');
     }
 }
