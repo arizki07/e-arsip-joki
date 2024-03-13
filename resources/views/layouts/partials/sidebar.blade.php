@@ -197,7 +197,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/spj" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>SPJ</span>
                         </a>
@@ -217,14 +217,14 @@
                             <span>Pengajuan (mengajukan)</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'Tanda Bukti' ? 'active' : '' }}">
+                    <li class="sidebar-item {{ $title === 'Bukti Pengeluaran BPP' ? 'active' : '' }}">
                         <a href="/bukti-bpp" class='sidebar-link'>
                             <i class="fas fa fa-check-circle"></i>
                             <span>Tanda Bukti</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item {{ $title === 'SPJ BPP' ? 'active' : '' }}">
+                        <a href="/spj-bpp" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>SPJ</span>
                         </a>
@@ -233,53 +233,66 @@
                     {{-- Kpa Sidebar --}}
                 @elseif (Auth::user() && Auth::user()->role === 'kpa')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/profile-kpa" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/pengajuan-kpa" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Pengajuan (mengajukan)</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'Tanda Bukti' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/bukti-kpa" class='sidebar-link'>
                             <i class="fas fa fa-check-circle"></i>
                             <span>Tanda Bukti</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item {{ $title === 'SPJ BPP' ? 'active' : '' }}">
+                        <a href="/kpa-spj" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
                             <span>SPJ</span>
                         </a>
                     </li>
                 @elseif (Auth::user() && Auth::user()->role === 'pa')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/profile-pa" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item {{ $title === 'SPJ PA' ? 'active' : '' }}">
+                        <a href="/spj-pa" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>SPJ (On Progress)</span>
+                            <span>SPJ</span>
                         </a>
                     </li>
                 @elseif (Auth::user() && Auth::user()->role === 'pptk')
                     <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                        <a href="/profile-pptk" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item {{ $title === 'SPJ PPTK' ? 'active' : '' }}">
+                        <a href="/spj-pptk" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>SPJ (CUMA BISA LIHAT)</span>
+                            <span>SPJ</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user() && Auth::user()->role === 'ppk')
+                    <li class="sidebar-item {{ $title === 'Profile' ? 'active' : '' }}">
+                        <a href="/profile-ppk" class='sidebar-link'>
+                            <i class='fas fa fa-user'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'SPJ PPK' ? 'active' : '' }}">
+                        <a href="/spj-ppk" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>SPJ</span>
                         </a>
                     </li>
                 @endif
