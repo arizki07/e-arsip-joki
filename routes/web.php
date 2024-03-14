@@ -155,7 +155,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::controller(SpjController::class)->group(function () {
-            Route::get('/spj', 'index');
+            Route::get('/data-spj', 'index');
             Route::get('/spj/create', 'create');
             Route::get('/spj/view/{id}', 'view');
             Route::get('/spj/delete/{id}', 'delete');

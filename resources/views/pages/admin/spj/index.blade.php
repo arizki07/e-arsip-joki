@@ -102,6 +102,24 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
+                    @csrf
+                    <label for="import">Upload Excel File</label>
+                    <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-2" required>
+                    {{-- <button type="submit" class="btn btn-primary mt-2">Import Data</button> --}}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ms-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Import</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

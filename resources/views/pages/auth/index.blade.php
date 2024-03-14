@@ -248,10 +248,11 @@
                     </div>
                     <button class="btn btn-primary btn-block btn-lg shadow-lg mt-2">Login</button>
                 </form>
-                <div class="text-center mt-5 text-lg fs-4">
-                    <p class="text-gray-600">Don't have an account? <a href="auth-register.html" class="font-bold">Sign
+                <div class="text-center mt-5 text-lg">
+                    {{-- <p class="text-gray-600">Don't have an account? <a href="auth-register.html" class="font-bold">Sign
                             up</a>.</p>
-                    <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p>
+                    <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p> --}}
+                    <p class="auth-subtitle mb-5">&copy; {{ date('Y') }} Apps By Coni</p>
                 </div>
             </div>
         </div>

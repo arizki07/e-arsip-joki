@@ -175,7 +175,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'Spj' ? 'active' : '' }}">
-                        <a href="/spj" class='sidebar-link'>
+                        <a href="/data-spj" class='sidebar-link'>
                             <i class="bi bi-journal-text"></i>
                             <span>SPJ</span>
                         </a>
