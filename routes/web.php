@@ -206,6 +206,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Bpp\BuktiPengeluaranBppController::class)->group(function () {
             Route::get('/bukti-bpp', 'index');
             Route::get('/bukti-bpp/tambah', 'tambah')->name('bukti-bpp.tambah');
+            Route::post('/bukti-bpp/store', 'store')->name('bukti-bpp.store');
+            Route::get('/bukti-bpp-pengeluaran/edit/{id}', 'edit')->name('bukti-bpp-pengeluaran.edit');
+            Route::put('/bukti-bpp-pengeluaran/{id}', 'update')->name('bukti-bpp-pengeluaran.update');
+            Route::get('/bukti-bpp-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
         });
 
         Route::controller(App\Http\Controllers\Bpp\SpjBppController::class)->group(function () {

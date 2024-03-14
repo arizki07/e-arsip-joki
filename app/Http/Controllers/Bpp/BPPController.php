@@ -147,7 +147,7 @@ class BPPController extends Controller
                 'p_biaya' => $validatedData['nd_jumlah_biaya'],
             ]);
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan Berhasil Disimpan!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan Berhasil Disimpan!');
         } catch (ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json(['errors' => $e->errors()], 422);
@@ -212,7 +212,7 @@ class BPPController extends Controller
 
             $notaDinas->update($validatedData);
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil diperbarui!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan berhasil diperbarui!');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
         } catch (\Exception $e) {
@@ -235,7 +235,7 @@ class BPPController extends Controller
 
             DB::commit();
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil dihapus!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan berhasil dihapus!');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
         } catch (\Exception $e) {

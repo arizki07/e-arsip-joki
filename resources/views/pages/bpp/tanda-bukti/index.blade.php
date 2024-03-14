@@ -74,7 +74,7 @@
                                     </td>
                                     <td>
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
+                                        <a href="{{ route('bukti-bpp-pengeluaran.edit', $item->id_td_bukti) }}"
                                             class="btn icon btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>

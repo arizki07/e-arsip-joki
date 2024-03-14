@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
     @include('component.alerts')
-
     <div class="col-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-body">
@@ -33,10 +32,11 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <select class="form-control mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
-                        <option disabled selected>-- Pilih Pengajuan --</option>
+                    <select class="form-select mt-1" name="td_id_pengajuan" id="id_pengajuan">
+                        <option disabled>-- Pilih Pengajuan --</option>
                         @foreach ($pengajuans as $pengajuan)
-                            <option value="{{ $pengajuan->id_pengajuan }}">{{ $pengajuan->p_nama_kegiatan }} -
+                            <option value="{{ $pengajuan->id_pengajuan }}"
+                                @if ($pengajuan->id_pengajuan == $buktiPengeluaran->td_id_pengajuan) selected @endif>{{ $pengajuan->p_nama_kegiatan }} -
                                 {{ $pengajuan->getStatusBadge() }}</option>
                         @endforeach
                     </select>
@@ -45,42 +45,40 @@
         </div>
     </div>
 
-    <section class="section" id="pengajuanDetails" style="display: none;">
+    <div class="col-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">{{ $title }}</h4>
             </div>
-
             <div class="card-body">
                 <div id="pengajuanDetails">
-                    <form action="{{ route('bukti-bpp.store') }}" method="post">
+                    <form action="{{ route('bukti-bpp-pengeluaran.update', $buktiPengeluaran->id_td_bukti) }}" method="post">
                         @csrf
-                        <input type="hidden" id="pengajuan" name="td_id_pengajuan">
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="basicInput">ID Pengajuan</label>
+                            <input type="text" class="form-control mt-1" name="td_id_pengajuan"
+                                value="{{ $buktiPengeluaran->td_id_pengajuan }}" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="basicInput">Nama Kegiatan</label>
-                            <input type="text" class="form-control mt-1" name="td_nama_kegiatan" id="nd_nama_kegiatan"
-                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan">
+                            <input type="text" class="form-control mt-1" name="td_nama_kegiatan"
+                                value="{{ $namaKegiatan; }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Sub Kegiatan</label>
-                            <input type="text" class="form-control mt-1" name="td_sub_kegiatan" id="nd_sub_kegiatan"
-                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan">
-                        </div>
-                        <div class="form-group">
-                            <label for="basicInput">Nomor Nota</label>
-                            <input type="text" class="form-control mt-1" name="td_nomor_nota" id="nd_nomor_nota"
-                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota">
+                            <input type="text" class="form-control mt-1" name="td_sub_kegiatan"
+                                value="{{ $subKegiatan; }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Tanggal</label>
-                            <input type="date" class="form-control mt-1" name="td_tanggal" id="nd_tanggal"
-                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}">
+                            <input type="date" class="form-control mt-1" name="td_tanggal"
+                                value="{{ $tglKegiatan; }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Jumlah Biaya</label>
-                            <input type="text" class="form-control mt-1" name="td_biaya" id="nd_jumlah_biaya"
-                                value="{{ old('nd_jumlah_biaya') }}" placeholder="Jumlah Biaya"
-                                oninput="formatRupiah(this)">
+                            <input type="text" class="form-control mt-1" name="td_biaya"
+                                value="{{ $buktiPengeluaran->td_biaya }}">
                         </div>
                         <div class="form-group mt-3" id="uraianContainer">
                             <div class="d-flex justify-content-between align-items-center">
@@ -90,22 +88,36 @@
                             </div>
                             <div class="uraian-row">
                                 <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan.0') }}</textarea>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input type="text" class="form-control mt-1" name="uraian_kegiatan_jumlah[]"
-                                            placeholder="Jumlah" value="{{ old('uraian_kegiatan_jumlah.0') }}"
-                                            oninput="formatRupiah(this)">
-                                    </div>
+                                    @foreach($data as $item)
+                                        <div class="col-md-6">
+                                            <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan', $item['uraian']) }}</textarea>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control mt-1" name="uraian_kegiatan_jumlah[]"
+                                                placeholder="Jumlah"
+                                                value="{{ old('uraian_kegiatan_jumlah.0', $item['jumlah']) }}">
+                                        </div>
+                                    @endforeach
                                     <div class="col-md-1">
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="removeUraianColumn(this)"><i class="bi bi-x-square"></i></button>
+                                        <button type="button" class="btn btn-danger" onclick="removeUraianColumn(this)"><i
+                                                class="bi bi-x-square"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row mt-2">
+                            <div class="col-md-5 text-right">
+                                {{-- <h5>Jumlah</h5> --}}
+                            </div>
+                            <div class="col-md-1 mt-2">
+                                <p class="ms-5">Jumlah</p>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control mt-1" id="total" name="total"
+                                    placeholder="Total Jumlah"
+                                    value="Rp {{ number_format($total, 0, ',', '.') }}" readonly>
+                            </div>
+                        </div>
                         <div class="col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -116,7 +128,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
 
 @section('scripts')
@@ -192,46 +204,6 @@
         function removeUraianColumn(button) {
             var uraianRow = button.closest('.uraian-row');
             uraianRow.remove();
-        }
-
-        $(".getPengajuanById").on("change", function() {
-            getDataPengajuan();
-        });
-
-        function getDataPengajuan() {
-            var selectedPengajuanId = $(".getPengajuanById").val();
-
-            $("#pengajuanDetails").hide();
-
-            if (selectedPengajuanId !== "") {
-                $.ajax({
-                    type: 'GET',
-                    url: '/bukti-bpp-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
-                        // "Authorization": "Bearer " + parsedObj.token.access_token
-                    },
-                    dataType: 'json',
-                    success: function(responseData) {
-                        // var dataPengajuan = json.data;
-                        var dataPengajuan = responseData.dataPengajuan;
-                        // console.log('disini');
-                        // console.log(dataPengajuan);
-
-                        $("#pengajuanDetails").show();
-
-                        $("#pengajuan").val(dataPengajuan.pengajuan.id_pengajuan);
-                        $("#nd_nama_kegiatan").val(dataPengajuan.notaDinas.nd_nama_kegiatan);
-                        $("#nd_sub_kegiatan").val(dataPengajuan.notaDinas.nd_sub_kegiatan);
-                        $("#nd_nomor_nota").val(dataPengajuan.notaDinas.nd_nomor_nota);
-                        $("#nd_tanggal").val(dataPengajuan.notaDinas.nd_tanggal);
-                        $("#nd_jumlah_biaya").val(dataPengajuan.notaDinas.nd_jumlah_biaya);
-                    },
-                    error: function(error) {
-                        console.error('Error fetching data for Pengajuan:', error);
-                    }
-                });
-            }
         }
     </script>
 @endsection
