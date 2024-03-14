@@ -24,7 +24,7 @@ class SpjBppController extends Controller
         $spj = SuratPengantarModel::all();
         return view('pages.bpp.spj.index', [
             'spj' => $spj,
-            'active' => 'SPJ',
+            'active' => 'SPJ BPP',
             'title' => 'SPJ BPP'
         ]);
     }
@@ -142,7 +142,7 @@ class SpjBppController extends Controller
         // END Group Syntax Pengeluaran
 
         return view('pages.bpp.spj.view', [
-            'title' => 'Spj',
+            'title' => 'SPJ BPP',
             'title2' => 'Detail SPJ',
             'suratPengantar' => $suratPengantar,
             'bku' => $bku,
@@ -165,7 +165,7 @@ class SpjBppController extends Controller
             'totalPenerimaansd' => $totalPenerimaansd,
             'totalPengeluaran' => $totalPengeluaran,
             'totalPengeluaransd' => $totalPengeluaransd,
-            'active' => 'SPJ'
+            'active' => 'SPJ BPP'
         ]);
     }
 
@@ -182,14 +182,18 @@ class SpjBppController extends Controller
             'file' => 'required|mimes:xlsx,xls',
         ]);
 
+        date_default_timezone_set('Asia/Jakarta');
         $now = new DateTime();
-        $formatted_datetime = $now->format('Ymd_His');
-        $file_name = 'spj_' . $formatted_datetime . '.xlsx';
+        $formatted_datetime = $now->format('dmYHis');
+        $file_name = 'SPJ_' . $formatted_datetime . '.xlsx';
         $destination_folder = 'arsip/spj';
-
+        // dd($destination_folder, $file_name); die;
         $this->create_folder($destination_folder);
-        Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
-
+        try {
+            Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
+        } catch (\Exception $e) {
+            return redirect()->to('/spj-bpp')->with('error', $e->getMessage());
+        }
         return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 

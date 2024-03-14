@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\BkuModel;
+use App\Models\BuktiPengeluaranModel;
+use App\Models\BiodataModel;
 use Carbon\Carbon;
 
 class BkuImport implements ToModel, WithStartRow
@@ -19,6 +21,22 @@ class BkuImport implements ToModel, WithStartRow
     {
         // dd ($row); die;
         $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+
+        $cekBukti = BuktiPengeluaranModel::where('id_td_bukti', $row[0])->exists();
+        $cekKPA = BiodataModel::where('id_biodata', $row[1])->exists();
+        $cekPPTK = BiodataModel::where('id_biodata', $row[2])->exists();
+        $cekBPP = BiodataModel::where('id_biodata', $row[3])->exists();
+        
+        if(!$cekBukti) {
+            throw new \Exception("Nomor Bukti Pengeluaran tidak ditemukan");
+        } else if (!$cekKPA) {
+            throw new \Exception("Nomor KPA tidak ditemukan");
+        } else if (!$cekPPTK) {
+            throw new \Exception("Nomor PPTK tidak ditemukan");
+        } else if (!$cekBPP) {
+            throw new \Exception("Nomor BPP tidak ditemukan");
+        }
+
         $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         $model = new BkuModel([
             'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,

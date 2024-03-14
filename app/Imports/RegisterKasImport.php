@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\SpjRegisterModel;
+use App\Models\BiodataModel;
 use Carbon\Carbon;
 
 class RegisterKasImport implements ToModel, WithStartRow
@@ -19,6 +20,12 @@ class RegisterKasImport implements ToModel, WithStartRow
     {
         // dd ($row); die;
         // $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+        $cek = BiodataModel::where('id_biodata', $row[1])->exists();
+        
+        if(!$cek) {
+            throw new \Exception("Nomor Biodata Penutup Kas tidak ditemukan");
+        } 
+
         $SESS_ID_BKU = Session::get('SESS_ID_BKU');
         $SESS_ID_FUNGSIONAL = Session::get('SESS_ID_FUNGSIONAL');
         $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');

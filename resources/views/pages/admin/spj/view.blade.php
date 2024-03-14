@@ -28,7 +28,7 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data Pertangguna Jawaban</h4>
+                                <h4>Data Pertanggung Jawaban</h4>
                             </div>
                             <div class="card-body">
                                 <div class="accordion" id="accordionExample">
