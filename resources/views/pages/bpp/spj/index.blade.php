@@ -25,18 +25,19 @@
         </div>
         <section class="section">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
                         Data SPJ
                     </h5>
-                </div>
-                {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="/spj/create"  data-bs-toggle="modal"
-                data-bs-target="#primary"> --}}
-                <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
-                    data-bs-target="#primary">
-                    <i class="bi bi-user"></i> Tambah SPJ
-                </a>
-
+                    <div>
+                        <a type="button" class="btn btn-primary me-2" href="#" data-bs-toggle="modal" data-bs-target="#primary">
+                            <i class="bi bi-person-plus"></i> Tambah SPJ
+                        </a>
+                        <a type="button" class="btn btn-primary" href="/bioSpj">
+                            <i class="bi bi-printer"></i> Daftar Biodata
+                        </a>
+                    </div>
+                </div>                             
                 <br>
                 <div class="card-body">
                     <div class="table-responsive">

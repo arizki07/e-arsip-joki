@@ -10,16 +10,6 @@ use DateTime;
 
 class ImportSpjController extends Controller
 {
-    // public function import(Request $request)
-    // {
-    //     $request->validate([
-    //         'file' => 'required|mimes:xlsx,xls',
-    //     ]);
-
-    //     Excel::import(new Import(), $request->file('file'));
-
-    //     return redirect()->back()->with('success', 'Data berhasil diimpor');
-    // }
     public function import(Request $request)
     {
         $request->validate([
@@ -33,8 +23,11 @@ class ImportSpjController extends Controller
         $destination_folder = 'arsip/spj';
         // dd($destination_folder, $file_name); die;
         $this->create_folder($destination_folder);
-        Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
-
+        try {
+            Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
+        } catch (\Exception $e) {
+            return redirect()->to('/data-spj')->with('error', $e->getMessage());
+        }
         return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 
