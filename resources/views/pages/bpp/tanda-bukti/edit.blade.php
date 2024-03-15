@@ -52,7 +52,8 @@
             </div>
             <div class="card-body">
                 <div id="pengajuanDetails">
-                    <form action="{{ route('bukti-bpp-pengeluaran.update', $buktiPengeluaran->id_td_bukti) }}" method="post">
+                    <form action="{{ route('bukti-bpp-pengeluaran.update', $buktiPengeluaran->id_td_bukti) }}"
+                        method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -63,22 +64,26 @@
                         <div class="form-group">
                             <label for="basicInput">Nama Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_nama_kegiatan"
-                                value="{{ $namaKegiatan; }}">
+                                value="{{ $namaKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Sub Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_sub_kegiatan"
-                                value="{{ $subKegiatan; }}">
+                                value="{{ $subKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Tanggal</label>
-                            <input type="date" class="form-control mt-1" name="td_tanggal"
-                                value="{{ $tglKegiatan; }}">
+                            <input type="date" class="form-control mt-1" name="td_tanggal" value="{{ $tglKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Jumlah Biaya</label>
                             <input type="text" class="form-control mt-1" name="td_biaya"
                                 value="{{ $buktiPengeluaran->td_biaya }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="basicInput">No Surat Bukti Pengeluaran</label>
+                            <input type="text" class="form-control mt-1" name="no_bukti" id="no_bukti"
+                                value="{{ $buktiPengeluaran->no_bukti }}" placeholder="No Surat Bukti Pengeluaran">
                         </div>
                         <div class="form-group mt-3" id="uraianContainer">
                             <div class="d-flex justify-content-between align-items-center">
@@ -88,12 +93,13 @@
                             </div>
                             <div class="uraian-row">
                                 <div class="row mt-2">
-                                    @foreach($data as $item)
+                                    @foreach ($data as $item)
                                         <div class="col-md-6">
                                             <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan', $item['uraian']) }}</textarea>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control mt-1" name="uraian_kegiatan_jumlah[]"
+                                            <input type="text" class="form-control mt-1 uraian-input"
+                                                name="uraian_kegiatan_jumlah[]" id="uraian_kegiatan_jumlah[]"
                                                 placeholder="Jumlah"
                                                 value="{{ old('uraian_kegiatan_jumlah.0', $item['jumlah']) }}">
                                         </div>
@@ -105,23 +111,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 text-right">
-                                {{-- <h5>Jumlah</h5> --}}
-                            </div>
-                            <div class="col-md-1 mt-2">
-                                <p class="ms-5">Jumlah</p>
-                            </div>
-                            <div class="col-md-5">
-                                <input type="text" class="form-control mt-1" id="total" name="total"
-                                    placeholder="Total Jumlah"
-                                    value="Rp {{ number_format($total, 0, ',', '.') }}" readonly>
+                        <div class="form-group">
+                            <div class="row mt-2">
+                                <div class="col-md-4 text-right">
+                                    {{-- <h5>Jumlah</h5> --}}
+                                </div>
+                                <div class="col-md-2 mt-2">
+                                    <p class="ms-5">Jumlah :</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" readonly class="form-control mt-1 total" id="total"
+                                        name="total" placeholder="Total Jumlah"
+                                        value="{{ $buktiPengeluaran->total_uraian }}" readonly>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a type="button" href="/bukti-bpp"
+                            <a type="button" href="{{ url('bukti-bpp') }}"
                                 class="btn btn-warning me-1 mb-1">Kembali</a>
                         </div>
                     </form>
@@ -133,6 +141,23 @@
 
 @section('scripts')
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Menangani perubahan pada input jumlah uraian
+            document.getElementsByName('uraian_kegiatan_jumlah[]').forEach(function(input) {
+                // Simpan nilai asli ke atribut data-original-value saat halaman dimuat
+                input.setAttribute('data-original-value', input.value);
+                input.addEventListener('change', function() {
+                    var originalValue = input.getAttribute('data-original-value');
+                    if (originalValue !== input.value) {
+                        input.value = originalValue;
+                    }
+                    updateTotal();
+                });
+            });
+            updateTotal();
+        });
+
+
         function formatRupiah(input) {
             let value = input.value.replace(/[^0-9]/g, "");
 
@@ -171,10 +196,11 @@
 
             var input = document.createElement('input');
             input.setAttribute('type', 'text');
-            input.setAttribute('class', 'form-control mt-1');
+            input.setAttribute('class', 'form-control mt-1 uraian-input');
             input.setAttribute('name', 'uraian_kegiatan_jumlah[]');
             input.setAttribute('placeholder', 'Jumlah');
             input.setAttribute('oninput', 'formatRupiah(this)');
+            input.addEventListener('input', updateTotal);
 
             inputCol.appendChild(input);
 
@@ -199,11 +225,76 @@
             uraianRow.appendChild(rowDiv);
 
             container.appendChild(uraianRow);
+
+            // Hitung total saat menambahkan kolom baru
+            // updateTotal();
         }
 
         function removeUraianColumn(button) {
             var uraianRow = button.closest('.uraian-row');
             uraianRow.remove();
+
+            // Hitung ulang total saat menghapus kolom
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var total = 0;
+            var inputs = document.querySelectorAll('.uraian-input');
+            inputs.forEach(function(input) {
+                var value = input.value.replace(/\D/g, ''); // Menghapus karakter non-digit
+                if (value !== '') {
+                    total += parseInt(value);
+                }
+            });
+
+            var totalInput = document.getElementById('total');
+            totalInput.value = formatCurrency(total);
+        }
+
+        function formatCurrency(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+
+        $(".getPengajuanById").on("change", function() {
+            getDataPengajuan();
+        });
+
+        function getDataPengajuan() {
+            var selectedPengajuanId = $(".getPengajuanById").val();
+
+            $("#pengajuanDetails").hide();
+
+            if (selectedPengajuanId !== "") {
+                $.ajax({
+                    type: 'GET',
+                    url: '/bukti-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+                        // "Authorization": "Bearer " + parsedObj.token.access_token
+                    },
+                    dataType: 'json',
+                    success: function(responseData) {
+                        // var dataPengajuan = json.data;
+                        var dataPengajuan = responseData.dataPengajuan;
+                        // console.log('disini');
+                        // console.log(dataPengajuan);
+
+                        $("#pengajuanDetails").show();
+
+                        $("#pengajuan").val(dataPengajuan.pengajuan.id_pengajuan);
+                        $("#nd_nama_kegiatan").val(dataPengajuan.notaDinas.nd_nama_kegiatan);
+                        $("#nd_sub_kegiatan").val(dataPengajuan.notaDinas.nd_sub_kegiatan);
+                        $("#nd_nomor_nota").val(dataPengajuan.notaDinas.nd_nomor_nota);
+                        $("#nd_tanggal").val(dataPengajuan.notaDinas.nd_tanggal);
+                        $("#nd_jumlah_biaya").val(dataPengajuan.notaDinas.nd_jumlah_biaya);
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data for Pengajuan:', error);
+                    }
+                });
+            }
         }
     </script>
 @endsection

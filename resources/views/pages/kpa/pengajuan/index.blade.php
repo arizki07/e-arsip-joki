@@ -76,7 +76,7 @@
                                         </button>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('acc.kpa', ['id' => $item->id_pengajuan]) }}" method="POST"
+                                            action="{{ route('kpa-acc', ['id' => $item->id_pengajuan]) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('POST')

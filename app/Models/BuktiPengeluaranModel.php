@@ -20,6 +20,8 @@ class BuktiPengeluaranModel extends Model
         'td_biaya',
         'td_jumlah_biaya',
         'td_uraian',
+        'no_bukti',
+        'total_uraian',
     ];
 
     protected static function boot()

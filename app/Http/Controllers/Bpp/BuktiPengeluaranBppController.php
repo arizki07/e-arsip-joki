@@ -51,8 +51,10 @@ class BuktiPengeluaranBppController extends Controller
                 'td_id_pengajuan' => 'required|numeric',
                 'td_biaya' => 'required',
                 // 'td_jumlah_biaya' => 'required',
+                'no_bukti' => 'required',
                 'uraian_kegiatan.*' => 'nullable|string',
                 'uraian_kegiatan_jumlah.*' => 'nullable',
+                'total' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -99,6 +101,8 @@ class BuktiPengeluaranBppController extends Controller
                 'td_bp_id' => $validatedData['td_bp_id'],
                 'td_biaya' => $validatedData['td_biaya'],
                 'td_jumlah_biaya' => $validatedData['td_biaya'],
+                'total_uraian' => $validatedData['total'],
+                'no_bukti' => $validatedData['no_bukti'],
             ]);
 
             return redirect('/bukti-bpp')->with('success', 'Data pengajuan berhasil disimpan!');
@@ -161,8 +165,10 @@ class BuktiPengeluaranBppController extends Controller
             $validator = Validator::make($request->all(), [
                 'td_id_pengajuan' => 'required|numeric',
                 'td_biaya' => 'required',
+                'no_bukti' => 'required',
                 'uraian_kegiatan.*' => 'nullable|string',
                 'uraian_kegiatan_jumlah.*' => 'nullable',
+                'total' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -204,6 +210,8 @@ class BuktiPengeluaranBppController extends Controller
                 'td_bp_id' => $validatedData['td_bp_id'],
                 'td_biaya' => $validatedData['td_biaya'],
                 'td_jumlah_biaya' => $validatedData['td_biaya'],
+                'total_uraian' => $validatedData['total'],
+                'no_bukti' => $validatedData['no_bukti'],
             ]);
 
             return redirect('/bukti-bpp-pengeluaran')->with('success', 'Data bukti pengeluaran berhasil diperbarui!');
