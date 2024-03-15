@@ -9,7 +9,7 @@ use App\Models\SuratPengantarModel;
 use App\Models\BuktiPengeluaranModel;
 use Carbon\Carbon;
 
-class SuratPengantarImport implements ToModel, WithStartRow
+class SuratPengantarImportUpdate implements ToModel, WithStartRow
 {
     /**
      * @param array $row
@@ -25,26 +25,25 @@ class SuratPengantarImport implements ToModel, WithStartRow
             throw new \Exception("Nomor Bukti Pengeluaran tidak ditemukan");
         }
 
-        if (SuratPengantarModel::where('id_td_bukti', $row[7])->exists()) {
-            throw new \Exception("Nomor Bukti Pengeluaran Sudah Digunakan.");
-            return null;
-          }
+        $model = SuratPengantarModel::where('id_surat_pengantar', $row[8])->first();
 
-        $model = new SuratPengantarModel([
-            'nomor_surat' => $row[0],
-            'sifat' => $row[1],
-            'lampiran' => $row[2],
-            'perihal' => $row[3],
-            'tanggal' => $tgl->toDateString(),
-            'kegiatan' => $row[5],
-            'biaya' => $row[6],
-            'id_td_bukti' => $row[7],
-        ]);
-        $model->save();
-
-        Session::put('SESS_ID_SURAT_PENGANTAR', $model->id_surat_pengantar);
-
-        // return $model;
+        if ($model) {
+            $model->update([
+                'nomor_surat' => $row[0],
+                'sifat' => $row[1],
+                'lampiran' => $row[2],
+                'perihal' => $row[3],
+                'tanggal' => $tgl->toDateString(),
+                'kegiatan' => $row[5],
+                'biaya' => $row[6],
+                'id_td_bukti' => $row[7],
+                'id_surat_pengantar' => $row[8],
+            ]);
+            Session::put('SESS_ID_SURAT_PENGANTAR', $model->id_surat_pengantar);
+        } else {
+            throw new \Exception("Nomor SPJ pada Sheet SURAT PENGANTAR Tidak Ditemukan");
+        }
+        return $model;
     }
 
     /**

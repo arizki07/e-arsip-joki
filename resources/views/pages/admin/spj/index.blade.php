@@ -32,9 +32,14 @@
                 </div>
                 {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="/spj/create"  data-bs-toggle="modal"
                 data-bs-target="#primary"> --}}
+                <a type="button" class="btn btn-primary ms-auto me-4" href="#"  data-bs-toggle="modal"
+                data-bs-target="#primary">
                 <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
                     data-bs-target="#primary">
                     <i class="bi bi-user"></i> Tambah SPJ
+                <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
+                    data-bs-target="#primary">
+                    <i class="bi bi-journal-plus"></i> Add / Edit SPJ
                 </a>
 
                 <br>
@@ -82,8 +87,11 @@
         role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title white" id="myModalLabel160">Input Excel SPJ
+                <h5 class="modal-title white" id="myModalLabel160">Input / Edit SPJ With Excel
                 </h5>
+                <button type="button" class="btn btn-light btn-sm" href="#">
+                    Download Template
+                </button>
                 <div class="btn-group mb-1">
                     <div class="dropdown">
                         <button class="btn btn-light btn-sm dropdown-toggle me-1" type="button"
@@ -91,6 +99,22 @@
                             aria-expanded="false">
                             Download Xlsx
                         </button>
+                        <div class="dropdown-menu bg-light" aria-labelledby="dropdownMenuButton">
+                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-ADD-(KOSONGAN).xlsx') }}" download>
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Template (KOSONGAN)
+                            </a>
+                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-ADD-(DATA-SAMPLE).xlsx') }}" download>
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Template (DATA SAMPLE)
+                            </a>
+                            {{-- <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(KOSONGAN).xlsx') }}" download>
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Template Update (KOSONGAN)
+                            </a>
+                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(DATA-SAMPLE).xlsx') }}" download>
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Template Update (DATA SAMPLE)
+                            </a> --}}
+                        </div>
+                    </div>
+                </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE_SPJ.xlsx') }}" download>
                                 Template XLSX
@@ -105,10 +129,31 @@
             <div class="modal-body">
                 <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
                     @csrf
-                    <label for="import">Upload Excel File</label>
-                    <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-2" required>
+                    <div class="form-group">
+                        <label for="type">Tipe Proses</label>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="form-check me-3 mt-2">
+                                <input class="form-check-input" type="radio" name="type" id="typeAdd" value="add">
+                                <label class="form-check-label" for="typeAdd">Add</label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="radio" name="type" id="typeUpdate" value="update">
+                                <label class="form-check-label" for="typeUpdate">Update</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="import">Upload Excel File</label>
+                        <input type="file" name="file" accept=".xlsx,.xls" class="form-control mt-1" required>
+                    </div>
+                    <small class="text-danger">*Note : Edit Excel (Pastikan Nomor SPJ Sama dengan Nomor Surat Pengantar yang dituju.)</small><br>
+                    <small class="text-danger">*Note : Silahkan Download Template Excel yang sudah disediakan!.</small>
                     {{-- <button type="submit" class="btn btn-primary mt-2">Import Data</button> --}}
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary"
+                            data-bs-dismiss="modal">
+                    <div class="modal-footer mt-4">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Close</span>

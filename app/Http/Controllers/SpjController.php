@@ -30,6 +30,11 @@ class SpjController extends Controller
 
     public function view($id)
     {
+        $hel = [
+            'active' => 'spj',
+            'title' => 'Tambah Surat Pertanggung Jawaban'
+        ];
+        return view('pages.admin.spj.create', $hel);
         $suratPengantar = SuratPengantarModel::findOrFail($id);
         $bku = BkuModel::all();
         $buktiPengeluaran = BuktiPengeluaranModel::all();
@@ -142,6 +147,7 @@ class SpjController extends Controller
         }
         $totalPengeluaran = $pengeluaranSP2D + $pengeluaranPajak;
         $totalPengeluaransd = $pengeluaranSP2Dsd + $pengeluaranPajaksd;
+        $urBKUs = UraianBkuModel::orderBy('no_urut', 'asc')->get();
         // END Group Syntax Pengeluaran
 
         return view('pages.admin.spj.view', [
@@ -168,6 +174,7 @@ class SpjController extends Controller
             'totalPenerimaansd' => $totalPenerimaansd,    
             'totalPengeluaran' => $totalPengeluaran,    
             'totalPengeluaransd' => $totalPengeluaransd, 
+            'urBKUs' => $urBKUs, 
             'active' => 'SPJ'
         ]);
     }
@@ -175,7 +182,7 @@ class SpjController extends Controller
     public function delete($id)
     {
         SuratPengantarModel::where('id_surat_pengantar', $id)->delete();
-
+        return redirect('/data-spj')->with('success', 'Data berhasil dihapus.');
         return redirect('/spj')->with('success', 'Data berhasil dihapus.');
     }
 
