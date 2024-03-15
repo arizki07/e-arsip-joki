@@ -5,6 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SpjModel;
 use App\Models\SuratPengantarModel;
+use App\Models\BkuModel;
+use App\Models\BuktiPengeluaranModel;
+use App\Models\SpjFungsionalModel;
+use App\Models\SpjRegisterModel;
+use App\Models\UraianBkuModel;
+use App\Models\UraianSpjFungsionalModel;
+use App\Models\UraianSpjRegisterModel;
+use App\Models\BiodataModel;
+use App\Exports\SPExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SpjController extends Controller
 {
@@ -14,20 +24,17 @@ class SpjController extends Controller
         return view('pages.admin.spj.index', [
             'title' => 'Spj',
             'active' => 'SPJ',
-            'spj' => $spj,
-            'title' => 'Spj', 'active' => 'spj'
+            'spj' => $spj
         ]);
     }
 
-    public function create()
+    public function view($id)
     {
-<<<<<<< Updated upstream
         $hel = [
             'active' => 'spj',
             'title' => 'Tambah Surat Pertanggung Jawaban'
         ];
         return view('pages.admin.spj.create', $hel);
-=======
         $suratPengantar = SuratPengantarModel::findOrFail($id);
         $bku = BkuModel::all();
         $buktiPengeluaran = BuktiPengeluaranModel::all();
@@ -175,13 +182,12 @@ class SpjController extends Controller
     public function delete($id)
     {
         SuratPengantarModel::where('id_surat_pengantar', $id)->delete();
-
         return redirect('/data-spj')->with('success', 'Data berhasil dihapus.');
+        return redirect('/spj')->with('success', 'Data berhasil dihapus.');
     }
 
     public function export_surat_pengantar() 
     {
         return Excel::download(new SPExport, 'spj.xlsx');
->>>>>>> Stashed changes
     }
 }

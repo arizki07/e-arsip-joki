@@ -9,9 +9,10 @@ use Illuminate\Validation\Rule;
 use App\Models\BiodataModel;
 use App\Models\JabatanModel;
 use App\Models\PengajuanModel;
+use App\Models\SuratPengantarModel;
 use App\Models\User;
 use Dompdf\Dompdf;
-
+use Illuminate\Support\Facades\Auth;
 
 class BPController extends Controller
 {
@@ -37,7 +38,8 @@ class BPController extends Controller
 
     public function profile()
     {
-        $biodata = BiodataModel::all();
+        $user = Auth::user();
+        $biodata = BiodataModel::where('user_id', $user->id_users)->get();
         $jabatan = JabatanModel::all();
 
         return view('pages.bp.profile.index', [
@@ -64,7 +66,7 @@ class BPController extends Controller
         // Save the updated data
         $biodata->save();
 
-        return redirect('/profile')->with('success', 'Data berhasil diperbarui.');
+        return redirect('/profile-bp')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function document()
@@ -132,5 +134,15 @@ class BPController extends Controller
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
+    }
+
+    public function spj()
+    {
+        $spj = SuratPengantarModel::all();
+        return view('pages.bp.spj.index', [
+            'active' => 'SPJ',
+            'title' => 'SPJ',
+            'spj' => $spj
+        ]);
     }
 }

@@ -227,6 +227,16 @@ class SpjBppController extends Controller
         }
 
         return redirect()->back()->with('success', 'Data berhasil diimport.');
+        $file_name = 'SPJ_' . $formatted_datetime . '.xlsx';
+        $destination_folder = 'arsip/spj';
+        // dd($destination_folder, $file_name); die;
+        $this->create_folder($destination_folder);
+        try {
+            Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
+        } catch (\Exception $e) {
+            return redirect()->to('/spj-bpp')->with('error', $e->getMessage());
+        }
+        return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 
     private function create_folder($folder_path)

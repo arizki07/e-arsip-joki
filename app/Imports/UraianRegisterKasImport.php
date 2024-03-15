@@ -19,8 +19,10 @@ class UraianRegisterKasImport implements ToModel, WithStartRow
     {
         // $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[1]));
         $SESS_ID_REGISTER_KAS = Session::get('SESS_ID_REGISTER_KAS');
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         return new UraianSpjRegisterModel ([
             'id_register_kas' => $SESS_ID_REGISTER_KAS,
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'kertas_100' => $row[0],
             'kertas_50' => $row[1],
             'kertas_20' => $row[2],

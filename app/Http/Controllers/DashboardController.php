@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\BiodataModel;
+use App\Models\BuktiPengeluaranModel;
 use App\Models\JabatanModel;
 use App\Models\PengajuanModel;
+use App\Models\SpjFungsionalModel;
 use App\Models\User;
 
 class DashboardController extends Controller
@@ -16,6 +18,8 @@ class DashboardController extends Controller
         $biodata = BiodataModel::count();
         $jabatan = JabatanModel::count();
         $pengajuan = PengajuanModel::count();
+        $bukti = BuktiPengeluaranModel::count();
+        $spj = SpjFungsionalModel::count();
         $user = User::count();
 
         return view('pages.dashboard', [
@@ -25,6 +29,8 @@ class DashboardController extends Controller
             'jabatan' => $jabatan,
             'pengajuan' => $pengajuan,
             'user'      => $user,
+            'bukti'      => $bukti,
+            'spj'      => $spj,
         ]);
     }
 }

@@ -14,6 +14,7 @@ use App\Models\PengajuanModel;
 use App\Models\BiodataModel;
 use App\Models\JabatanModel;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class BPPController extends Controller
 {
@@ -41,7 +42,8 @@ class BPPController extends Controller
     //view profile bpp
     public function profilee()
     {
-        $biodata = BiodataModel::all();
+        $user = Auth::user();
+        $biodata = BiodataModel::where('user_id', $user->id_users)->get();
         $jabatan = JabatanModel::all();
 
         return view('pages.bpp.profile.index', [
@@ -68,7 +70,7 @@ class BPPController extends Controller
         // Save the updated data
         $biodata->save();
 
-        return redirect('/profile')->with('success', 'Data berhasil diperbarui.');
+        return redirect('/profile-bpp')->with('success', 'Data berhasil diperbarui.');
     }
 
     //view pengajuan Bpp
@@ -145,7 +147,7 @@ class BPPController extends Controller
                 'p_biaya' => $validatedData['nd_jumlah_biaya'],
             ]);
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan Berhasil Disimpan!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan Berhasil Disimpan!');
         } catch (ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json(['errors' => $e->errors()], 422);
@@ -210,7 +212,7 @@ class BPPController extends Controller
 
             $notaDinas->update($validatedData);
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil diperbarui!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan berhasil diperbarui!');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
         } catch (\Exception $e) {
@@ -233,7 +235,7 @@ class BPPController extends Controller
 
             DB::commit();
 
-            return redirect('/pengajuan')->with('success', 'Data pengajuan berhasil dihapus!');
+            return redirect('/pengajuan-index')->with('success', 'Data pengajuan berhasil dihapus!');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Data pengajuan tidak ditemukan.');
         } catch (\Exception $e) {

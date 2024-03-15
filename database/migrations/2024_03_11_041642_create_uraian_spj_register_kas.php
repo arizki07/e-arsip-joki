@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('spj_register_uraian', function (Blueprint $table) {
             $table->id('id_register_uraian');
             $table->unsignedBigInteger('id_register_kas');
+            $table->unsignedBigInteger('id_surat_pengantar');
             $table->string('kertas_100');
             $table->string('kertas_50');
             $table->string('kertas_20');
@@ -31,7 +32,8 @@ return new class extends Migration
             $table->string('logam_5');
             $table->timestamps();
 
-            $table->foreign('id_register_kas')->references('id_register_kas')->on('spj_register_kas');
+            $table->foreign('id_register_kas')->references('id_register_kas')->on('spj_register_kas')->onDelete('cascade');;
+            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar')->onDelete('cascade');;
         });
     }
 

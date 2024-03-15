@@ -54,7 +54,7 @@
                 <!-- User Content -->
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                     <div class="card mb-4">
-                        <h5 class="card-header">{{ $title }}</h5>
+                        <h5 class="card-header">Profile No Bio-{{ $item->id_biodata }}</h5>
                         <div class="card-body">
                             <form>
                                 <div class="row">
@@ -118,7 +118,7 @@
                             <h3 class="mb-2">Edit Profile Biodata</h3>
                             <p class="text-muted">Silahkan Edit Profile Anda.</p>
                         </div>
-                        <form action="{{ route('update-biodata', ['id' => $item->id_biodata]) }}" id="editUserForm"
+                        <form action="{{ route('bpp.update', ['id' => $item->id_biodata]) }}" id="editUserForm"
                             class="row g-3" method="post">
                             @csrf
 

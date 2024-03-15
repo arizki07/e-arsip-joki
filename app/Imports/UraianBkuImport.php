@@ -19,8 +19,10 @@ class UraianBkuImport implements ToModel, WithStartRow
     {
         $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[1]));
         $SESS_ID_BKU = Session::get('SESS_ID_BKU');
+        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
         return new UraianBkuModel ([
             'id_bku' => $SESS_ID_BKU,
+            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
             'no_urut' => $row[0],
             'tanggal' => $tgl->toDateString(),
             'uraian' => $row[2],

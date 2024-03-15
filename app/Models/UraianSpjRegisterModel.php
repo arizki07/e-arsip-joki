@@ -13,6 +13,7 @@ class UraianSpjRegisterModel extends Model
     protected $primaryKey = 'id_register_uraian';
     protected $fillable = [
         'id_register_kas',
+        'id_surat_pengantar',
         'kertas_100',
         'kertas_50',
         'kertas_20',

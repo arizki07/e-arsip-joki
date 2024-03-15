@@ -36,10 +36,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('login');
     Route::post('/login', 'authenticate');
     Route::post('/logout', 'logout');
 });
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::controller(DashboardController::class)->group(function () {
@@ -138,6 +139,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
             Route::get('/export/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan');
             Route::get('/export/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan');
+            Route::get('/export/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng');
+            Route::get('/export/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng');
+            Route::get('/export/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng');
         });
 
         Route::controller(App\Http\Controllers\Admin\BuktiPengeluaranController::class)->group(function () {
@@ -151,8 +155,18 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::controller(SpjController::class)->group(function () {
-            Route::get('/spj', 'index');
+            Route::get('/data-spj', 'index');
             Route::get('/spj/create', 'create');
+            Route::get('/spj/view/{id}', 'view');
+            Route::get('/spj/delete/{id}', 'delete');
+            Route::get('/spj/export/surat_pengantar', 'export_surat_pengantar');
+
+            // AREA CETAK SPJ
+            Route::get('/spj/pdf/surat_pengantar', 'pdf_surat_pengantar');
+            Route::get('/spj/pdf/bku', 'pdf_bku');
+            Route::get('/spj/pdf/fungsional', 'pdf_fungsional');
+            Route::get('/spj/pdf/register_kas', 'pdf_register_kas');
+            Route::get('/spj/pdf/all_spj', 'pdf_all_spj');
         });
 
         Route::post('/import', [ImportSpjController::class, 'import'])->name('import');
@@ -160,18 +174,26 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['CekLogin:bp']], function () {
 
+        // Route::get('/test/bp', function () {
+        //     echo 'bp';
+        // });
+
+        // Route::get('/profile', [BPController::class, 'profile'])->name('profile');
+
         Route::controller(BPController::class)->group(function () {
-            Route::get('/profile', 'profile');
+            Route::get('/profile-bp', 'profile'); // cek
             Route::post('biodata/update/{id}', 'update')->name('biodata-update');
             Route::get('/doc-bp', 'document')->name('doc.bp.index');
             Route::get('/detail/pengajuan/pdf/{id}', 'detailPengajuanPdf')->name('detail.pdf.pengajuan');
+            Route::get('/spj', 'spj');
         });
     });
 
     Route::group(['middleware' => ['CekLogin:bpp']], function () {
 
         Route::controller(App\Http\Controllers\Bpp\BPPController::class)->group(function () {
-            Route::get('/profile', 'profilee');
+            Route::get('/profile-bpp', 'profilee'); //cek
+            Route::post('/update-profile-bpp/{id}', 'updatee')->name('bpp.update');
             Route::get('/pengajuan-index', 'pengajuan');
             Route::get('/pengajuans/create', 'create')->name('pengajuans.create');
             Route::post('/pengajuans/store', 'store')->name('store.pengajuans');
@@ -183,17 +205,87 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Bpp\BuktiPengeluaranBppController::class)->group(function () {
             Route::get('/bukti-bpp', 'index');
             Route::get('/bukti-bpp/tambah', 'tambah')->name('bukti-bpp.tambah');
+            Route::post('/bukti-bpp/store', 'store')->name('bukti-bpp.store');
+            Route::get('/bukti-bpp-pengeluaran/edit/{id}', 'edit')->name('bukti-bpp-pengeluaran.edit');
+            Route::put('/bukti-bpp-pengeluaran/{id}', 'update')->name('bukti-bpp-pengeluaran.update');
+            Route::get('/bukti-bpp-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
         });
+
+        Route::controller(App\Http\Controllers\Bpp\SpjBppController::class)->group(function () {
+            Route::get('/spj-bpp', 'index');
+            Route::get('/spj-create', 'create');
+            Route::post('/impor-spj', 'import')->name('impor.spj');
+            Route::get('/spj-bpp-view/{id}', 'view');
+            Route::get('/spj-delete/{id}', 'delete');
+        });
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export-bpp/pengajuan', 'exportPengajuan')->name('export.pengajuan.bpp');
+            Route::get('/export-bpp/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.bpp');
+            Route::get('/export-bpp/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.bpp');
+            Route::get('/export-bpp/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.bpp');
+            Route::get('/export-bpp/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.bpp');
+            Route::get('/export-bpp/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.bpp');
+        });
+
+        Route::get('/bioSpj', [ExportController::class, 'bioSpj']);
     });
 
     Route::group(['middleware' => ['CekLogin:kpa']], function () {
+        Route::controller(App\Http\Controllers\Kpa\ProfileKpaController::class)->group(function () {
+            Route::get('/profile-kpa', 'profile');
+            Route::post('/update-kpa', 'update')->name('kpa.update');
+        });
+
+        Route::controller(App\Http\Controllers\Kpa\PengajuanKpaController::class)->group(function () {
+            Route::get('/pengajuan-kpa', 'pengajuan');
+            Route::post('/kpa-acc/{id}', 'verifikasi');
+        });
+
+        Route::controller(App\Http\Controllers\Kpa\BuktiKpaController::class)->group(function () {
+            Route::get('/bukti-kpa', 'bukti');
+        });
+
+        Route::controller(App\Http\Controllers\Kpa\SpjKpaController::class)->group(function () {
+            Route::get('/kpa-spj', 'spj');
+        });
+
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export-kpa/pengajuan', 'exportPengajuan')->name('export.pengajuan.kpa');
+            Route::get('/export-kpa/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.kpa');
+            Route::get('/export-kpa/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.kpa');
+            Route::get('/export-kpa/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.kpa');
+            Route::get('/export-kpa/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.kpa');
+            Route::get('/export-kpa/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.kpa');
+        });
     });
     Route::group(['middleware' => ['CekLogin:pa']], function () {
+        Route::controller(App\Http\Controllers\Pa\ProfilePaController::class)->group(function () {
+            Route::get('/profile-pa', 'index');
+            Route::post('/update-pa', 'update')->name('update.pa');
+        });
+
+        Route::controller(App\Http\Controllers\Pa\SpjPaController::class)->group(function () {
+            Route::get('/spj-pa', 'index');
+        });
     });
     Route::group(['middleware' => ['CekLogin:pptk']], function () {
-        Route::controller(PPTKController::class)->group(function () {
-            Route::get('/profile-pptk', 'profile');
-            Route::post('biodata/update/{id}', 'update')->name('update-biodata');
+        Route::controller(App\Http\Controllers\Pptk\ProfilePptkController::class)->group(function () {
+            Route::get('/profile-pptk', 'index');
+            Route::post('/update-pptk', 'update')->name('update.pptk');
+        });
+        Route::controller(App\Http\Controllers\Ppk\SpjPpkController::class)->group(function () {
+            Route::get('/spj-pptk', 'index');
+        });
+    });
+
+    Route::group(['middleware' => ['CekLogin:ppk']], function () {
+        Route::controller(App\Http\Controllers\Ppk\ProfilePpkController::class)->group(function () {
+            Route::get('/profile-ppk', 'index');
+            Route::post('/update-ppk', 'update')->name('update.ppk');
+        });
+
+        Route::controller(App\Http\Controllers\Ppk\SpjPpkController::class)->group(function () {
+            Route::get('/spj-ppk', 'index');
         });
     });
 });

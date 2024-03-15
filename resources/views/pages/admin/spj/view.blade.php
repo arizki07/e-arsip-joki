@@ -175,6 +175,10 @@
                                                                     @if ($urBKU->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
                                                                         <tr>
                                                                             <td>{{ $urBKU->no_urut; }}</td>
+                                                                @foreach ($uraianBku as $urBKU)
+                                                                    @if ($urBKU->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
+                                                                        <tr>
+                                                                            <td>{{ $urBKU->no_urut }}</td>
                                                                             <td>{{ \Carbon\Carbon::parse($urBKU->tanggal)->format('d M Y') }}</td>
                                                                             <td>{{ $urBKU->uraian }}</td>
                                                                             <td>{{ $urBKU->kode_rekening }}</td>

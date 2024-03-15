@@ -13,6 +13,7 @@ class BkuModel extends Model
     protected $primaryKey = 'id_bku';
     protected $fillable = [
         'id_td_bukti',
+        'id_surat_pengantar',
         'id_kpa',
         'id_pptk',
         'id_bpp',

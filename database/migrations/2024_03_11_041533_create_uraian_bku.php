@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('spj_bku_uraian', function (Blueprint $table) {
             $table->id('id_bku_uraian');
             $table->unsignedBigInteger('id_bku');
+            $table->unsignedBigInteger('id_surat_pengantar');
             $table->string('no_urut');
             $table->date('tanggal');
             $table->string('uraian');
@@ -26,7 +27,8 @@ return new class extends Migration
             $table->string('keterangan');
             $table->timestamps();
 
-            $table->foreign('id_bku')->references('id_bku')->on('spj_bku');
+            $table->foreign('id_bku')->references('id_bku')->on('spj_bku')->onDelete('cascade');;
+            $table->foreign('id_surat_pengantar')->references('id_surat_pengantar')->on('spj_surat_pengantar')->onDelete('cascade');;
         });
     }
 

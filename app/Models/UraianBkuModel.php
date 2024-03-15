@@ -13,6 +13,7 @@ class UraianBkuModel extends Model
     protected $primaryKey = 'id_bku_uraian';
     protected $fillable = [
         'id_bku',
+        'id_surat_pengantar',
         'no_urut',
         'tanggal',
         'uraian',

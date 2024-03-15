@@ -37,27 +37,27 @@ class UserSeeder extends Seeder
             $jabatans = [
                 [
                     'kode' => 'BP',
-                    'nama_jabatan' => 'Jabatan 1',
+                    'nama_jabatan' => 'Bendahara Pengeluaran',
                 ],
                 [
                     'kode' => 'BPP',
-                    'nama_jabatan' => 'Jabatan 2',
+                    'nama_jabatan' => 'Bendahara Pengeluaran Pembantu',
                 ],
                 [
                     'kode' => 'KPA',
-                    'nama_jabatan' => 'Jabatan 3',
+                    'nama_jabatan' => 'Kuasa Pengguna Anggaran',
                 ],
                 [
                     'kode' => 'PA',
-                    'nama_jabatan' => 'Jabatan 4',
+                    'nama_jabatan' => 'Pengguna Anggaran',
                 ],
                 [
                     'kode' => 'PPK',
-                    'nama_jabatan' => 'Jabatan 5',
+                    'nama_jabatan' => 'Pejabat Pembuat Komitmen',
                 ],
                 [
                     'kode' => 'PPTK',
-                    'nama_jabatan' => 'Jabatan 6',
+                    'nama_jabatan' => 'Pejabat Pelaksana Teknis Kegiatan',
                 ],
             ];
 

@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nomor Bukti</th>
                                 <th>Nama Kegiatan</th>
                                 <th>Badan Pengeluaran Pembantu</th>
                                 <th>Tanggal</th>
@@ -50,6 +51,7 @@
                             @foreach ($buktiPengeluarans as $item)
                                 <tr>
                                     <td><?= $i++ ?></td>
+                                    <td>{{ $item->id_td_bukti }}</td>
                                     <td>{{ $item->bukti->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>
@@ -74,7 +76,7 @@
                                     </td>
                                     <td>
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
+                                        <a href="{{ route('bukti-bpp-pengeluaran.edit', $item->id_td_bukti) }}"
                                             class="btn icon btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
