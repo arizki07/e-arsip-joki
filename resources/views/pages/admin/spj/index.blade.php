@@ -25,23 +25,23 @@
         </div>
         <section class="section">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
                         Data SPJ
                     </h5>
-                </div>
-                {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="/spj/create"  data-bs-toggle="modal"
-                data-bs-target="#primary"> --}}
-                <a type="button" class="btn btn-primary ms-auto me-4" href="#"  data-bs-toggle="modal"
-                data-bs-target="#primary">
-                <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
-                    data-bs-target="#primary">
-                    <i class="bi bi-user"></i> Tambah SPJ
-                <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
-                    data-bs-target="#primary">
-                    <i class="bi bi-journal-plus"></i> Add / Edit SPJ
-                </a>
-
+                    <div>
+                        <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
+                            data-bs-target="#primary">
+                            <i class="bi bi-journal-plus"></i> Add / Edit SPJ
+                        </a>
+                        {{-- <a type="button" class="btn btn-primary me-2" href="#" data-bs-toggle="modal" data-bs-target="#primary">
+                            <i class="bi bi-person-plus"></i> Tambah SPJ
+                        </a> --}}
+                        {{-- <a type="button" class="btn btn-primary" href="/bioSpj">
+                            <i class="bi bi-printer"></i> Daftar Biodata
+                        </a> --}}
+                    </div>
+                </div>         
                 <br>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -89,9 +89,6 @@
             <div class="modal-header bg-primary">
                 <h5 class="modal-title white" id="myModalLabel160">Input / Edit SPJ With Excel
                 </h5>
-                <button type="button" class="btn btn-light btn-sm" href="#">
-                    Download Template
-                </button>
                 <div class="btn-group mb-1">
                     <div class="dropdown">
                         <button class="btn btn-light btn-sm dropdown-toggle me-1" type="button"
@@ -112,16 +109,6 @@
                             <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(DATA-SAMPLE).xlsx') }}" download>
                                 <i class="bi bi-file-earmark-spreadsheet"></i> Template Update (DATA SAMPLE)
                             </a> --}}
-                        </div>
-                    </div>
-                </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE_SPJ.xlsx') }}" download>
-                                Template XLSX
-                            </a>
-                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/SAMPLE_INPUT_SPJ.xlsx') }}" download>
-                                Sample Input XLSX
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -149,11 +136,7 @@
                     <small class="text-danger">*Note : Edit Excel (Pastikan Nomor SPJ Sama dengan Nomor Surat Pengantar yang dituju.)</small><br>
                     <small class="text-danger">*Note : Silahkan Download Template Excel yang sudah disediakan!.</small>
                     {{-- <button type="submit" class="btn btn-primary mt-2">Import Data</button> --}}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary"
-                            data-bs-dismiss="modal">
                     <div class="modal-footer mt-4">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Close</span>
@@ -164,6 +147,7 @@
                         </button>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     </div>
@@ -232,5 +216,5 @@
         </div>
     </div>
 </div>
-@endforeach
+    @endforeach
 @endsection

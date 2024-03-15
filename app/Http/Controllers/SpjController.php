@@ -30,11 +30,11 @@ class SpjController extends Controller
 
     public function view($id)
     {
-        $hel = [
-            'active' => 'spj',
-            'title' => 'Tambah Surat Pertanggung Jawaban'
-        ];
-        return view('pages.admin.spj.create', $hel);
+        // $hel = [
+        //     'active' => 'spj',
+        //     'title' => 'Tambah Surat Pertanggung Jawaban'
+        // ];
+        // return view('pages.admin.spj.create', $hel);
         $suratPengantar = SuratPengantarModel::findOrFail($id);
         $bku = BkuModel::all();
         $buktiPengeluaran = BuktiPengeluaranModel::all();
