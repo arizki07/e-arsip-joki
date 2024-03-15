@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nomor Bukti</th>
                                 <th>Nama Kegiatan</th>
                                 <th>Badan Pengeluaran Pembantu</th>
                                 <th>Tanggal</th>
@@ -50,6 +51,7 @@
                             @foreach ($buktiPengeluarans as $item)
                                 <tr>
                                     <td><?= $i++ ?></td>
+                                    <td>{{ $item->id_td_bukti }}</td>
                                     <td>{{ $item->bukti->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>

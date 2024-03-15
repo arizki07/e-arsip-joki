@@ -10,7 +10,7 @@ use App\Models\BuktiPengeluaranModel;
 use App\Models\BiodataModel;
 use Carbon\Carbon;
 
-class BkuImport implements ToModel, WithStartRow
+class BkuImportUpdate implements ToModel, WithStartRow
 {
     /**
      * @param array $row
@@ -37,9 +37,10 @@ class BkuImport implements ToModel, WithStartRow
             throw new \Exception("Nomor BPP tidak ditemukan");
         }
 
-        $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
-        $model = new BkuModel([
-            'id_surat_pengantar' => $SESS_ID_SURAT_PENGANTAR,
+        // $SESS_ID_SURAT_PENGANTAR = Session::get('SESS_ID_SURAT_PENGANTAR');
+        $model = BkuModel::where('id_surat_pengantar', $row[9])->first();
+        $model->update([
+            'id_surat_pengantar' => $row[9],
             'id_td_bukti' => $row[0],
             'id_kpa' => $row[1],
             'id_pptk' => $row[2],
@@ -51,7 +52,7 @@ class BkuImport implements ToModel, WithStartRow
             'sp2d' => $row[8],
         ]);
         // dd ($model); die;
-        $model->save();
+        // $model->save();
 
         Session::put('SESS_ID_BKU', $model->id_bku);
     }

@@ -159,7 +159,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj/create', 'create');
             Route::get('/spj/view/{id}', 'view');
             Route::get('/spj/delete/{id}', 'delete');
-
             Route::get('/spj/export/surat_pengantar', 'export_surat_pengantar');
 
             // AREA CETAK SPJ
@@ -227,6 +226,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-bpp/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.bpp');
             Route::get('/export-bpp/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.bpp');
         });
+
+        Route::get('/bioSpj', [ExportController::class, 'bioSpj']);
     });
 
     Route::group(['middleware' => ['CekLogin:kpa']], function () {

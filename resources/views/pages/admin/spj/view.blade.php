@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-@include('component.alerts')
+    @include('component.alerts')
     <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
             <i class="bi bi-justify fs-3"></i>
@@ -11,13 +11,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>{{ $title2; }}</h3>
+                    <h3>{{ $title2 }}</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ $title2; }}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $title2 }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -28,17 +28,20 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data Pertangguna Jawaban</h4>
+                                <h4>Data Pertanggung Jawaban</h4>
                             </div>
                             <div class="card-body">
                                 <div class="accordion" id="accordionExample">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            SPJ SURAT PENGANTAR
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                SPJ SURAT PENGANTAR
                                             </button>
                                         </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
                                                     <table class="table">
@@ -46,43 +49,46 @@
                                                             <tr>
                                                                 <th>Kegiatan</th>
                                                                 <td>:</td>
-                                                                <td>{{$suratPengantar->kegiatan}}</td>
+                                                                <td>{{ $suratPengantar->kegiatan }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>No Surat</th>
                                                                 <td>:</td>
-                                                                <td>{{$suratPengantar->nomor_surat}}</td>
+                                                                <td>{{ $suratPengantar->nomor_surat }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>Sifat</th>
                                                                 <td>:</td>
-                                                                <td>{{$suratPengantar->sifat}}</td>
+                                                                <td>{{ $suratPengantar->sifat }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>Lampiran</th>
                                                                 <td>:</td>
-                                                                <td>{{$suratPengantar->lampiran}}</td>
+                                                                <td>{{ $suratPengantar->lampiran }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>Perihal</th>
                                                                 <td>:</td>
-                                                                <td>{{$suratPengantar->perihal}}</td>
+                                                                <td>{{ $suratPengantar->perihal }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>Biaya</th>
                                                                 <td>:</td>
-                                                                <td>Rp {{ number_format($suratPengantar->biaya, 0, ',', '.') }}</td>
+                                                                <td>Rp
+                                                                    {{ number_format($suratPengantar->biaya, 0, ',', '.') }}
+                                                                </td>
                                                             </tr>
-                                                            
+
                                                             <tr>
                                                                 <th>Tanggal</th>
                                                                 <td>:</td>
-                                                                <td>{{ \Carbon\Carbon::parse($suratPengantar->tanggal)->format('d-m-Y') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($suratPengantar->tanggal)->format('d-m-Y') }}
+                                                                </td>
                                                             </tr>
                                                         </thead>
                                                     </table>
@@ -93,11 +99,14 @@
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingTwo">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            SPJ BKU
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">
+                                                SPJ BKU
                                             </button>
                                         </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div id="collapseTwo" class="accordion-collapse collapse"
+                                            aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
                                                     <div class="card-body">
@@ -112,7 +121,8 @@
                                                                 <tr>
                                                                     <th>Nama & Kode Program</th>
                                                                     <td>:</td>
-                                                                    <td>PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA</td>
+                                                                    <td>PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH
+                                                                        KABUPATEN/KOTA</td>
                                                                 </tr>
 
                                                                 <tr>
@@ -175,26 +185,30 @@
                                                                     @if ($urBKU->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
                                                                         <tr>
                                                                             <td>{{ $urBKU->no_urut }}</td>
-                                                                            <td>{{ \Carbon\Carbon::parse($urBKU->tanggal)->format('d M Y') }}</td>
+                                                                            <td>{{ \Carbon\Carbon::parse($urBKU->tanggal)->format('d M Y') }}
+                                                                            </td>
                                                                             <td>{{ $urBKU->uraian }}</td>
                                                                             <td>{{ $urBKU->kode_rekening }}</td>
                                                                             <td>
                                                                                 @if ($urBKU->penerimaan !== '-')
-                                                                                    Rp {{ number_format($urBKU->penerimaan, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urBKU->penerimaan, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urBKU->penerimaan }}
                                                                                 @endif
                                                                             </td>
                                                                             <td>
                                                                                 @if ($urBKU->pengeluaran !== '-')
-                                                                                    Rp {{ number_format($urBKU->pengeluaran, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urBKU->pengeluaran, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urBKU->pengeluaran }}
                                                                                 @endif
                                                                             </td>
                                                                             <td>
                                                                                 @if ($urBKU->saldo !== '-')
-                                                                                    Rp {{ number_format($urBKU->saldo, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urBKU->saldo, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urBKU->saldo }}
                                                                                 @endif
@@ -207,9 +221,14 @@
                                                             <tfoot>
                                                                 <tr>
                                                                     <th colspan="4" class="text-center">Jumlah</th>
-                                                                    <th>Rp {{ number_format($totalPenerimaan, 0, ',', '.') }}</th>
-                                                                    <th>Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</th>
-                                                                    <th>Rp {{ number_format($totalSaldo, 0, ',', '.') }}</th>
+                                                                    <th>Rp
+                                                                        {{ number_format($totalPenerimaan, 0, ',', '.') }}
+                                                                    </th>
+                                                                    <th>Rp
+                                                                        {{ number_format($totalPengeluaran, 0, ',', '.') }}
+                                                                    </th>
+                                                                    <th>Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                                                                    </th>
                                                                 </tr>
                                                             </tfoot>
                                                         </table>
@@ -221,11 +240,14 @@
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingThree">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            SPJ FUNGSIONAL
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                aria-expanded="false" aria-controls="collapseThree">
+                                                SPJ FUNGSIONAL
                                             </button>
                                         </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div id="collapseThree" class="accordion-collapse collapse"
+                                            aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
                                                     <div class="card-body">
@@ -261,7 +283,7 @@
                                                             </thead>
                                                         </table>
 
-                                                        
+
                                                         <div class="card-header text-center">
                                                             <h5 class="card-title">
                                                                 Data Detail SPJ FUNGSIONAL
@@ -289,42 +311,48 @@
                                                                                 <td>{{ $urFUNG->uraian }}</td>
                                                                                 <td>
                                                                                     @if ($urFUNG->jumlah_anggaran !== '-')
-                                                                                        Rp {{ number_format($urFUNG->jumlah_anggaran, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->jumlah_anggaran, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->jumlah_anggaran }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sd_bulan_lalu !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sd_bulan_lalu }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->bulan_ini !== '-')
-                                                                                        Rp {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->bulan_ini }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sd_bulan_ini !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sd_bulan_ini }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->jumlah_spj !== '-')
-                                                                                        Rp {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->jumlah_spj }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sisa_pagu_anggaran !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sisa_pagu_anggaran }}
                                                                                     @endif
@@ -335,18 +363,26 @@
                                                                 @endforeach
                                                                 <tr>
                                                                     <th colspan="2" class="text-center">Jumlah</th>
-                                                                    <th>Rp {{ number_format($jmlAnggaran, 0, ',', '.') }}</th>
+                                                                    <th>Rp {{ number_format($jmlAnggaran, 0, ',', '.') }}
+                                                                    </th>
                                                                     <th>
                                                                         @if ($jmlBulanLalu !== '-')
-                                                                            Rp {{ number_format($jmlBulanLalu, 0, ',', '.') }}
+                                                                            Rp
+                                                                            {{ number_format($jmlBulanLalu, 0, ',', '.') }}
                                                                         @else
                                                                             {{ $jmlBulanLalu }}
                                                                         @endif
                                                                     </th>
-                                                                    <th>Rp {{ number_format($jmlBulanIni, 0, ',', '.') }}</th>
-                                                                    <th>Rp {{ number_format($jmlsdBulanIni, 0, ',', '.') }}</th>
-                                                                    <th>Rp {{ number_format($jumlahSpjTerbesar, 0, ',', '.') }}</th>
-                                                                    <th>Rp {{ number_format($jmlAnggaran - $jumlahSpjTerbesar, 0, ',', '.') }}</th>
+                                                                    <th>Rp {{ number_format($jmlBulanIni, 0, ',', '.') }}
+                                                                    </th>
+                                                                    <th>Rp {{ number_format($jmlsdBulanIni, 0, ',', '.') }}
+                                                                    </th>
+                                                                    <th>Rp
+                                                                        {{ number_format($jumlahSpjTerbesar, 0, ',', '.') }}
+                                                                    </th>
+                                                                    <th>Rp
+                                                                        {{ number_format($jmlAnggaran - $jumlahSpjTerbesar, 0, ',', '.') }}
+                                                                    </th>
                                                                 </tr>
 
                                                                 <tr>
@@ -359,39 +395,46 @@
                                                                     @if ($urFUNG->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
                                                                         @if ($urFUNG->tipe == 'Penerimaan')
                                                                             <tr>
-                                                                                <td class="text-center">{{ $i++;}}</td>
-                                                                                <td colspan="2">{{ $urFUNG->uraian }}</td>
+                                                                                <td class="text-center">{{ $i++ }}
+                                                                                </td>
+                                                                                <td colspan="2">{{ $urFUNG->uraian }}
+                                                                                </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sd_bulan_lalu !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sd_bulan_lalu }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->bulan_ini !== '-')
-                                                                                        Rp {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->bulan_ini }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sd_bulan_ini !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sd_bulan_ini }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->jumlah_spj !== '-')
-                                                                                        Rp {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->jumlah_spj }}
                                                                                     @endif
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($urFUNG->sisa_pagu_anggaran !== '-')
-                                                                                        Rp {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
                                                                                     @else
                                                                                         {{ $urFUNG->sisa_pagu_anggaran }}
                                                                                     @endif
@@ -402,25 +445,29 @@
                                                                 @endforeach
 
                                                                 <tr>
-                                                                    <th colspan="3" class="text-center">Jumlah Penerimaan</th>
+                                                                    <th colspan="3" class="text-center">Jumlah Penerimaan
+                                                                    </th>
                                                                     <th>Rp 0</th>
                                                                     <th>
                                                                         @if ($totalPenerimaan !== '-')
-                                                                            Rp {{ number_format($totalPenerimaan, 0, ',', '.') }}
+                                                                            Rp
+                                                                            {{ number_format($totalPenerimaan, 0, ',', '.') }}
                                                                         @else
                                                                             {{ $totalPenerimaan }}
                                                                         @endif
                                                                     </th>
                                                                     <th>
                                                                         @if ($totalPenerimaansd !== '-')
-                                                                            Rp {{ number_format($totalPenerimaansd, 0, ',', '.') }}
+                                                                            Rp
+                                                                            {{ number_format($totalPenerimaansd, 0, ',', '.') }}
                                                                         @else
                                                                             {{ $totalPenerimaansd }}
                                                                         @endif
                                                                     </th>
                                                                     <th>
                                                                         @if ($totalPenerimaansd !== '-')
-                                                                            Rp {{ number_format($totalPenerimaansd, 0, ',', '.') }}
+                                                                            Rp
+                                                                            {{ number_format($totalPenerimaansd, 0, ',', '.') }}
                                                                         @else
                                                                             {{ $totalPenerimaansd }}
                                                                         @endif
@@ -435,82 +482,93 @@
                                                                     $j = 1;
                                                                 @endphp
                                                                 @foreach ($uraianFungsional as $urFUNG)
-                                                                @if ($urFUNG->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
-                                                                    @if ($urFUNG->tipe == 'Pengeluaran')
-                                                                        <tr>
-                                                                            <td class="text-center">{{ $j++; }}</td>
-                                                                            <td colspan="2">{{ $urFUNG->uraian }}</td>
-                                                                            <td>
-                                                                                @if ($urFUNG->sd_bulan_lalu !== '-')
-                                                                                    Rp {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
-                                                                                @else
-                                                                                    {{ $urFUNG->sd_bulan_lalu }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if ($urFUNG->bulan_ini !== '-')
-                                                                                    Rp {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
-                                                                                @else
-                                                                                    {{ $urFUNG->bulan_ini }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if ($urFUNG->sd_bulan_ini !== '-')
-                                                                                    Rp {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
-                                                                                @else
-                                                                                    {{ $urFUNG->sd_bulan_ini }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if ($urFUNG->jumlah_spj !== '-')
-                                                                                    Rp {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
-                                                                                @else
-                                                                                    {{ $urFUNG->jumlah_spj }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if ($urFUNG->sisa_pagu_anggaran !== '-')
-                                                                                    Rp {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
-                                                                                @else
-                                                                                    {{ $urFUNG->sisa_pagu_anggaran }}
-                                                                                @endif
-                                                                            </td>
-                                                                        </tr>
+                                                                    @if ($urFUNG->id_surat_pengantar == $suratPengantar->id_surat_pengantar)
+                                                                        @if ($urFUNG->tipe == 'Pengeluaran')
+                                                                            <tr>
+                                                                                <td class="text-center">{{ $j++ }}
+                                                                                </td>
+                                                                                <td colspan="2">{{ $urFUNG->uraian }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($urFUNG->sd_bulan_lalu !== '-')
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_lalu, 0, ',', '.') }}
+                                                                                    @else
+                                                                                        {{ $urFUNG->sd_bulan_lalu }}
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($urFUNG->bulan_ini !== '-')
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->bulan_ini, 0, ',', '.') }}
+                                                                                    @else
+                                                                                        {{ $urFUNG->bulan_ini }}
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($urFUNG->sd_bulan_ini !== '-')
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sd_bulan_ini, 0, ',', '.') }}
+                                                                                    @else
+                                                                                        {{ $urFUNG->sd_bulan_ini }}
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($urFUNG->jumlah_spj !== '-')
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->jumlah_spj, 0, ',', '.') }}
+                                                                                    @else
+                                                                                        {{ $urFUNG->jumlah_spj }}
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($urFUNG->sisa_pagu_anggaran !== '-')
+                                                                                        Rp
+                                                                                        {{ number_format($urFUNG->sisa_pagu_anggaran, 0, ',', '.') }}
+                                                                                    @else
+                                                                                        {{ $urFUNG->sisa_pagu_anggaran }}
+                                                                                    @endif
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     @endif
-                                                                @endif
-                                                            @endforeach
+                                                                @endforeach
 
-                                                            <tr>
-                                                                <th colspan="3" class="text-center">Jumlah Pengeluaran</th>
-                                                                <th>Rp 0</th>
-                                                                <th>
-                                                                    @if ($totalPengeluaran !== '-')
-                                                                        Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}
-                                                                    @else
-                                                                        {{ $totalPengeluaran }}
-                                                                    @endif
-                                                                </th>
-                                                                <th>
-                                                                    @if ($totalPengeluaransd !== '-')
-                                                                        Rp {{ number_format($totalPengeluaransd, 0, ',', '.') }}
-                                                                    @else
-                                                                        {{ $totalPengeluaransd }}
-                                                                    @endif
-                                                                </th>
-                                                                <th>
-                                                                    @if ($totalPengeluaransd !== '-')
-                                                                        Rp {{ number_format($totalPengeluaransd, 0, ',', '.') }}
-                                                                    @else
-                                                                        {{ $totalPengeluaransd }}
-                                                                    @endif
-                                                                </th>
-                                                                <th>Rp 0</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th colspan="3" class="text-center">Jumlah
+                                                                        Pengeluaran</th>
+                                                                    <th>Rp 0</th>
+                                                                    <th>
+                                                                        @if ($totalPengeluaran !== '-')
+                                                                            Rp
+                                                                            {{ number_format($totalPengeluaran, 0, ',', '.') }}
+                                                                        @else
+                                                                            {{ $totalPengeluaran }}
+                                                                        @endif
+                                                                    </th>
+                                                                    <th>
+                                                                        @if ($totalPengeluaransd !== '-')
+                                                                            Rp
+                                                                            {{ number_format($totalPengeluaransd, 0, ',', '.') }}
+                                                                        @else
+                                                                            {{ $totalPengeluaransd }}
+                                                                        @endif
+                                                                    </th>
+                                                                    <th>
+                                                                        @if ($totalPengeluaransd !== '-')
+                                                                            Rp
+                                                                            {{ number_format($totalPengeluaransd, 0, ',', '.') }}
+                                                                        @else
+                                                                            {{ $totalPengeluaransd }}
+                                                                        @endif
+                                                                    </th>
+                                                                    <th>Rp 0</th>
+                                                                </tr>
 
-                                                            <tr>
-                                                                <th colspan="7" class="text-center">Saldo Kas</th>
-                                                                <th>RP -;</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th colspan="7" class="text-center">Saldo Kas</th>
+                                                                    <th>RP -;</th>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -521,11 +579,14 @@
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingFour">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                            SPJ REGISTER KAS
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                                aria-expanded="false" aria-controls="collapseFour">
+                                                SPJ REGISTER KAS
                                             </button>
                                         </h2>
-                                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                        <div id="collapseFour" class="accordion-collapse collapse"
+                                            aria-labelledby="headingFour" data-bs-parent="#accordionExample">
 
                                             <div class="accordion-body">
                                                 <div class="table-responsive">
@@ -555,7 +616,8 @@
                                                                             <td>:</td>
                                                                             <td>
                                                                                 @if ($totalPenerimaansd !== '-')
-                                                                                    Rp {{ number_format($totalPenerimaansd, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($totalPenerimaansd, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $totalPenerimaansd }}
                                                                                 @endif
@@ -567,7 +629,8 @@
                                                                             <td>:</td>
                                                                             <td>
                                                                                 @if ($totalPengeluaransd !== '-')
-                                                                                    Rp {{ number_format($totalPengeluaransd, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($totalPengeluaransd, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $totalPengeluaransd }}
                                                                                 @endif
@@ -579,7 +642,8 @@
                                                                             <td>:</td>
                                                                             <td>
                                                                                 @if ($urREG->saldo_buku !== '-')
-                                                                                    Rp {{ number_format($urREG->saldo_buku, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urREG->saldo_buku, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urREG->saldo_buku }}
                                                                                 @endif
@@ -591,7 +655,8 @@
                                                                             <td>:</td>
                                                                             <td>
                                                                                 @if ($urREG->saldo_kas !== '-')
-                                                                                    Rp {{ number_format($urREG->saldo_kas, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urREG->saldo_kas, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urREG->saldo_kas }}
                                                                                 @endif
@@ -603,7 +668,8 @@
                                                                             <td>:</td>
                                                                             <td>
                                                                                 @if ($urREG->positif_negatif !== '-')
-                                                                                    Rp {{ number_format($urREG->positif_negatif, 0, ',', '.') }}
+                                                                                    Rp
+                                                                                    {{ number_format($urREG->positif_negatif, 0, ',', '.') }}
                                                                                 @else
                                                                                     {{ $urREG->positif_negatif }}
                                                                                 @endif
@@ -634,7 +700,8 @@
                                                         <table class="table table-bordered table-striped">
                                                             <tbody>
                                                                 <tr>
-                                                                    <th colspan="6" class="text-center">UANG KERTAS</th>
+                                                                    <th colspan="6" class="text-center">UANG KERTAS
+                                                                    </th>
                                                                 </tr>
                                                                 @foreach ($uraianRegister as $urREGIS)
                                                                     @if ($suratPengantar->id_surat_pengantar == $urREGIS->id_surat_pengantar)
@@ -687,7 +754,8 @@
                                                                             <td>Rp -</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <th colspan="5" class="text-center">Jumlah</th>
+                                                                            <th colspan="5" class="text-center">Jumlah
+                                                                            </th>
                                                                             <th>Rp -</th>
                                                                         </tr>
                                                                     @endif
@@ -755,7 +823,8 @@
                                                                             <td>Rp -</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <th colspan="5" class="text-center">Jumlah</th>
+                                                                            <th colspan="5" class="text-center">Jumlah
+                                                                            </th>
                                                                             <th>Rp -</th>
                                                                         </tr>
                                                                     @endif

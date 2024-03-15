@@ -11,6 +11,8 @@ use Dompdf\Dompdf;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Response;
+use App\Exports\ExportBioSpj;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
 {
@@ -224,6 +226,10 @@ class ExportController extends Controller
         return ($hasil_terbilang == '') ? 'Nol' : $hasil_terbilang;
     }
 
-
+    public function bioSpj() 
+    {
+        // return Excel::download(new ExportBioSpj, 'Daftar-Biodata.xlsx', true, ['X-Vapor-Base64-Encode' => 'True']);
+        return Excel::download(new ExportBioSpj, 'Daftar-Biodata.xlsx');
+    }
 
 }
