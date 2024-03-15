@@ -1,33 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Bpp;
 
-use Illuminate\Http\Request;
-use App\Models\SpjModel;
+use App\Http\Controllers\Controller;
+use App\Imports\Import;
+use App\Imports\ImportUpdate;
+use App\Models\BiodataModel;
+use App\Models\BkuModel;
+use App\Models\BuktiPengeluaranModel;
+use App\Models\SpjFungsionalModel;
+use App\Models\SpjRegisterModel;
 use App\Models\SuratPengantarModel;
+use App\Models\UraianBkuModel;
+use App\Models\UraianSpjFungsionalModel;
+use App\Models\UraianSpjRegisterModel;
+use DateTime;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
-class SpjController extends Controller
+class SpjBppController extends Controller
 {
     public function index()
     {
         $spj = SuratPengantarModel::all();
-        return view('pages.admin.spj.index', [
-            'title' => 'Spj',
-            'active' => 'SPJ',
+        return view('pages.bpp.spj.index', [
             'spj' => $spj,
-            'title' => 'Spj', 'active' => 'spj'
+            'active' => 'SPJ BPP',
+            'title' => 'SPJ BPP'
         ]);
     }
 
-    public function create()
+    public function view($id)
     {
-<<<<<<< Updated upstream
-        $hel = [
-            'active' => 'spj',
-            'title' => 'Tambah Surat Pertanggung Jawaban'
-        ];
-        return view('pages.admin.spj.create', $hel);
-=======
         $suratPengantar = SuratPengantarModel::findOrFail($id);
         $bku = BkuModel::all();
         $buktiPengeluaran = BuktiPengeluaranModel::all();
@@ -42,8 +46,8 @@ class SpjController extends Controller
         $totalPengeluaran = 0;
         $totalSaldo = 0;
         foreach ($uraianBku as $urBKU) {
-            if ($urBKU->id_surat_pengantar == $id){
-                
+            if ($urBKU->id_surat_pengantar == $id) {
+
                 if (is_numeric($urBKU->penerimaan)) {
                     $totalPenerimaan += $urBKU->penerimaan;
                 }
@@ -92,20 +96,18 @@ class SpjController extends Controller
 
                 if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $penerimaanSP2D) {
                     $penerimaanSP2D = $urFUNG->bulan_ini;
-                } 
+                }
                 if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $penerimaanSP2Dsd) {
                     $penerimaanSP2Dsd = $urFUNG->sd_bulan_ini;
                 }
-                
             } else if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Penerimaan' && $urFUNG->uraian == 'Potongan Pajak') {
 
                 if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $penerimaanPajak) {
                     $penerimaanPajak = $urFUNG->bulan_ini;
-                } 
+                }
                 if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $penerimaanPajaksd) {
                     $penerimaanPajaksd = $urFUNG->sd_bulan_ini;
                 }
-
             }
         }
         $totalPenerimaan = $penerimaanSP2D + $penerimaanPajak;
@@ -122,29 +124,26 @@ class SpjController extends Controller
 
                 if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $pengeluaranSP2D) {
                     $pengeluaranSP2D = $urFUNG->bulan_ini;
-                } 
+                }
                 if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $pengeluaranSP2Dsd) {
                     $pengeluaranSP2Dsd = $urFUNG->sd_bulan_ini;
                 }
-                
             } else if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Pengeluaran' && $urFUNG->uraian == 'Potongan Pajak') {
 
                 if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $pengeluaranPajak) {
                     $pengeluaranPajak = $urFUNG->bulan_ini;
-                } 
+                }
                 if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $pengeluaranPajaksd) {
                     $pengeluaranPajaksd = $urFUNG->sd_bulan_ini;
                 }
-
             }
         }
         $totalPengeluaran = $pengeluaranSP2D + $pengeluaranPajak;
         $totalPengeluaransd = $pengeluaranSP2Dsd + $pengeluaranPajaksd;
-        $urBKUs = UraianBkuModel::orderBy('no_urut', 'asc')->get();
         // END Group Syntax Pengeluaran
 
-        return view('pages.admin.spj.view', [
-            'title' => 'Spj',
+        return view('pages.bpp.spj.view', [
+            'title' => 'SPJ BPP',
             'title2' => 'Detail SPJ',
             'suratPengantar' => $suratPengantar,
             'bku' => $bku,
@@ -162,13 +161,12 @@ class SpjController extends Controller
             'jmlBulanIni' => $jmlBulanIni,
             'jmlsdBulanIni' => $jmlsdBulanIni,
             'jmlAnggaran' => $jmlAnggaran,
-            'jmlBulanLalu' => $jmlBulanLalu,    
-            'totalPenerimaan' => $totalPenerimaan,    
-            'totalPenerimaansd' => $totalPenerimaansd,    
-            'totalPengeluaran' => $totalPengeluaran,    
-            'totalPengeluaransd' => $totalPengeluaransd, 
-            'urBKUs' => $urBKUs, 
-            'active' => 'SPJ'
+            'jmlBulanLalu' => $jmlBulanLalu,
+            'totalPenerimaan' => $totalPenerimaan,
+            'totalPenerimaansd' => $totalPenerimaansd,
+            'totalPengeluaran' => $totalPengeluaran,
+            'totalPengeluaransd' => $totalPengeluaransd,
+            'active' => 'SPJ BPP'
         ]);
     }
 
@@ -176,12 +174,65 @@ class SpjController extends Controller
     {
         SuratPengantarModel::where('id_surat_pengantar', $id)->delete();
 
-        return redirect('/data-spj')->with('success', 'Data berhasil dihapus.');
+        return redirect('/spj')->with('success', 'Data berhasil dihapus.');
     }
 
-    public function export_surat_pengantar() 
+    public function import(Request $request)
     {
-        return Excel::download(new SPExport, 'spj.xlsx');
->>>>>>> Stashed changes
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        date_default_timezone_set('Asia/Jakarta');
+        $now = new DateTime();
+        $formatted_datetime = $now->format('dmYHis');
+        $type = $request->input('type');
+
+        // $file_name = 'SPJ_' . $formatted_datetime . '.xlsx';
+        // $destination_folder = 'arsip/spj';
+        // // dd($destination_folder, $file_name); die;
+        // $this->create_folder($destination_folder);
+        // try {
+        //     Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
+        // } catch (\Exception $e) {
+        //     return redirect()->to('/spj-bpp')->with('error', $e->getMessage());
+        // }
+        // return redirect()->back()->with('success', 'Data berhasil diimport.');
+
+        if ($type === 'add') {
+            $file_name = 'SPJ_' . $formatted_datetime . '.xlsx';
+            $destination_folder = 'arsip/spj';
+
+            $this->create_folder($destination_folder);
+
+            try {
+                Excel::import(new Import(), $request->file('file'), $destination_folder . '/' . $file_name);
+            } catch (\Exception $e) {
+                return redirect()->to('/spj-bpp')->with('error', $e->getMessage());
+            }
+
+        } else if ($type === 'update') {
+            $file_name = 'SPJ_' . $formatted_datetime . '.xlsx';
+            $destination_folder = 'arsip/spj';
+
+            $this->create_folder($destination_folder);
+
+            try {
+                Excel::import(new ImportUpdate(), $request->file('file'), $destination_folder . '/' . $file_name);
+            } catch (\Exception $e) {
+                return redirect()->to('/spj-bpp')->with('error', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('error', 'Anda belum memilih tipe proses Add/Update.');
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil diimport.');
+    }
+
+    private function create_folder($folder_path)
+    {
+        if (!file_exists($folder_path)) {
+            mkdir($folder_path, 0777, true);
+        }
     }
 }

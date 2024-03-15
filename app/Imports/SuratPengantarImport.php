@@ -18,6 +18,20 @@ class SuratPengantarImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         $tgl = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+<<<<<<< Updated upstream
+=======
+        $cekNota = BuktiPengeluaranModel::where('id_td_bukti', $row[7])->exists();
+        
+        if(!$cekNota) {
+            throw new \Exception("Nomor Bukti Pengeluaran tidak ditemukan");
+        }
+
+        if (SuratPengantarModel::where('id_td_bukti', $row[7])->exists()) {
+            throw new \Exception("Nomor Bukti Pengeluaran Sudah Digunakan.");
+            return null;
+          }
+
+>>>>>>> Stashed changes
         $model = new SuratPengantarModel([
             'nomor_surat' => $row[0],
             'sifat' => $row[1],
@@ -32,7 +46,7 @@ class SuratPengantarImport implements ToModel, WithStartRow
 
         // Session::put('SESS_SURAT_PENGANTAR', $model->id_surat_pengantar);
 
-        return $model;
+        // return $model;
     }
 
     /**
