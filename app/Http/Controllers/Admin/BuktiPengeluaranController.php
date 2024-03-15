@@ -48,13 +48,16 @@ class BuktiPengeluaranController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'td_id_pengajuan' => 'required|numeric',
                 'td_biaya' => 'required',
                 // 'td_jumlah_biaya' => 'required',
+                'no_bukti' => 'required',
                 'uraian_kegiatan.*' => 'nullable|string',
                 'uraian_kegiatan_jumlah.*' => 'nullable',
+                'total' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -91,6 +94,7 @@ class BuktiPengeluaranController extends Controller
             unset($validatedData['nd_sub_kegiatan']);
             unset($validatedData['nd_tanggal']);
 
+            // dd($validatedData);
             // Create BuktiPengeluaranModel
             BuktiPengeluaranModel::create([
                 'td_id_pengajuan' => $validatedData['td_id_pengajuan'],
@@ -101,6 +105,8 @@ class BuktiPengeluaranController extends Controller
                 'td_bp_id' => $validatedData['td_bp_id'],
                 'td_biaya' => $validatedData['td_biaya'],
                 'td_jumlah_biaya' => $validatedData['td_biaya'],
+                'total_uraian' => $validatedData['total'],
+                'no_bukti' => $validatedData['no_bukti'],
             ]);
 
             return redirect('/bukti-pengeluaran')->with('success', 'Data pengajuan berhasil disimpan!');
@@ -117,11 +123,33 @@ class BuktiPengeluaranController extends Controller
         $buktiPengeluaran = BuktiPengeluaranModel::findOrFail($id);
         $pengajuans = PengajuanModel::all(); // or however you retrieve $pengajuans in your context
 
+        $namaKegiatan = '';
+        $subKegiatan = '';
+        foreach ($pengajuans as $peng) {
+            if ($peng->id_pengajuan == $buktiPengeluaran->td_id_pengajuan) {
+                $namaKegiatan = $peng->p_nama_kegiatan;
+                $subKegiatan = $peng->p_sub_kegiatan;
+                $tglKegiatan = $peng->p_tanggal;
+            }
+        }
+
+        $data = json_decode($buktiPengeluaran->td_uraian, true);
+        $total = 0;
+
+        foreach ($data as $item) {
+            $jumlah = str_replace(['Rp ', '.'], '', $item['jumlah']);
+            $total += (int)$jumlah;
+        }
         return view('pages.admin.bukti-pengeluaran.edit', [
             'title' => 'Edit Bukti Pengeluaran',
             'active' => 'Bukti-pengeluaran',
             'buktiPengeluaran' => $buktiPengeluaran,
             'pengajuans' => $pengajuans,
+            'namaKegiatan' => $namaKegiatan,
+            'subKegiatan' => $subKegiatan,
+            'tglKegiatan' => $tglKegiatan,
+            'data' => $data,
+            'total' => $total,
         ]);
     }
 
@@ -131,8 +159,10 @@ class BuktiPengeluaranController extends Controller
             $validator = Validator::make($request->all(), [
                 'td_id_pengajuan' => 'required|numeric',
                 'td_biaya' => 'required',
+                'no_bukti' => 'required',
                 'uraian_kegiatan.*' => 'nullable|string',
                 'uraian_kegiatan_jumlah.*' => 'nullable',
+                'total' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -174,6 +204,8 @@ class BuktiPengeluaranController extends Controller
                 'td_bp_id' => $validatedData['td_bp_id'],
                 'td_biaya' => $validatedData['td_biaya'],
                 'td_jumlah_biaya' => $validatedData['td_biaya'],
+                'total_uraian' => $validatedData['total'],
+                'no_bukti' => $validatedData['no_bukti'],
             ]);
 
             return redirect('/bukti-pengeluaran')->with('success', 'Data bukti pengeluaran berhasil diperbarui!');

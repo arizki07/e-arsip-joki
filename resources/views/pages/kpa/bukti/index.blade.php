@@ -41,7 +41,7 @@
                                 <th>Tanggal</th>
                                 <th>Export</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -73,7 +73,7 @@
                                             <span class="badge bg-primary">Approve</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
                                         <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
                                             class="btn icon btn-primary">
@@ -94,8 +94,7 @@
                                                 </button>
                                             @endif
                                         </form>
-                                        {{-- <a href="#" class="btn icon btn-danger"><i class="fas fa-times"></i></a> --}}
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

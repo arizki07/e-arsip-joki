@@ -206,7 +206,7 @@
                         <div class="tebal">
                             <font style="font-size: 14px;">TANDA BUKTI PENGELUARAN</font>
                         </div>
-                        <font style="font-size: 14px;">NOMOR : ......./GU/SATPOLPP/GU/12/{{ \Carbon\Carbon::now()->locale('id')->isoFormat('YYYY') }}</font>
+                        <font style="font-size: 14px;">NOMOR : {{ $data->no_bukti }}</font>
                         <!-- <div class="kontak">
                             E-mail: <font style="color: blue;">smp-2smbr@gmail.com</font> Telp: (021) 2176263 Website: <font style="color: blue;">smpn-2-smbr.sch.id</font>
                         </div> -->
@@ -263,33 +263,18 @@
                 <tr>
                     <td class="content-value-ttd" style="border: 1px solid #000;">
                         @foreach (json_decode($data->td_uraian) as $uraian)
-{{ $uraian->uraian }}
+{{ $uraian->uraian }} <br>
 @endforeach
                     </td>
                     <td class="content-value-ttd" style="border: 1px solid #000;">
                         @foreach (json_decode($data->td_uraian) as $uraian)
-{{ $uraian->jumlah }}
+{{ $uraian->jumlah }} <br>
 @endforeach
                     </td>
                 </tr>
                 <tr>
                   <td class="content-value-ttd" style="border: 1px solid #000;">Jumlah Total</td>
-                  <td class="content-value-ttd" style="border: 1px solid #000;">
-                    @php
-                        $totalJumlah = 0;
-                    @endphp
-
-                    @foreach (json_decode($data->td_uraian) as $uraian)
-@php
-    $jumlah = (float) str_replace('Rp ', '', $uraian->jumlah);
-
-    $totalJumlah += $jumlah;
-@endphp
-@endforeach
-
-                    Rp {{ number_format($totalJumlah, 3) }}
-
-                </td>
+                  <td class="content-value-ttd" style="border: 1px solid #000;">{{ $data->total_uraian }}</td>
                 </tr>
             </table>
             <br>

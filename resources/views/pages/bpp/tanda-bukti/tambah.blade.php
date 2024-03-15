@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <select class="form-control mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
+                    <select class="form-select mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
                         <option disabled selected>-- Pilih Pengajuan --</option>
                         @foreach ($pengajuans as $pengajuan)
                             <option value="{{ $pengajuan->id_pengajuan }}">{{ $pengajuan->p_nama_kegiatan }} -
@@ -59,28 +59,33 @@
                         <div class="form-group">
                             <label for="basicInput">Nama Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_nama_kegiatan" id="nd_nama_kegiatan"
-                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan">
+                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Sub Kegiatan</label>
                             <input type="text" class="form-control mt-1" name="td_sub_kegiatan" id="nd_sub_kegiatan"
-                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan">
+                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Nomor Nota</label>
                             <input type="text" class="form-control mt-1" name="td_nomor_nota" id="nd_nomor_nota"
-                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota">
+                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Tanggal</label>
                             <input type="date" class="form-control mt-1" name="td_tanggal" id="nd_tanggal"
-                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}">
+                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Jumlah Biaya</label>
                             <input type="text" class="form-control mt-1" name="td_biaya" id="nd_jumlah_biaya"
                                 value="{{ old('nd_jumlah_biaya') }}" placeholder="Jumlah Biaya"
                                 oninput="formatRupiah(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="basicInput">No Surat Bukti Pengeluaran</label>
+                            <input type="text" class="form-control mt-1" name="no_bukti" id="no_bukti"
+                                value="{{ old('no_bukti') }}" placeholder="No Surat Bukti Pengeluaran">
                         </div>
                         <div class="form-group mt-3" id="uraianContainer">
                             <div class="d-flex justify-content-between align-items-center">
@@ -94,7 +99,8 @@
                                         <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan.0') }}</textarea>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control mt-1" name="uraian_kegiatan_jumlah[]"
+                                        <input type="text" class="form-control mt-1 uraian-input"
+                                            name="uraian_kegiatan_jumlah[]" id="uraian_kegiatan_jumlah[]"
                                             placeholder="Jumlah" value="{{ old('uraian_kegiatan_jumlah.0') }}"
                                             oninput="formatRupiah(this)">
                                     </div>
@@ -105,11 +111,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row mt-2">
+                                <div class="col-md-4 text-right">
+                                    {{-- <h5>Jumlah</h5> --}}
+                                </div>
+                                <div class="col-md-2 mt-2">
+                                    <p class="ms-5">Jumlah :</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" readonly class="form-control mt-1 total" id="total"
+                                        name="total" placeholder="Total Jumlah" readonly>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a type="button" href="{{ url('pengajuan') }}"
+                            <a type="button" href="{{ url('bukti-bpp.tambah') }}"
                                 class="btn btn-warning me-1 mb-1">Kembali</a>
                         </div>
                     </form>
@@ -121,6 +141,17 @@
 
 @section('scripts')
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Menangani perubahan pada input jumlah uraian
+            document.getElementsByName('uraian_kegiatan_jumlah[]').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    updateTotal();
+                });
+            });
+            updateTotal();
+        });
+
+
         function formatRupiah(input) {
             let value = input.value.replace(/[^0-9]/g, "");
 
@@ -159,10 +190,11 @@
 
             var input = document.createElement('input');
             input.setAttribute('type', 'text');
-            input.setAttribute('class', 'form-control mt-1');
+            input.setAttribute('class', 'form-control mt-1 uraian-input');
             input.setAttribute('name', 'uraian_kegiatan_jumlah[]');
             input.setAttribute('placeholder', 'Jumlah');
             input.setAttribute('oninput', 'formatRupiah(this)');
+            input.addEventListener('input', updateTotal);
 
             inputCol.appendChild(input);
 
@@ -187,12 +219,37 @@
             uraianRow.appendChild(rowDiv);
 
             container.appendChild(uraianRow);
+
+            // Hitung total saat menambahkan kolom baru
+            // updateTotal();
         }
 
         function removeUraianColumn(button) {
             var uraianRow = button.closest('.uraian-row');
             uraianRow.remove();
+
+            // Hitung ulang total saat menghapus kolom
+            updateTotal();
         }
+
+        function updateTotal() {
+            var total = 0;
+            var inputs = document.querySelectorAll('.uraian-input');
+            inputs.forEach(function(input) {
+                var value = input.value.replace(/\D/g, ''); // Menghapus karakter non-digit
+                if (value !== '') {
+                    total += parseInt(value);
+                }
+            });
+
+            var totalInput = document.getElementById('total');
+            totalInput.value = formatCurrency(total);
+        }
+
+        function formatCurrency(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
 
         $(".getPengajuanById").on("change", function() {
             getDataPengajuan();
@@ -206,7 +263,7 @@
             if (selectedPengajuanId !== "") {
                 $.ajax({
                     type: 'GET',
-                    url: '/bukti-bpp-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
+                    url: '/bukti-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
                         // "Authorization": "Bearer " + parsedObj.token.access_token

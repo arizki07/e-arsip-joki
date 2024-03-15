@@ -237,7 +237,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(App\Http\Controllers\Kpa\PengajuanKpaController::class)->group(function () {
             Route::get('/pengajuan-kpa', 'pengajuan');
-            Route::post('/kpa-acc/{id}', 'verifikasi');
+            Route::post('/kpa-acc/{id}', 'verifikasi')->name('kpa-acc');
         });
 
         Route::controller(App\Http\Controllers\Kpa\BuktiKpaController::class)->group(function () {
@@ -246,6 +246,19 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(App\Http\Controllers\Kpa\SpjKpaController::class)->group(function () {
             Route::get('/kpa-spj', 'spj');
+            Route::get('/kpa-data-spj', 'index');
+            Route::get('/kpa-spj/create', 'create');
+            Route::get('/kpa-spj/view/{id}', 'view');
+            Route::get('/kpa-spj/delete/{id}', 'delete');
+
+            Route::get('/kpa-spj/export/surat_pengantar', 'export_surat_pengantar');
+
+            // AREA CETAK SPJ
+            Route::get('/kpa-spj/pdf/surat_pengantar', 'pdf_surat_pengantar');
+            Route::get('/kpa-spj/pdf/bku', 'pdf_bku');
+            Route::get('/kpa-spj/pdf/fungsional', 'pdf_fungsional');
+            Route::get('/kpa-spj/pdf/register_kas', 'pdf_register_kas');
+            Route::get('/kpa-spj/pdf/all_spj', 'pdf_all_spj');
         });
 
         Route::controller(ExportController::class)->group(function () {
