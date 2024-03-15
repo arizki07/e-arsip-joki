@@ -24,7 +24,7 @@ class SpjKpaController extends Controller
         return view('pages.kpa.spj.index', [
             'spj' => $spj,
             'active' => 'SPJ',
-            'title' => 'SPJ BPP'
+            'title' => 'SPJ KPA'
         ]);
     }
 
