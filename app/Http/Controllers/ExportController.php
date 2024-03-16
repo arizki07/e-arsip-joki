@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\BuktiPengeluaranModel;
 use App\Models\PengajuanModel;
 use App\Models\NotaDinasModel;
+use App\Models\SuratPengantarModel;
+use App\Models\UraianBkuModel;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Support\Facades\View;
 use Dompdf\Dompdf;
@@ -13,6 +16,8 @@ use Dompdf\Options;
 use Illuminate\Support\Facades\Response;
 use App\Exports\ExportBioSpj;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ExportController extends Controller
 {
@@ -133,27 +138,27 @@ class ExportController extends Controller
             $buktiPengID = $buktiPengeluaran['id_td_bukti'];
 
             $data = $model->select(
-                            'td_bukti_pengeluarans.*',
-                            'pa.nama as nama_pa',
-                            'pa.nip as nip_pa',
-                            'kpa.nama as nama_kpa',
-                            'kpa.nip as nip_kpa',
-                            'bpp.nama as nama_bpp',
-                            'bpp.nip as nip_bpp',
-                            'peng.p_nama_kegiatan',
-                            'peng.p_sub_kegiatan',
-                            'peng.p_tanggal',
-                            )
-                            ->leftJoin('biodatas as pa', 'pa.id_biodata', '=', 'td_bukti_pengeluarans.td_pa_id')
-                            ->leftJoin('biodatas as kpa', 'kpa.id_biodata', '=', 'td_bukti_pengeluarans.td_kpa_id')
-                            ->leftJoin('biodatas as bpp', 'bpp.id_biodata', '=', 'td_bukti_pengeluarans.td_bpp_id')
-                            ->leftJoin('biodatas as bp', 'bp.id_biodata', '=', 'td_bukti_pengeluarans.td_bp_id')
-                            ->join('pengajuans as peng', 'peng.id_pengajuan', '=', 'td_bukti_pengeluarans.td_id_pengajuan')
-                            ->where('td_bukti_pengeluarans.id_td_bukti', $buktiPengID)
-                            ->first();
-                            $amountString = preg_replace("/[^0-9]/", "", $data->td_biaya);
+                'td_bukti_pengeluarans.*',
+                'pa.nama as nama_pa',
+                'pa.nip as nip_pa',
+                'kpa.nama as nama_kpa',
+                'kpa.nip as nip_kpa',
+                'bpp.nama as nama_bpp',
+                'bpp.nip as nip_bpp',
+                'peng.p_nama_kegiatan',
+                'peng.p_sub_kegiatan',
+                'peng.p_tanggal',
+            )
+                ->leftJoin('biodatas as pa', 'pa.id_biodata', '=', 'td_bukti_pengeluarans.td_pa_id')
+                ->leftJoin('biodatas as kpa', 'kpa.id_biodata', '=', 'td_bukti_pengeluarans.td_kpa_id')
+                ->leftJoin('biodatas as bpp', 'bpp.id_biodata', '=', 'td_bukti_pengeluarans.td_bpp_id')
+                ->leftJoin('biodatas as bp', 'bp.id_biodata', '=', 'td_bukti_pengeluarans.td_bp_id')
+                ->join('pengajuans as peng', 'peng.id_pengajuan', '=', 'td_bukti_pengeluarans.td_id_pengajuan')
+                ->where('td_bukti_pengeluarans.id_td_bukti', $buktiPengID)
+                ->first();
+            $amountString = preg_replace("/[^0-9]/", "", $data->td_biaya);
 
-                            $terbilang = $this->terbilangRupiah($amountString);
+            $terbilang = $this->terbilangRupiah($amountString);
             $pdf = PDF::setOptions([
                 'isPhpEnabled' => true,
                 'isHtml5ParserEnabled' => true,
@@ -172,7 +177,6 @@ class ExportController extends Controller
             // Return the PDF content without triggering download
             return response($pdf->output())
                 ->header('Content-Type', 'application/pdf');
-
         } else {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
@@ -226,10 +230,313 @@ class ExportController extends Controller
         return ($hasil_terbilang == '') ? 'Nol' : $hasil_terbilang;
     }
 
-    public function bioSpj() 
+    public function bioSpj()
     {
         // return Excel::download(new ExportBioSpj, 'Daftar-Biodata.xlsx', true, ['X-Vapor-Base64-Encode' => 'True']);
         return Excel::download(new ExportBioSpj, 'Daftar-Biodata.xlsx');
     }
 
+
+    public function export_spj(Request $request, $id)
+    {
+        $model = new SuratPengantarModel();
+        $spjData = $model->find($id);
+        $act = $request->get('typeSPJ');
+        // dd($act);
+        // die;
+
+        if ($spjData) {
+            $suratPengantarID = $spjData['id_surat_pengantar'];
+
+            $querySPJ = (new SuratPengantarModel())->querySpjAll($suratPengantarID);
+            $queryUraianBku = (new SuratPengantarModel())->queryUraianBku($suratPengantarID);
+            $queryUraianFungsional = (new SuratPengantarModel())->queryUraianFungsional($suratPengantarID);
+            $queryFungsional = (new SuratPengantarModel())->queryFungsi($suratPengantarID);
+            // dd($querySPJ);
+            // dd($queryUraianBku);
+            // dd($queryUraianFungsional);
+            // die;
+            $uraianJson = $querySPJ->td_uraian;
+            $uraianArray = json_decode($uraianJson, true);
+            $uraianData = [];
+            foreach ($uraianArray as $uraianItem) {
+                $uraianData[] = [
+                    'jumlah' => $uraianItem['jumlah'],
+                    'uraian' => $uraianItem['uraian']
+                ];
+            }
+
+            $total = 0;
+            foreach ($uraianData as $item) {
+                $jumlah = str_replace(['Rp ', '.'], '', $item['jumlah']);
+                $total += (int)$jumlah;
+            }
+
+            // URAIAN FUNGSIONAL (TIPE == URAIAN FUNGSIONAL)
+            $jumlahSpjTerbesar = 0;
+            $jmlBulanIni = 0;
+            $jmlsdBulanIni = 0;
+            $jmlAnggaran = 0;
+            $jmlBulanLalu = 0;
+            foreach ($queryUraianFungsional as $urFUNG) {
+                if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Uraian Fungsional') {
+                    if (is_numeric($urFUNG->jumlah_spj) && $urFUNG->jumlah_spj > $jumlahSpjTerbesar) {
+                        $jumlahSpjTerbesar = $urFUNG->jumlah_spj;
+                    }
+                    if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $jmlBulanIni) {
+                        $jmlBulanIni = $urFUNG->bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $jmlsdBulanIni) {
+                        $jmlsdBulanIni = $urFUNG->sd_bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->jumlah_anggaran) && $urFUNG->jumlah_anggaran > $jmlAnggaran) {
+                        $jmlAnggaran = $urFUNG->jumlah_anggaran;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_lalu) && $urFUNG->sd_bulan_lalu > $jmlBulanLalu) {
+                        $jmlBulanLalu = $urFUNG->sd_bulan_lalu;
+                    }
+                }
+            }
+
+            // START Group Syntax Penerimaan
+            $penerimaanSP2D = 0;
+            $penerimaanPajak = 0;
+            $penerimaanSP2Dsd = 0;
+            $penerimaanPajaksd = 0;
+            foreach ($queryUraianFungsional as $urFUNG) {
+                if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Penerimaan' && $urFUNG->uraian == 'SP2D / Panjar') {
+
+                    if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $penerimaanSP2D) {
+                        $penerimaanSP2D = $urFUNG->bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $penerimaanSP2Dsd) {
+                        $penerimaanSP2Dsd = $urFUNG->sd_bulan_ini;
+                    }
+                } else if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Penerimaan' && $urFUNG->uraian == 'Potongan Pajak') {
+
+                    if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $penerimaanPajak) {
+                        $penerimaanPajak = $urFUNG->bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $penerimaanPajaksd) {
+                        $penerimaanPajaksd = $urFUNG->sd_bulan_ini;
+                    }
+                }
+            }
+            $totalPenerimaan = $penerimaanSP2D + $penerimaanPajak;
+            $totalPenerimaansd = $penerimaanSP2Dsd + $penerimaanPajaksd;
+
+            // START Group Syntax Pengeluaran
+            $pengeluaranSP2D = 0;
+            $pengeluaranPajak = 0;
+            $pengeluaranSP2Dsd = 0;
+            $pengeluaranPajaksd = 0;
+            foreach ($queryUraianFungsional as $urFUNG) {
+                if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Pengeluaran' && $urFUNG->uraian == 'SP2D / Panjar') {
+
+                    if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $pengeluaranSP2D) {
+                        $pengeluaranSP2D = $urFUNG->bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $pengeluaranSP2Dsd) {
+                        $pengeluaranSP2Dsd = $urFUNG->sd_bulan_ini;
+                    }
+                } else if ($urFUNG->id_surat_pengantar == $id && $urFUNG->tipe == 'Pengeluaran' && $urFUNG->uraian == 'Potongan Pajak') {
+
+                    if (is_numeric($urFUNG->bulan_ini) && $urFUNG->bulan_ini > $pengeluaranPajak) {
+                        $pengeluaranPajak = $urFUNG->bulan_ini;
+                    }
+                    if (is_numeric($urFUNG->sd_bulan_ini) && $urFUNG->sd_bulan_ini > $pengeluaranPajaksd) {
+                        $pengeluaranPajaksd = $urFUNG->sd_bulan_ini;
+                    }
+                }
+            }
+            $totalPengeluaran = $pengeluaranSP2D + $pengeluaranPajak;
+            $totalPengeluaransd = $pengeluaranSP2Dsd + $pengeluaranPajaksd;
+
+            if ($act == 'spj_surat_pengantar') {
+                $view = view('doc/spj/surat-pengantar', ['surPeng' => $querySPJ, 'uraianData' => $uraianData, 'total' => $total]);
+            } else if ($act == 'spj_bku') {
+                $totalPenerimaanBku = 0;
+                $totalPengeluaranBku = 0;
+                $totalSaldo = 0;
+                foreach ($queryUraianBku as $urBKU) {
+                    if ($urBKU->id_surat_pengantar == $id) {
+
+                        if (is_numeric($urBKU->penerimaan)) {
+                            $totalPenerimaanBku += $urBKU->penerimaan;
+                        }
+                        if (is_numeric($urBKU->pengeluaran)) {
+                            $totalPengeluaranBku += $urBKU->pengeluaran;
+                        }
+                        if (is_numeric($urBKU->saldo)) {
+                            $totalSaldo += $urBKU->saldo;
+                        }
+                    }
+                }
+                $view = view('doc/spj/bku', ['bku' => $querySPJ, 'queryUraianBku' => $queryUraianBku, 'uraianData' => $uraianData, 'total' => $total, 'totalPenerimaanBku' => $totalPenerimaanBku, 'totalPengeluaranBku' => $totalPengeluaranBku, 'totalSaldo' => $totalSaldo]);
+            } else if ($act == 'spj_fungsional') {
+                $view = view('doc/spj/fungsional', ['bku' => $querySPJ, 'urFungsional' => $queryUraianFungsional, 'fungsi' => $queryFungsional, 'uraianData' => $uraianData, 'jumlahSpjTerbesar' => $jumlahSpjTerbesar, 'jmlBulanIni' => $jmlBulanIni, 'jmlsdBulanIni' => $jmlsdBulanIni, 'jmlAnggaran' => $jmlAnggaran, 'jmlBulanLalu' => $jmlBulanLalu, 'totalPenerimaan' => $totalPenerimaan, 'totalPenerimaansd' => $totalPenerimaansd, 'totalPengeluaran' => $totalPengeluaran, 'totalPengeluaransd' => $totalPengeluaransd]);
+            } else if ($act == 'spj_register_kas') {
+                $view = view('doc/spj/register', [
+                    'bku' => $querySPJ,
+                    'totalPenerimaan' => $totalPenerimaan,
+                    'totalPengeluaran' => $totalPengeluaran,
+                    'uraianData' => $uraianData
+                ]);
+            }
+
+            $dompdf = new Dompdf();
+            $options = new \Dompdf\Options();
+            $options->set('isPhpEnabled', true);
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+            $dompdf->setOptions($options);
+            setlocale(LC_TIME, 'id_ID');
+            date_default_timezone_set('Asia/Jakarta');
+
+            $dompdf->loadHtml($view);
+
+            $dompdf->setPaper('F4', 'portrait');
+
+            $dompdf->render();
+
+            $pdfContent = $dompdf->output();
+
+            if ($act == 'spj_surat_pengantar') {
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $filename = 'SPJ_SURAT PENGANTAR_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+            } else if ($act == 'spj_bku') {
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $filename = 'SPJ_BKU_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+            } else if ($act == 'spj_fungsional') {
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $filename = 'SPJ_FUNGSIONAL_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+            } else if ($act == 'spj_register_kas') {
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $filename = 'SPJ_REGISTER KAS_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+            } else {
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $filename = 'SPJ_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+            }
+
+            $filePath = public_path('arsip/pdf/' . $filename);
+            file_put_contents($filePath, $pdfContent);
+
+            $response = response($pdfContent);
+            $response->header('Content-Type', 'application/pdf');
+            $response->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+            $response->setContent($pdfContent);
+
+            return $response;
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+    }
+
+    public function export_spj_all($id)
+    {
+        $model = new SuratPengantarModel();
+
+        $spjData = $model->find($id);
+
+        if ($spjData) {
+            $suratPengantarID = $spjData['id_surat_pengantar'];
+            $result = (new SuratPengantarModel())->querySpjAll($suratPengantarID);
+            $uraianJson = $result->td_uraian;
+            $uraianArray = json_decode($uraianJson, true);
+            $uraianData = [];
+            foreach ($uraianArray as $uraianItem) {
+                $uraianData[] = [
+                    'jumlah' => $uraianItem['jumlah'],
+                    'uraian' => $uraianItem['uraian']
+                ];
+            }
+
+            $total = 0;
+            foreach ($uraianData as $item) {
+                $jumlah = str_replace(['Rp ', '.'], '', $item['jumlah']);
+                $total += (int)$jumlah;
+            }
+
+            // dd($result);
+            // die;
+
+            $view = view('doc/spj/spj', ['result' => $result, 'uraianData' => $uraianData, 'total' => $total]);
+
+            $dompdf = new Dompdf();
+            $options = new \Dompdf\Options();
+            $options->set('isPhpEnabled', true);
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+            $dompdf->setOptions($options);
+            setlocale(LC_TIME, 'id_ID');
+            date_default_timezone_set('Asia/Jakarta');
+
+            $dompdf->loadHtml($view);
+
+            $dompdf->setPaper('F4', 'portrait');
+
+            $dompdf->render();
+
+            $pdfContent = $dompdf->output();
+
+            $pdfName = str_replace(' ', '_', $spjData['perihal']);
+            $filename = $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+
+            $filePath = public_path('arsip/pdf/' . $filename);
+            file_put_contents($filePath, $pdfContent);
+
+            $response = response($pdfContent);
+            $response->header('Content-Type', 'application/pdf');
+            $response->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+            $response->setContent($pdfContent);
+
+            return $response;
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+    }
 }
+
+// JANGAN DIHAPUS (CEK QUERY SQL SPJ ALL)
+// SELECT 
+//     sp.*, 
+//     pj.*, 
+// 		ju.*, 
+// 		bku.*, 
+// 		urbku.*,
+// 		fung.*,
+// 		urfung.*,
+// 		reg.*,
+// 		urreg.*,
+// 		bku.*,
+//     bd_kpa.nama AS nama_kpa, 
+//     bd_pa.nama AS nama_pa, 
+//     bd_bpp.nama AS nama_bpp
+// FROM 
+//     spj_surat_pengantar AS sp
+// JOIN 
+//     td_bukti_pengeluarans AS pj ON sp.id_td_bukti = pj.id_td_bukti
+// LEFT JOIN 
+// 		pengajuans AS ju ON pj.td_id_pengajuan = ju.id_pengajuan
+// LEFT JOIN 
+//     biodatas AS bd_kpa ON pj.td_kpa_id = bd_kpa.id_biodata
+// LEFT JOIN 
+//     biodatas AS bd_pa ON pj.td_pa_id = bd_pa.id_biodata
+// LEFT JOIN 
+//     biodatas AS bd_bpp ON pj.td_bpp_id = bd_bpp.id_biodata
+// LEFT JOIN 
+// 		spj_bku AS bku ON bku.id_surat_pengantar = sp.id_surat_pengantar
+// LEFT JOIN 
+// 		spj_bku_uraian AS urbku ON urbku.id_surat_pengantar = sp.id_surat_pengantar
+// LEFT JOIN 
+// 		spj_fungsional AS fung ON fung.id_surat_pengantar = sp.id_surat_pengantar
+// LEFT JOIN 
+// 		spj_fungsional_uraian AS urfung ON urfung.id_surat_pengantar = sp.id_surat_pengantar
+// LEFT JOIN 
+// 		spj_register_kas AS reg ON reg.id_surat_pengantar = sp.id_surat_pengantar
+// LEFT JOIN 
+// 		spj_register_uraian AS urreg ON urreg.id_surat_pengantar = sp.id_surat_pengantar
+// WHERE 
+//     sp.id_surat_pengantar = 'ISI PAKE ID SURAT PENGANTAR';

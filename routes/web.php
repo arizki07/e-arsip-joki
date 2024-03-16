@@ -142,6 +142,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng');
             Route::get('/export/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng');
             Route::get('/export/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng');
+            // SPJ
+            Route::get('/spj/export/document/{id}', 'export_spj');
         });
 
         Route::controller(App\Http\Controllers\Admin\BuktiPengeluaranController::class)->group(function () {
@@ -159,14 +161,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj/create', 'create');
             Route::get('/spj/view/{id}', 'view');
             Route::get('/spj/delete/{id}', 'delete');
-            Route::get('/spj/export/surat_pengantar', 'export_surat_pengantar');
-
-            // AREA CETAK SPJ
-            Route::get('/spj/pdf/surat_pengantar', 'pdf_surat_pengantar');
-            Route::get('/spj/pdf/bku', 'pdf_bku');
-            Route::get('/spj/pdf/fungsional', 'pdf_fungsional');
-            Route::get('/spj/pdf/register_kas', 'pdf_register_kas');
-            Route::get('/spj/pdf/all_spj', 'pdf_all_spj');
         });
 
         Route::post('/import', [ImportSpjController::class, 'import'])->name('import');
