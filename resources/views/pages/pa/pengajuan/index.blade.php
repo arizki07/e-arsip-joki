@@ -49,12 +49,12 @@
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
                                     <td>
-                                        <a href="{{ route('export.pengajuan.kpa') }}" type="button"
+                                        <a href="{{ route('export.pengajuan.pa') }}" type="button"
                                             class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
-                                        <a href="{{ route('export.word.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.word.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
-                                        <a href="{{ route('export.pdf.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.pdf.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
@@ -78,11 +78,11 @@
                                         </button>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('kpa-acc', ['id' => $item->id_pengajuan]) }}" method="POST"
-                                            class="d-inline">
+                                            action="{{ route('kpa-acc-pa', ['id' => $item->id_pengajuan]) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 2)
+                                            @if ($item->status == 3)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-thumbs-up"></i>
                                                 </button>
@@ -93,7 +93,7 @@
                                             @endif
                                         </form>
                                         <form id="rejectForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('reject', ['id' => $item->id_pengajuan]) }}" method="POST"
+                                            action="{{ route('reject.pa', ['id' => $item->id_pengajuan]) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('POST')
@@ -157,15 +157,15 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('export.pengajuan.kpa') }}" type="button"
+                                <a href="{{ route('export.pengajuan.pa') }}" type="button"
                                     class="btn btn-outline-success">
                                     <i class="fas fa-file-excel"></i> Export to Excel
                                 </a>
-                                <a href="{{ route('export.word.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
+                                <a href="{{ route('export.word.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                     type="button" class="btn btn-outline-primary">
                                     <i class="fas fa-file-word"></i> Export to Word
                                 </a>
-                                <a href="{{ route('export.pdf.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
+                                <a href="{{ route('export.pdf.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                     type="button" class="btn btn-outline-danger">
                                     <i class="fas fa-file-pdf"></i> Export to PDF
                                 </a>

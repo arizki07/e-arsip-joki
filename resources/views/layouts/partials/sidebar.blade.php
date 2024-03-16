@@ -263,6 +263,12 @@
                             <span>Profile</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $title === 'Pengajuan-pa' ? 'active' : '' }}">
+                        <a href="/pengajuan-pa" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Pengajuan (mengajukan)</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $title === 'SPJ PA' ? 'active' : '' }}">
                         <a href="/spj-pa" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>

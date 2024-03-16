@@ -22,6 +22,9 @@ class DashboardController extends Controller
         $spj = SpjFungsionalModel::count();
         $user = User::count();
 
+        $approvedCount = PengajuanModel::where('status', 4)->count();
+        $rejectedCount = PengajuanModel::where('status', 5)->count();
+
         return view('pages.dashboard', [
             'title' => 'Dashboard',
             'active' => 'Dashboard',
@@ -31,6 +34,8 @@ class DashboardController extends Controller
             'user'      => $user,
             'bukti'      => $bukti,
             'spj'      => $spj,
+            'approvedCount' => $approvedCount,
+            'rejectedCount' => $rejectedCount,
         ]);
     }
 }

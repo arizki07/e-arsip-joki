@@ -239,6 +239,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Kpa\PengajuanKpaController::class)->group(function () {
             Route::get('/pengajuan-kpa', 'pengajuan');
             Route::post('/kpa-acc/{id}', 'verifikasi')->name('kpa-acc');
+            Route::post('/reject/{id}', 'reject')->name('reject');
         });
 
         Route::controller(App\Http\Controllers\Kpa\BuktiKpaController::class)->group(function () {
@@ -277,8 +278,23 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/update-pa', 'update')->name('update.pa');
         });
 
+        Route::controller(App\Http\Controllers\Pa\PengajuanPaController::class)->group(function () {
+            Route::get('/pengajuan-pa', 'index');
+            Route::post('/kpa-acc-pa/{id}', 'verifikasi')->name('kpa-acc-pa');
+            Route::post('/reject-pa/{id}', 'reject')->name('reject.pa');
+        });
+
         Route::controller(App\Http\Controllers\Pa\SpjPaController::class)->group(function () {
             Route::get('/spj-pa', 'index');
+        });
+
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export-pa/pengajuan', 'exportPengajuan')->name('export.pengajuan.pa');
+            Route::get('/export-pa/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.pa');
+            Route::get('/export-pa/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.pa');
+            Route::get('/export-pa/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.pa');
+            Route::get('/export-pa/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.pa');
+            Route::get('/export-pa/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.pa');
         });
     });
     Route::group(['middleware' => ['CekLogin:pptk']], function () {
