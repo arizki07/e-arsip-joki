@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Kpa;
+namespace App\Http\Controllers\Pa;
 
 use App\Http\Controllers\Controller;
 use App\Models\PengajuanModel;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class PengajuanKpaController extends Controller
+
+class PengajuanPaController extends Controller
 {
-    public function pengajuan()
+    public function index()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();
 
-        return view('pages.kpa.pengajuan.index', [
+        return view('pages.pa.pengajuan.index', [
             'pengajuan' => $pengajuans,
-            'title' => 'Pengajuan',
-            'active' => 'Pengajuan'
+            'title' => 'Pengajuan-pa',
+            'active' => 'Pengajuan-pa'
         ]);
     }
 
@@ -24,7 +25,7 @@ class PengajuanKpaController extends Controller
     {
         try {
             $pengajuan = PengajuanModel::findOrFail($id);
-            $pengajuan->status = '3';
+            $pengajuan->status = '4';
             $pengajuan->save();
 
             return redirect()->back()->with('success', 'Pengajuan telah disetujui!');

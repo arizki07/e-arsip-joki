@@ -56,6 +56,8 @@ class PengajuanModel extends Model
                 return 'Pending PA';
             case 4:
                 return 'Selesai';
+            case 5:
+                return 'Reject';
             default:
                 return '';
         }
