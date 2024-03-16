@@ -269,7 +269,7 @@
             if (selectedPengajuanId !== "") {
                 $.ajax({
                     type: 'GET',
-                    url: '/bukti-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
+                    url: '/bukti-bpp-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
                         // "Authorization": "Bearer " + parsedObj.token.access_token

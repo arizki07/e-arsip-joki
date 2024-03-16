@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Pengajuan Nota Dinas Pamong Praja</title>
+    <title>SPJ Surat Pengantar</title>
     <style type="text/css">
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -58,6 +58,10 @@
             border-collapse: collapse;
         }
 
+        .border-solid {
+            border: 1px solid #000;
+        }
+
         .table-bawah td {
             border: 0px; /* Batas setiap sel */
             padding: 8px;
@@ -65,6 +69,11 @@
         }
 
         .td-bawah-second {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        .td-bawah-third {
             border: 1px solid #000;
             padding: 8px;
         }
@@ -152,7 +161,7 @@
 
         .data-value-1 {
             text-align: left;
-            width: 150px;
+            /* width: 150px; */
         }
 
         /*.additional-info {
@@ -187,7 +196,8 @@
             <table width="100%">
                 <tr>
                     <td>
-                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXsGdY-avkAVzjcP9GUYIa1OptUFJRekUE3ptUyc73h7OXq9b4GaNzoZy3QctGIE6-Xh_FPaoX384RNxKoSH-IdM9EY7CITk-gsEfd6omADkvB1D_jYBsN2nTikg63REMpvRVGDnLto-7mICmgDDjcaD8zG_h_PLyjnz2-1ZQhHVunmvvpc0UfOA/s320/GKL24_logo-kota-cirebon%20-%20Koleksilogo.com.png" class="logo" alt="Logo">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXsGdY-avkAVzjcP9GUYIa1OptUFJRekUE3ptUyc73h7OXq9b4GaNzoZy3QctGIE6-Xh_FPaoX384RNxKoSH-IdM9EY7CITk-gsEfd6omADkvB1D_jYBsN2nTikg63REMpvRVGDnLto-7mICmgDDjcaD8zG_h_PLyjnz2-1ZQhHVunmvvpc0UfOA/s320/GKL24_logo-kota-cirebon%20-%20Koleksilogo.com.png"
+                            class="logo" alt="Logo">
                     </td>
                     <td class="td-atas">
                         <div class="tebal" style="font-size: 22px;">PEMERINTAH DAERAH KOTA CIREBON</div>
@@ -203,54 +213,68 @@
             </table>
             <hr class="garis">
         </div>
-        <div class="header-content">
-            <h3 style="font-size: 14pt;"><strong><u>FORMULIR PERMINTAAN PEMBAYARAN UP/GU/TU</u></strong></h3>
-        </div>
-        <div class="table-container">
-            <table class="table-bawah" style="border: 0px; font-size: 12pt; width: 620px; margin: auto;">
+        {{-- <div class="header-content">
+            <h3 style="font-size: 14pt;"><strong><u>FORMULIR PERMINTAAN PEMBAYARAN TESTING</u></strong></h3>
+        </div> --}}
+        <div>
+            <table class="table-bawah" style="border: 2px; font-size: 10pt; width: 670px; margin: auto;">
                 <tbody>
                     <tr>
-                        <td class="data-value-1">Nomor</td>
-                        <td class="data-value">: {{ $laporanPengajuan->p_nama_kegiatan }}</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>Cirebon, {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM YYYY') }}</td>
                     </tr>
                     <tr>
-                        <td class="data-value-1">Sifat</td>
-                        <td class="data-value">: {{ $laporanPengajuan->p_sub_kegiatan }}</td>
+                        <td>Nomor</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">{{ $surPeng->nomor_surat }}</td>
+                        <td>Kepada,</td>
                     </tr>
                     <tr>
-                        <td class="data-value-1">Lampiran</td>
-                        <td class="data-value">: {{ \Carbon\Carbon::parse($laporanPengajuan->p_tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                        <td>Sifat</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">{{ $surPeng->sifat }}</td>
+                        <td>Yth, Bendahara Pengeluaran SATPOL PP</td>
                     </tr>
                     <tr>
-                        <td class="data-value-1">Perihal</td>
-                        <td class="data-value">: {{ $laporanPengajuan->p_biaya }}</td>
+                        <td>Lampiran</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">{{ $surPeng->lampiran }}</td>
+                        <td>Di</td>
                     </tr>
                     <tr>
-                        <td class="data-value-1"></td>
-                        <td class="data-value"></td>
-                    </tr>
-                    <tr>
-                        <td class="data-value" colspan="2">Bersama ini kami sampaikan Surat Pertanggung Jawaban (SPJ) Panjar :</td>
-                    </tr>
-                    <tr>
-                        <td class="data-value-1">Kegiatan</td>
-                        <td class="data-value">: {{ $laporanPengajuan->p_sub_kegiatan }}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-value-1">Sebesar</td>
-                        <td class="data-value">: {{ $laporanPengajuan->p_sub_kegiatan }}</td>
-                    </tr>
-                    <tr>
-                        <td class="data-value-1"></td>
-                        <td class="data-value"></td>
+                        <td>Perihal</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">{{ $surPeng->perihal }}</td>
+                        <td style="font-weight: bold;">CIREBON</td>
                     </tr>
                 </tbody>
             </table>
-            <table>
+        </div>
+
+        <div class="table-container">
+            <table class="table-bawah" style="border: 2px; font-size: 10pt; width: 670px; margin: auto;">
+                <tbody>
+                    <tr>
+                        <td class="data-value" colspan="3">Bersama ini kami sampaikan Surat Pertanggung Jawaban (SPJ) Panjar :</td>
+                    </tr>
+                    <tr>
+                        <td>Kegiatan</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">{{ $surPeng->kegiatan }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sebesar</td>
+                        <td style="width: 5px;">:</td>
+                        <td class="data-value">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <table class="table-bawah" style="font-size: 10pt; width: 655px; margin: auto; margin-top: 10px;">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -263,12 +287,47 @@
                     @php
                         $number = 1;
                     @endphp
+                    @foreach ($uraianData as $ur)
                     <tr>
-                        <td>{{ $number++; }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;">{{ $number++; }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;">{{ $ur['uraian'] }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;">{{ $ur['jumlah'] }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4" style="border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; border-bottom: 3px solid #000; padding: 3px; font-weight: bold; text-align: center;">Jumlah</td>
+                    </tr>                    
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;">Jumlah Bulan Ini</td>
+                        <td style="border: 1px solid #000; padding: 3px;">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;">Jumlah S/d Bulan Lalu</td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;">Jumlah S/d Bulan Ini</td>
+                        <td style="border: 1px solid #000; padding: 3px;">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;">Saldo Yang Belum Di SPJ kan</td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
+                        <td style="border: 1px solid #000; padding: 3px;"></td>
                     </tr>
                 </tbody>
             </table>
-            <table style="border: 5px; font-size: 12pt; width: 620px; margin: auto;">
+        </div>
+
+        <div class="table-container">
+            <table style="border: 5px; font-size: 12pt; width: 670px; margin: auto;">
                 <tbody>
                     <tr>
                         <tr>
@@ -294,66 +353,13 @@
                         <td class="data-value-center">
                             Mengetahui/Menyetujui<br>
                             Kuasa Pengguna Anggaran<br><br><br><br><br>
-                            <strong style="text-decoration: underline;">{{ $laporanPengajuan->nama_kpa }}</strong><br>
-                            <label>NIP. {{ $laporanPengajuan->nip_kpa }}</label>
+                            <strong style="text-decoration: underline;">{{ $surPeng->nama_kpa }}</strong><br>
+                            <label>NIP. {{ $surPeng->nip_kpa }}</label>
                         </td>
                         <td class="data-value-center">
                             Bendahara Pengeluaran Pembantu<br><br><br><br><br><br>
-                            <strong style="text-decoration: underline;">{{ $laporanPengajuan->nama_bpp }}</strong><br>
-                            <label>NIP. {{ $laporanPengajuan->nip_bpp }}</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr><tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="data-value-center">
-                            Mengetahui/Menyetujui<br>
-                            Pengguna Anggaran<br><br><br><br><br>
-                            <strong style="text-decoration: underline;">{{ $laporanPengajuan->nama_pa }}</strong><br>
-                            <label>NIP. {{ $laporanPengajuan->nip_pa }}</label>
-                        </td>
-                        <td style="text-align: center;">
-                            <div style="text-align: left; display: inline-block;">
-                                <strong>Catatan PA:</strong> Nilai SPJ sesuai<br>dengan permintaan pembayaran<br><br>
-                                Paraf Verifikasi:<br><br><br><br><br>
-                            </div>
+                            <strong style="text-decoration: underline;">{{ $surPeng->nama_bpp }}</strong><br>
+                            <label>NIP. {{ $surPeng->nip_bpp }}</label>
                         </td>
                     </tr>
                 </tbody>
