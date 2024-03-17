@@ -19,9 +19,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
-                        <a type="button" href="{{ route('bukti.create') }}" class="btn btn-primary" style="float: right;">
+                        {{-- <a type="button" href="{{ route('bukti.create') }}" class="btn btn-primary" style="float: right;">
                             <i class="bi bi-user"></i> Tambah {{ $title }}
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -53,8 +53,8 @@
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>
                                     <td>
-                                        <a href="{{ route('export.buktiPeng.kpa') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                        {{-- <a href="{{ route('export.buktiPeng.kpa') }}" type="button"
+                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
                                         <a href="{{ route('export.word.buktiPeng.kpa', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>

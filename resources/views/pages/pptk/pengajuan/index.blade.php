@@ -19,10 +19,10 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
-                        <a type="button" href="{{ route('pengajuan.create') }}" class="btn btn-primary"
+                        {{-- <a type="button" href="{{ route('pengajuan.create') }}" class="btn btn-primary"
                             style="float: right;">
                             <i class="bi bi-user"></i> Tambah Data Pengajuan
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

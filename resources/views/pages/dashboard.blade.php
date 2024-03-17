@@ -27,7 +27,8 @@
                                 <img src="{{ asset('template/dist/assets/compiled/jpg/1.jpg') }}" alt="Face 1">
                             </div>
                             <div class="ms-3 name">
-                                <h4 class="font-bold">Selamat datang di aplikasi Sistem Informasi Arsip Laporan Keuangan
+                                <h4 class="font-bold">Selamat datang di aplikasi Sistem Informasi Keuangan Satuan Polisi
+                                    Pamong Praja Kota Cirebon
                                 </h4>
                                 <h5 class="font-bold">{{ Auth::user()->name }}</h5>
                                 <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
