@@ -160,11 +160,11 @@
                                     Document
                                     PPTK</a>
                             </li>
-                            <li class="submenu-item {{ $title === 'Ppk' ? 'active' : '' }}">
+                            {{-- <li class="submenu-item {{ $title === 'Ppk' ? 'active' : '' }}">
                                 <a href="/ppk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
                                     Document
                                     PPK</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
 
