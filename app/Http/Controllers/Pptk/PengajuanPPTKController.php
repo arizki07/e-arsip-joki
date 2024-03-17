@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Pa;
+namespace App\Http\Controllers\Pptk;
 
-use App\Http\Controllers\Controller;
-use App\Models\PengajuanModel;
 use Illuminate\Http\Request;
+use App\Models\PengajuanModel;
+use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class PengajuanPaController extends Controller
+class PengajuanPPTKController extends Controller
 {
     public function index()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();
 
-        return view('pages.pa.pengajuan.index', [
+        // dd($pengajuans);
+        return view('pages.pptk.pengajuan.index', [
+            'title' => 'Pengajuan',
+            'active' => 'acc_pptk',
             'pengajuan' => $pengajuans,
-            'title' => 'Pengajuan-pa',
-            'active' => 'Pengajuan-pa'
         ]);
     }
 
@@ -25,7 +25,7 @@ class PengajuanPaController extends Controller
     {
         try {
             $pengajuan = PengajuanModel::findOrFail($id);
-            $pengajuan->status = '6';
+            $pengajuan->status = '3';
             $pengajuan->save();
 
             return redirect()->back()->with('success', 'Pengajuan telah disetujui!');

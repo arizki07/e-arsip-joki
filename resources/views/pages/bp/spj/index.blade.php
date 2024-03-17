@@ -29,6 +29,7 @@
                     <h5 class="card-title mb-0">
                         Data SPJ
                     </h5>
+
                     <div>
                         <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
                             data-bs-target="#primary">
@@ -42,6 +43,16 @@
                         </a> --}}
                     </div>
                 </div>         
+
+                </div>
+                {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="/spj/create"  data-bs-toggle="modal"
+                data-bs-target="#primary"> --}}
+                {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
+                    data-bs-target="#primary">
+                    <i class="bi bi-user"></i> Tambah SPJ
+                </a> --}}
+
+
                 <br>
                 <div class="card-body">
                     <div class="table-responsive">

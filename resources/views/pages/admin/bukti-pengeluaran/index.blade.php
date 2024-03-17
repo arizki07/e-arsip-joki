@@ -53,8 +53,8 @@
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>
                                     <td>
-                                        <a href="{{ route('export.buktiPeng') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                        {{-- <a href="{{ route('export.buktiPeng') }}" type="button"
+                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
                                         <a href="{{ route('export.word.buktiPeng', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>

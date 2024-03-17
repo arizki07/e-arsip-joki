@@ -25,10 +25,23 @@ class DocumentKPA extends Controller
     {
         try {
             $pengajuan = PengajuanModel::findOrFail($id);
-            $pengajuan->status = '3';
+            $pengajuan->status = '4';
             $pengajuan->save();
 
             return redirect()->back()->with('success', 'Pengajuan telah disetujui!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Pengajuan tidak ditemukan!');
+        }
+    }
+
+    public function reject($id)
+    {
+        try {
+            $pengajuan = PengajuanModel::findOrFail($id);
+            $pengajuan->status = '5'; // Mengubah status menjadi reject
+            $pengajuan->save();
+
+            return redirect()->back()->with('success', 'Pengajuan telah ditolak!');
         } catch (ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Pengajuan tidak ditemukan!');
         }

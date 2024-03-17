@@ -1,24 +1,34 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BPController;
-use App\Http\Controllers\BPPController;
-use App\Http\Controllers\BuktiPengeluaranController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KPAController;
-use App\Http\Controllers\PAController;
-use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\PPKController;
-use App\Http\Controllers\PPTKController;
-use App\Http\Controllers\SpjController;
-use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\BiodataController;
-use App\Http\Controllers\Admin\VerifikasiController;
-use App\Http\Controllers\ExportController;
-use App\Http\Controllers\ImportSpjController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BPController;
+use App\Http\Controllers\PAController;
+use App\Http\Controllers\BPPController;
+use App\Http\Controllers\KPAController;
+use App\Http\Controllers\PPKController;
+use App\Http\Controllers\SpjController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PPTKController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\Admin\DocumentKPA;
+use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImportSpjController;
+use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\Bpp\SpjBppController;
+use App\Http\Controllers\Kpa\ProfileKpaController;
+use App\Http\Controllers\Admin\DocumentBpController;
+use App\Http\Controllers\Admin\DocumentPaController;
+use App\Http\Controllers\Admin\VerifikasiController;
+use App\Http\Controllers\BuktiPengeluaranController;
+use App\Http\Controllers\Kpa\PengajuanKpaController;
+use App\Http\Controllers\Admin\DocumentBppController;
+use App\Http\Controllers\Admin\DocumentPPTKController;
+use App\Http\Controllers\Bpp\BuktiPengeluaranBppController;
+use App\Http\Controllers\Pptk\PengajuanPPTKController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +133,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Admin\DocumentKPA::class)->group(function () {
             Route::get('/acc-kpa', 'index')->name('acc.kpa.index');
             Route::post('/acc-kpa/{id}', 'verifikasi')->name('acc.kpa');
+            Route::post('/reject-kpa/{id}', 'reject')->name('reject.kpa');
         });
 
         Route::controller(App\Http\Controllers\Admin\DocumentBpController::class)->group(function () {
@@ -133,7 +144,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Admin\DocumentPaController::class)->group(function () {
             Route::get('/acc-pa', 'index')->name('acc.pa.index');
             Route::post('/acc-pa/{id}', 'verifikasi')->name('acc.pa');
+            Route::post('/reject-pa/{id}', 'reject')->name('reject.pa.document');
         });
+
+        Route::controller(App\Http\Controllers\Admin\DocumentPPTKController::class)->group(function () {
+            Route::get('/acc-pptk', 'index')->name('acc.pptk.index');
+            Route::post('/acc-pptk/{id}', 'verifikasi')->name('acc.pptk');
+            Route::post('/reject-pptk/{id}', 'reject')->name('reject.pptk');
+        });
+
 
         Route::controller(ExportController::class)->group(function () {
             Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
@@ -284,6 +303,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj/bpp/export/document/{id}', 'export_spj');
         });
     });
+
     Route::group(['middleware' => ['CekLogin:pa']], function () {
         Route::controller(App\Http\Controllers\Pa\ProfilePaController::class)->group(function () {
             Route::get('/profile-pa', 'index');
@@ -310,10 +330,24 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj/bpp/export/document/{id}', 'export_spj');
         });
     });
+
     Route::group(['middleware' => ['CekLogin:pptk']], function () {
         Route::controller(App\Http\Controllers\Pptk\ProfilePptkController::class)->group(function () {
             Route::get('/profile-pptk', 'index');
             Route::post('/update-pptk', 'update')->name('update.pptk');
+        });
+        Route::controller(App\Http\Controllers\Pptk\PengajuanPPTKController::class)->group(function () {
+            Route::get('/pengajuan-pptk', 'index');
+            Route::post('/acc-pptk-role/{id}', 'verifikasi')->name('acc.pptk.role');
+            Route::post('/reject-pptk-role/{id}', 'reject')->name('reject.pptk.role');
+        });
+        Route::controller(ExportController::class)->group(function () {
+            // Route::get('/export/pengajuan', 'exportPengajuan')->name('export.pengajuan');
+            Route::get('/export/pengajuan-pptk/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.pptk');
+            Route::get('/export/pengajuan-pptk/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.pptk');
+            // Route::get('/export/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng');
+            // Route::get('/export/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng');
+            // Route::get('/export/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng');
         });
         Route::controller(App\Http\Controllers\Ppk\SpjPpkController::class)->group(function () {
             Route::get('/spj-pptk', 'index');
@@ -330,7 +364,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj-ppk', 'index');
         });
     });
-
     Route::controller(BPController::class)->group(function () {
         Route::get('/doc-bp', 'document')->name('doc.bp.index');
     });

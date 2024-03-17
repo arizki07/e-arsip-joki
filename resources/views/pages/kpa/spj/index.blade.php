@@ -32,10 +32,10 @@
                 </div>
                 {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="/spj/create"  data-bs-toggle="modal"
                 data-bs-target="#primary"> --}}
-                <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
+                {{-- <a type="button" class="btn btn-primary ms-auto me-4" href="#" data-bs-toggle="modal"
                     data-bs-target="#primary">
                     <i class="bi bi-user"></i> Tambah SPJ
-                </a>
+                </a> --}}
 
                 <br>
                 <div class="card-body">
