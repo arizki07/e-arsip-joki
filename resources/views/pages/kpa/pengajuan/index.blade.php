@@ -66,11 +66,9 @@
                                         @elseif ($item->status == 3)
                                             <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-primary">Selesai</span>
                                         @elseif ($item->status == 5)
                                             <span class="badge bg-danger">Reject</span>
-                                        @elseif ($item->status == 6)
-                                            <span class="badge bg-primary">Selesai</span>
                                         @endif
                                     </td>
                                     <td>
