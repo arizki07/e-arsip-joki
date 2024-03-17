@@ -217,7 +217,13 @@
                         <td class="data-value">{{ \Carbon\Carbon::now()->locale('id')->isoFormat('MMMM YYYY') }}</td>
                         <td style="width: 140px;">Saldo Buku</td>
                         <td style="width: 5px; padding: 3px;">:</td>
-                        <td class="data-value">Rp {{ number_format($bku->saldo_buku, 0, ',', '.') }}</td>
+                        <td class="data-value">
+                            @if ($bku->saldo_buku !== '-')
+                                {{ number_format($bku->saldo_buku, 0, ',', '.') }}
+                            @else
+                                {{ $bku->saldo_buku }}
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Nama Penutup Kas</td>
@@ -225,7 +231,13 @@
                         <td class="data-value">{{ $bku->nama_kpa }}</td>
                         <td>Saldo Kas/Bank</td>
                         <td style="width: 5px; padding: 3px;">:</td>
-                        <td class="data-value">Rp {{ number_format($bku->saldo_kas, 0, ',', '.') }}</td>
+                        <td class="data-value">
+                            @if ($bku->saldo_kas !== '-')
+                                {{ number_format($bku->saldo_kas, 0, ',', '.') }}
+                            @else
+                                {{ $bku->saldo_kas }}
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Tanggal Penutupan Lalu</td>
@@ -233,7 +245,13 @@
                         <td class="data-value">{{ $bku->tgl_penutupan_lalu }}</td>
                         <td>Perbedaan Positif/Negatif</td>
                         <td style="width: 5px; padding: 3px;">:</td>
-                        <td class="data-value">Rp {{ number_format($bku->positif_negatif, 0, ',', '.') }}</td>
+                        <td class="data-value">
+                            @if ($bku->positif_negatif !== '-')
+                                {{ number_format($bku->positif_negatif, 0, ',', '.') }}
+                            @else
+                                {{ $bku->positif_negatif }}
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Jml Seluruh Penerimaan</td>
