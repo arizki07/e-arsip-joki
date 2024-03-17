@@ -51,13 +51,15 @@ class PengajuanModel extends Model
             case 1:
                 return 'Pending Verifikasi';
             case 2:
-                return 'Pending KPA';
+                return 'Pending PPTK';
             case 3:
-                return 'Pending PA';
+                return 'Pending KPA';
             case 4:
-                return 'Selesai';
+                return 'Pending PA';
             case 5:
                 return 'Reject';
+            case 6:
+                return 'Selesai';
             default:
                 return '';
         }

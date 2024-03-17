@@ -154,6 +154,12 @@
 
                             </li>
 
+                            <li class="submenu-item {{ $title === 'Pptk' ? 'active' : '' }}">
+                                <a href="{{ route('acc.pptk.index') }}" class="submenu-link"><i
+                                        class="bi bi-file-earmark-text-fill"></i>
+                                    Document
+                                    PPTK</a>
+                            </li>
                             <li class="submenu-item {{ $title === 'Ppk' ? 'active' : '' }}">
                                 <a href="/ppk" class="submenu-link"><i class="bi bi-file-earmark-text-fill"></i>
                                     Document
@@ -280,6 +286,12 @@
                         <a href="/profile-pptk" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Pengajuan' ? 'active' : '' }}">
+                        <a href="/pengajuan-pptk" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Pengajuan</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'SPJ PPTK' ? 'active' : '' }}">

@@ -24,7 +24,7 @@ class PengajuanKpaController extends Controller
     {
         try {
             $pengajuan = PengajuanModel::findOrFail($id);
-            $pengajuan->status = '3';
+            $pengajuan->status = '4';
             $pengajuan->save();
 
             return redirect()->back()->with('success', 'Pengajuan telah disetujui!');

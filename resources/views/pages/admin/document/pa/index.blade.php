@@ -48,25 +48,29 @@
                                     <td>{{ $item->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
-                                    <td>export
+                                    <td>
                                         {{-- <a href="{{ route('export.pengajuan') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
                                         <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
                                         <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
-                                                class="fas fa fa-file-pdf"></i></a> --}}
+                                                class="fas fa fa-file-pdf"></i></a>
                                     </td>
                                     <td>
                                         @if ($item->status == 1)
                                             <span class="badge bg-warning">Pending Verifikasi</span>
                                         @elseif ($item->status == 2)
-                                            <span class="badge bg-warning">Pending KPA</span>
+                                            <span class="badge bg-warning">Pending PPTK</span>
                                         @elseif ($item->status == 3)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-success">Approve</span>
+                                            <span class="badge bg-warning">Pending PA</span>
+                                        @elseif ($item->status == 5)
+                                            <span class="badge bg-danger">Reject</span>
+                                        @elseif ($item->status == 6)
+                                            <span class="badge bg-primary">Selesai</span>
                                         @endif
                                     </td>
                                     <td>
@@ -80,13 +84,28 @@
                                             class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 3)
+                                            @if ($item->status == 4)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             @else
                                                 <button type="button" class="btn icon btn-success" disabled>
                                                     <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
+                                        </form>
+                                        <form id="rejectForm{{ $item->id_pengajuan }}"
+                                            action="{{ route('reject.pa.document', ['id' => $item->id_pengajuan]) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('POST')
+                                            @if ($item->status == 4)
+                                                <button type="submit" class="btn icon btn-danger">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @else
+                                                <button type="submit" class="btn icon btn-danger" disabled>
+                                                    <i class="fas fa-thumbs-down"></i>
                                                 </button>
                                             @endif
                                         </form>
@@ -144,15 +163,16 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('export.pengajuan') }}" type="button" class="btn btn-outline-success">
+                                <a href="{{ route('export.pengajuan') }}" type="button"
+                                    class="btn btn-outline-success">
                                     <i class="fas fa-file-excel"></i> Export to Excel
                                 </a>
                                 <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                     type="button" class="btn btn-outline-primary">
                                     <i class="fas fa-file-word"></i> Export to Word
                                 </a>
-                                <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}" type="button"
-                                    class="btn btn-outline-danger">
+                                <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-danger">
                                     <i class="fas fa-file-pdf"></i> Export to PDF
                                 </a>
                             </div>
