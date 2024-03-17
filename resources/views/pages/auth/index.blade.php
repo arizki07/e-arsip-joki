@@ -195,6 +195,7 @@
 </head>
 
 <body>
+    @include('component.alerts')
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div class="area">
         <ul class="circles">
