@@ -37,7 +37,7 @@
                                 <th>Tanggal</th>
                                 <th>Export</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -66,53 +66,12 @@
                                         @elseif ($item->status == 3)
                                             <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-primary">Selesai</span>
                                         @elseif ($item->status == 5)
                                             <span class="badge bg-danger">Reject</span>
-                                        @elseif ($item->status == 6)
-                                            <span class="badge bg-primary">Selesai</span>
                                         @endif
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#detailModal{{ $item->id }}">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
 
-                                        <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('kpa-acc-pa', ['id' => $item->id_pengajuan]) }}"
-                                            method="POST" class="d-inline">
-                                            @csrf
-                                            @method('POST')
-                                            @if ($item->status == 4)
-                                                <button type="submit" class="btn icon btn-success">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" class="btn icon btn-success" disabled>
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            @endif
-                                        </form>
-                                        <form id="rejectForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('reject.pa', ['id' => $item->id_pengajuan]) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('POST')
-
-                                            @if ($item->status == 4)
-                                                <button type="submit" class="btn icon btn-danger">
-                                                    <i class="fas fa-thumbs-down"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" class="btn icon btn-danger" disabled>
-                                                    <i class="fas fa-thumbs-down"></i>
-                                                </button>
-                                            @endif
-                                        </form>
-
-                                        {{-- <a href="#" class="btn icon btn-danger"><i class="fas fa-times"></i></a> --}}
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
