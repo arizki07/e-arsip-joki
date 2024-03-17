@@ -18,6 +18,7 @@ use App\Exports\ExportBioSpj;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use setasign\Fpdi\Fpdi;
 
 class ExportController extends Controller
 {
@@ -382,6 +383,73 @@ class ExportController extends Controller
                     'totalPengeluaran' => $totalPengeluaran,
                     'uraianData' => $uraianData
                 ]);
+            } else if ($act == 'spj_all') {
+                // $mergedContent = '';
+                $tempFiles = [];
+                $acts = ['spj_surat_pengantar', 'spj_bku', 'spj_fungsional', 'spj_register_kas'];
+                foreach ($acts as $actType) {
+                    if ($actType == 'spj_surat_pengantar') {
+                        $view = view('doc/spj/surat-pengantar', ['surPeng' => $querySPJ, 'uraianData' => $uraianData, 'total' => $total]);
+                        $pdfContent = $this->generatePdfFromView($view);
+                        $tempFile = tempnam(sys_get_temp_dir(), 'spj_surat_pengantar');
+                        file_put_contents($tempFile, $pdfContent);
+                        $tempFiles[] = $tempFile;
+                    } else if ($actType == 'spj_bku') {
+                        $totalPenerimaanBku = 0;
+                        $totalPengeluaranBku = 0;
+                        $totalSaldo = 0;
+                        foreach ($queryUraianBku as $urBKU) {
+                            if ($urBKU->id_surat_pengantar == $id) {
+
+                                if (is_numeric($urBKU->penerimaan)) {
+                                    $totalPenerimaanBku += $urBKU->penerimaan;
+                                }
+                                if (is_numeric($urBKU->pengeluaran)) {
+                                    $totalPengeluaranBku += $urBKU->pengeluaran;
+                                }
+                                if (is_numeric($urBKU->saldo)) {
+                                    $totalSaldo += $urBKU->saldo;
+                                }
+                            }
+                        }
+                        $view = view('doc/spj/bku', ['bku' => $querySPJ, 'queryUraianBku' => $queryUraianBku, 'uraianData' => $uraianData, 'total' => $total, 'totalPenerimaanBku' => $totalPenerimaanBku, 'totalPengeluaranBku' => $totalPengeluaranBku, 'totalSaldo' => $totalSaldo]);
+                        $pdfContent = $this->generatePdfFromView($view);
+                        $tempFile = tempnam(sys_get_temp_dir(), 'spj_bku');
+                        file_put_contents($tempFile, $pdfContent);
+                        $tempFiles[] = $tempFile;
+                    } else if ($actType == 'spj_fungsional') {
+                        $view = view('doc/spj/fungsional', ['bku' => $querySPJ, 'urFungsional' => $queryUraianFungsional, 'fungsi' => $queryFungsional, 'uraianData' => $uraianData, 'jumlahSpjTerbesar' => $jumlahSpjTerbesar, 'jmlBulanIni' => $jmlBulanIni, 'jmlsdBulanIni' => $jmlsdBulanIni, 'jmlAnggaran' => $jmlAnggaran, 'jmlBulanLalu' => $jmlBulanLalu, 'totalPenerimaan' => $totalPenerimaan, 'totalPenerimaansd' => $totalPenerimaansd, 'totalPengeluaran' => $totalPengeluaran, 'totalPengeluaransd' => $totalPengeluaransd]);
+                        $pdfContent = $this->generatePdfFromView($view);
+                        $tempFile = tempnam(sys_get_temp_dir(), 'spj_fungsional');
+                        file_put_contents($tempFile, $pdfContent);
+                        $tempFiles[] = $tempFile;
+                    } else if ($actType == 'spj_register_kas') {
+                        $view = view('doc/spj/register', ['bku' => $querySPJ, 'totalPenerimaan' => $totalPenerimaan, 'totalPengeluaran' => $totalPengeluaran, 'uraianData' => $uraianData]);
+                        $pdfContent = $this->generatePdfFromView($view);
+                        $tempFile = tempnam(sys_get_temp_dir(), 'spj_register_kas');
+                        file_put_contents($tempFile, $pdfContent);
+                        $tempFiles[] = $tempFile;
+                    }
+                }
+
+                $pdf = new \setasign\Fpdi\Fpdi();
+                foreach ($tempFiles as $tempFile) {
+                    $pageCount = $pdf->setSourceFile($tempFile);
+                    for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
+                        $template = $pdf->importPage($pageNumber);
+                        $pdf->AddPage();
+                        $pdf->useTemplate($template);
+                    }
+                    unlink($tempFile);
+                }
+
+                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
+                $mergedFilename = 'SPJ_ALL-NO-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
+                $mergedFilePath = public_path('arsip/pdf/' . $mergedFilename);
+                $pdf->Output($mergedFilePath, 'F');
+
+                $response = response()->download($mergedFilePath, $mergedFilename);
+                return $response;
             }
 
             $dompdf = new Dompdf();
@@ -413,9 +481,6 @@ class ExportController extends Controller
             } else if ($act == 'spj_register_kas') {
                 $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
                 $filename = 'SPJ_REGISTER KAS_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
-            } else {
-                $pdfName = str_replace(' ', '_', $spjData['id_surat_pengantar']);
-                $filename = 'SPJ_No-' . $pdfName . date('d-m-Y_H-i-s') . '.pdf';
             }
 
             $filePath = public_path('arsip/pdf/' . $filename);
@@ -433,69 +498,24 @@ class ExportController extends Controller
         }
     }
 
-    public function export_spj_all($id)
+    private function generatePdfFromView($view)
     {
-        $model = new SuratPengantarModel();
+        $dompdf = new Dompdf();
+        $options = new \Dompdf\Options();
+        $options->set('isPhpEnabled', true);
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $dompdf->setOptions($options);
+        setlocale(LC_TIME, 'id_ID');
+        date_default_timezone_set('Asia/Jakarta');
 
-        $spjData = $model->find($id);
+        $dompdf->loadHtml($view);
 
-        if ($spjData) {
-            $suratPengantarID = $spjData['id_surat_pengantar'];
-            $result = (new SuratPengantarModel())->querySpjAll($suratPengantarID);
-            $uraianJson = $result->td_uraian;
-            $uraianArray = json_decode($uraianJson, true);
-            $uraianData = [];
-            foreach ($uraianArray as $uraianItem) {
-                $uraianData[] = [
-                    'jumlah' => $uraianItem['jumlah'],
-                    'uraian' => $uraianItem['uraian']
-                ];
-            }
+        $dompdf->setPaper('F4', 'portrait');
 
-            $total = 0;
-            foreach ($uraianData as $item) {
-                $jumlah = str_replace(['Rp ', '.'], '', $item['jumlah']);
-                $total += (int)$jumlah;
-            }
+        $dompdf->render();
 
-            // dd($result);
-            // die;
-
-            $view = view('doc/spj/spj', ['result' => $result, 'uraianData' => $uraianData, 'total' => $total]);
-
-            $dompdf = new Dompdf();
-            $options = new \Dompdf\Options();
-            $options->set('isPhpEnabled', true);
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isRemoteEnabled', true);
-            $dompdf->setOptions($options);
-            setlocale(LC_TIME, 'id_ID');
-            date_default_timezone_set('Asia/Jakarta');
-
-            $dompdf->loadHtml($view);
-
-            $dompdf->setPaper('F4', 'portrait');
-
-            $dompdf->render();
-
-            $pdfContent = $dompdf->output();
-
-            $pdfName = str_replace(' ', '_', $spjData['perihal']);
-            $filename = $pdfName . date('d-m-Y_H-i-s') . '.pdf';
-
-            $filePath = public_path('arsip/pdf/' . $filename);
-            file_put_contents($filePath, $pdfContent);
-
-            $response = response($pdfContent);
-            $response->header('Content-Type', 'application/pdf');
-            $response->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
-
-            $response->setContent($pdfContent);
-
-            return $response;
-        } else {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
+        return $dompdf->output();
     }
 }
 

@@ -174,6 +174,19 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Route::get('/profile', [BPController::class, 'profile'])->name('profile');
 
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/spj/export/document/{id}', 'export_spj');
+        });
+
+        Route::controller(SpjController::class)->group(function () {
+            // Route::get('/data-spj', 'index');
+            // Route::get('/spj/create', 'create');
+            Route::get('/spj/view/{id}', 'view')->name('bp.view.spj');
+            // Route::get('/spj/delete/{id}', 'delete');
+        });
+
+        Route::post('/import', [ImportSpjController::class, 'import'])->name('import');
+
         Route::controller(BPController::class)->group(function () {
             Route::get('/profile-bp', 'profile'); // cek
             Route::post('biodata/update/{id}', 'update')->name('biodata-update');
@@ -219,9 +232,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-bpp/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.bpp');
             Route::get('/export-bpp/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.bpp');
             Route::get('/export-bpp/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.bpp');
+            Route::get('/spj/bpp/export/document/{id}', 'export_spj');
+            Route::get('/bioSpj', 'bioSpj');
         });
 
-        Route::get('/bioSpj', [ExportController::class, 'bioSpj']);
+        // Route::controller(ExportController::class)->group(function () {
+        // });
+        // Route::get('/bioSpj', [ExportController::class, 'bioSpj']);
     });
 
     Route::group(['middleware' => ['CekLogin:kpa']], function () {
@@ -264,6 +281,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-kpa/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.kpa');
             Route::get('/export-kpa/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.kpa');
             Route::get('/export-kpa/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.kpa');
+            Route::get('/spj/bpp/export/document/{id}', 'export_spj');
         });
     });
     Route::group(['middleware' => ['CekLogin:pa']], function () {
@@ -289,6 +307,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-pa/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.pa');
             Route::get('/export-pa/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.pa');
             Route::get('/export-pa/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.pa');
+            Route::get('/spj/bpp/export/document/{id}', 'export_spj');
         });
     });
     Route::group(['middleware' => ['CekLogin:pptk']], function () {
@@ -310,5 +329,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(App\Http\Controllers\Ppk\SpjPpkController::class)->group(function () {
             Route::get('/spj-ppk', 'index');
         });
+    });
+
+    Route::controller(BPController::class)->group(function () {
+        Route::get('/doc-bp', 'document')->name('doc.bp.index');
     });
 });

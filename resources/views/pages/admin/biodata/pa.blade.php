@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>ID</th>
                                 <th>Nama</th>
                                 <th>Jabatan</th>
                                 <th>NIP</th>
@@ -66,6 +67,7 @@
                                 @if ($displayRow)
                                     <tr>
                                         <td>{{ $i++ }}</td>
+                                        <td>PA-{{ $item['id_biodata'] }}</td>
                                         <td>{{ $item['nama'] }}</td>
                                         <td>{{ $kodeJabatan }}</td>
                                         <td>{{ $item['nip'] }}</td>

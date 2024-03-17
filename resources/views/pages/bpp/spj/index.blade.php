@@ -65,9 +65,9 @@
                                     <td>{{ $item->perihal }}</td>
                                     <td>
                                         <a href="spj-bpp-view/{{ $item->id_surat_pengantar }}" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
-                                        {{-- <a href="#" class="btn icon btn-primary" data-bs-toggle="modal"
+                                        <a href="#" class="btn icon btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#print-{{ $item->id_surat_pengantar }}"><i class="bi bi-printer"></i></a>
-                                        <a href="#" class="btn icon btn-danger" data-bs-toggle="modal"
+                                        {{-- <a href="#" class="btn icon btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#delete-{{ $item->id_surat_pengantar }}"><i class="bi bi-trash"></i></a> --}}
                                     </td>
                                 </tr>
@@ -191,23 +191,23 @@
             <div class="modal-body">
                 <p>Silahkan pilih data yang ingin dicetak dalam bentuk file.</p>
                 <div class="modal-footer">
-                    <a type="button" href="/spj/export/surat_pengantar" class="btn btn-primary ms-1">
+                    <a type="button" href="/spj/bpp/export/document/{{ $item->id_surat_pengantar }}?typeSPJ=spj_surat_pengantar" class="btn btn-primary ms-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block"><i class="bi bi-printer"></i> SPJ Surat Pengantar</span>
                     </a>
-                    <a type="button" href="#" class="btn btn-success ms-1">
+                    <a type="button" href="/spj/bpp/export/document/{{ $item->id_surat_pengantar }}?typeSPJ=spj_bku" class="btn btn-success ms-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block"><i class="bi bi-printer"></i> SPJ BKU</span>
                     </a>
-                    <a type="button" href="#" class="btn btn-warning ms-1">
+                    <a type="button" href="/spj/bpp/export/document/{{ $item->id_surat_pengantar }}?typeSPJ=spj_fungsional" class="btn btn-warning ms-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block"><i class="bi bi-printer"></i> SPJ Fungsional</span>
                     </a>
-                    <a type="button" href="#" class="btn btn-danger ms-1">
+                    <a type="button" href="/spj/bpp/export/document/{{ $item->id_surat_pengantar }}?typeSPJ=spj_register_kas" class="btn btn-danger ms-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block"><i class="bi bi-printer"></i> SPJ Register Kas</span>
                     </a>
-                    <a type="button" href="#" class="btn btn-light ms-1">
+                    <a type="button" href="/spj/bpp/export/document/{{ $item->id_surat_pengantar }}?typeSPJ=spj_all" class="btn btn-light ms-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block"><i class="bi bi-printer"></i> All SPJ No ID-{{ $item->id_surat_pengantar }}</span>
                     </a>

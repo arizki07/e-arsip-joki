@@ -26,10 +26,10 @@ class CekLogin
         // if ($user->role == $rules) {
         //     return $next($request);
         // }
-        // return redirect()->back()->with('error', 'Anda Tidak Memiliki Akses ');
         if (!Auth::check()) {
             Log::info('Pengguna tidak terautentikasi. URL: ' . $request->fullUrl());
             return redirect('login');
+            // return redirect()->back()->with('error', 'Anda Tidak Memiliki Akses ');
         }
 
         $user = Auth::user();
@@ -39,6 +39,7 @@ class CekLogin
         }
 
         Log::info('Pengguna ' . $user->name . ' tidak memiliki akses yang diperlukan. Role: ' . $user->role);
-        return redirect('login')->withErrors(['error' => 'Anda Tidak Memiliki Akses']);
+        // return redirect('login')->withErrors(['error' => 'Anda Tidak Memiliki Akses']);
+        return redirect()->back()->withErrors(['error' => 'Anda Tidak Memiliki Akses']);
     }
 }
