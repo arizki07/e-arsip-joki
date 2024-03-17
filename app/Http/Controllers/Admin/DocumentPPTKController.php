@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pa;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PengajuanModel;
@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
-class PengajuanPaController extends Controller
+class DocumentPPTKController extends Controller
 {
     public function index()
     {
         $pengajuans = PengajuanModel::joinBiodata()->get();
 
-        return view('pages.pa.pengajuan.index', [
+        // dd($pengajuans);
+        return view('pages.admin.document.pptk.index', [
+            'title' => 'Terima Pengajuan',
+            'active' => 'acc_kpa',
             'pengajuan' => $pengajuans,
-            'title' => 'Pengajuan-pa',
-            'active' => 'Pengajuan-pa'
         ]);
     }
 
@@ -25,7 +26,7 @@ class PengajuanPaController extends Controller
     {
         try {
             $pengajuan = PengajuanModel::findOrFail($id);
-            $pengajuan->status = '6';
+            $pengajuan->status = '3';
             $pengajuan->save();
 
             return redirect()->back()->with('success', 'Pengajuan telah disetujui!');

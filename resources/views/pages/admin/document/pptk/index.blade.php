@@ -82,17 +82,33 @@
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('verifikasi', ['id' => $item->id_pengajuan]) }}"
-                                            method="POST" class="d-inline">
+                                            action="{{ route('acc.pptk', ['id' => $item->id_pengajuan]) }}" method="POST"
+                                            class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 1)
+                                            @if ($item->status == 2)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             @else
                                                 <button type="button" class="btn icon btn-success" disabled>
                                                     <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
+                                        </form>
+
+                                        <form id="rejectForm{{ $item->id_pengajuan }}"
+                                            action="{{ route('reject.pptk', ['id' => $item->id_pengajuan]) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('POST')
+                                            @if ($item->status == 2)
+                                                <button type="submit" class="btn icon btn-danger">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @else
+                                                <button type="submit" class="btn icon btn-danger" disabled>
+                                                    <i class="fas fa-thumbs-down"></i>
                                                 </button>
                                             @endif
                                         </form>

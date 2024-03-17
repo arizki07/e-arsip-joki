@@ -49,8 +49,8 @@
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
                                     <td>
-                                        <a href="{{ route('export.pengajuan.pa') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                        {{-- <a href="{{ route('export.pengajuan.pa') }}" type="button"
+                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
                                         <a href="{{ route('export.word.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
@@ -62,13 +62,15 @@
                                         @if ($item->status == 1)
                                             <span class="badge bg-warning">Pending Verifikasi</span>
                                         @elseif ($item->status == 2)
-                                            <span class="badge bg-warning">Pending KPA</span>
+                                            <span class="badge bg-warning">Pending PPTK</span>
                                         @elseif ($item->status == 3)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-success">Approve</span>
+                                            <span class="badge bg-warning">Pending PA</span>
                                         @elseif ($item->status == 5)
                                             <span class="badge bg-danger">Reject</span>
+                                        @elseif ($item->status == 6)
+                                            <span class="badge bg-primary">Selesai</span>
                                         @endif
                                     </td>
                                     <td>
@@ -82,13 +84,13 @@
                                             method="POST" class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 3)
+                                            @if ($item->status == 4)
                                                 <button type="submit" class="btn icon btn-success">
-                                                    <i class="fas fa-thumbs-up"></i>
+                                                    <i class="fas fa-check"></i>
                                                 </button>
                                             @else
                                                 <button type="button" class="btn icon btn-success" disabled>
-                                                    <i class="fas fa-thumbs-up"></i>
+                                                    <i class="fas fa-check"></i>
                                                 </button>
                                             @endif
                                         </form>
@@ -97,9 +99,16 @@
                                             class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            <button type="submit" class="btn icon btn-danger">
-                                                <i class="fas fa-thumbs-down"></i>
-                                            </button>
+
+                                            @if ($item->status == 4)
+                                                <button type="submit" class="btn icon btn-danger">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn icon btn-danger" disabled>
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @endif
                                         </form>
 
                                         {{-- <a href="#" class="btn icon btn-danger"><i class="fas fa-times"></i></a> --}}
@@ -147,20 +156,24 @@
                                         @if ($item->status == 1)
                                             <span class="badge bg-warning">Pending Verifikasi</span>
                                         @elseif ($item->status == 2)
-                                            <span class="badge bg-warning">Pending KPA</span>
+                                            <span class="badge bg-warning">Pending PPTK</span>
                                         @elseif ($item->status == 3)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->status == 4)
-                                            <span class="badge bg-success">Approve</span>
+                                            <span class="badge bg-warning">Pending PA</span>
+                                        @elseif ($item->status == 5)
+                                            <span class="badge bg-danger">Reject</span>
+                                        @elseif ($item->status == 6)
+                                            <span class="badge bg-primary">Selesai</span>
                                         @endif
                                     </span>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('export.pengajuan.pa') }}" type="button"
+                                {{-- <a href="{{ route('export.pengajuan.pa') }}" type="button"
                                     class="btn btn-outline-success">
                                     <i class="fas fa-file-excel"></i> Export to Excel
-                                </a>
+                                </a> --}}
                                 <a href="{{ route('export.word.pengajuan.pa', ['id' => $item->id_pengajuan]) }}"
                                     type="button" class="btn btn-outline-primary">
                                     <i class="fas fa-file-word"></i> Export to Word

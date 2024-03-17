@@ -56,10 +56,10 @@
                                     <td>
                                         {{-- <a href="{{ route('export.pengajuan') }}" type="button"
                                             class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
-                                        <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.word.pengajuan.pptk', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
-                                        <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.pdf.pengajuan.pptk', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
@@ -82,17 +82,33 @@
                                         <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
 
                                         <form id="verifikasiForm{{ $item->id_pengajuan }}"
-                                            action="{{ route('verifikasi', ['id' => $item->id_pengajuan]) }}"
+                                            action="{{ route('acc.pptk.role', ['id' => $item->id_pengajuan]) }}"
                                             method="POST" class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->status == 1)
+                                            @if ($item->status == 2)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             @else
                                                 <button type="button" class="btn icon btn-success" disabled>
                                                     <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
+                                        </form>
+
+                                        <form id="rejectForm{{ $item->id_pengajuan }}"
+                                            action="{{ route('reject.pptk.role', ['id' => $item->id_pengajuan]) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('POST')
+                                            @if ($item->status == 2)
+                                                <button type="submit" class="btn icon btn-danger">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @else
+                                                <button type="submit" class="btn icon btn-danger" disabled>
+                                                    <i class="fas fa-thumbs-down"></i>
                                                 </button>
                                             @endif
                                         </form>
