@@ -66,15 +66,19 @@
                                         @if ($item->bukti->status == 1)
                                             <span class="badge bg-warning">Pending Verifikasi</span>
                                         @elseif ($item->bukti->status == 2)
-                                            <span class="badge bg-warning">Pending KPA</span>
+                                            <span class="badge bg-warning">Pending PPTK</span>
                                         @elseif ($item->bukti->status == 3)
-                                            <span class="badge bg-warning">Pending PA</span>
+                                            <span class="badge bg-warning">Pending KPA</span>
                                         @elseif ($item->bukti->status == 4)
                                             <span class="badge bg-primary">Approve</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
+                                        {{-- <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a> --}}
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal{{ $item->id_td_bukti }}">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
                                         <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
                                             class="btn icon btn-primary">
                                             <i class="bi bi-pencil-square"></i>
@@ -104,4 +108,27 @@
             </div>
         </div>
     </section>
+    <!-- Modal -->
+    @foreach ($buktiPengeluarans as $item)
+        <div class="modal fade" id="exampleModal{{ $item->id_td_bukti }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Pengajuan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="pengajuanId">ID Pengajuan:</label>
+                            <input type="text" class="form-control" id="pengajuanId{{ $item->id_td_bukti }}"
+                                value="{{ $item->td_id_pengajuan }}" readonly>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    @endforeach
 @endsection

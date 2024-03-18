@@ -73,7 +73,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#detailModal{{ $item->id }}">
+                                            data-bs-target="#exampleModal{{ $item->id_pengajuan }}">
                                             <i class="bi bi-eye"></i>
                                         </button>
 
@@ -120,12 +120,12 @@
 
     <!-- Modal -->
     @foreach ($pengajuan as $item)
-        <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1"
-            aria-labelledby="detailModalLabel{{ $item->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal fade" id="exampleModal{{ $item->id_pengajuan }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="detailModalLabel{{ $item->id }}">Detail Pengajuan</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -152,37 +152,32 @@
                                         @if ($item->status == 1)
                                             <span class="badge bg-warning">Pending Verifikasi</span>
                                         @elseif ($item->status == 2)
-                                            <span class="badge bg-warning">Pending PPTK</span>
-                                        @elseif ($item->status == 3)
                                             <span class="badge bg-warning">Pending KPA</span>
-                                        @elseif ($item->status == 4)
+                                        @elseif ($item->status == 3)
                                             <span class="badge bg-warning">Pending PA</span>
-                                        @elseif ($item->status == 5)
-                                            <span class="badge bg-danger">Reject</span>
-                                        @elseif ($item->status == 6)
-                                            <span class="badge bg-primary">Selesai</span>
+                                        @elseif ($item->status == 4)
+                                            <span class="badge bg-success">Approve</span>
                                         @endif
                                     </span>
                                 </div>
                             </div>
                             <div class="text-center">
-                                {{-- <a href="{{ route('export.pengajuan.kpa') }}" type="button"
-                                    class="btn btn-outline-success">
-                                    <i class="fas fa-file-excel"></i> Export to Excel
-                                </a> --}}
-                                <a href="{{ route('export.word.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
+                                {{-- <a href="{{ route('export.pengajuan') }}" type="button" class="btn btn-outline-success">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </a> --}}
+                                <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                     type="button" class="btn btn-outline-primary">
                                     <i class="fas fa-file-word"></i> Export to Word
                                 </a>
-                                <a href="{{ route('export.pdf.pengajuan.kpa', ['id' => $item->id_pengajuan]) }}"
-                                    type="button" class="btn btn-outline-danger">
+                                <a href="{{ route('detail.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-danger" target="_blank">
                                     <i class="fas fa-file-pdf"></i> Export to PDF
                                 </a>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

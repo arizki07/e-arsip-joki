@@ -55,8 +55,8 @@
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->p_tanggal }}</td>
                                     <td>
-                                        <a href="{{ route('export.pengajuan') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a>
+                                        {{-- <a href="{{ route('export.pengajuan') }}" type="button" --}}
+                                        {{-- class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
                                         <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
@@ -65,7 +65,11 @@
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
+                                        {{-- <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a> --}}
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal{{ $item->id_pengajuan }}">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
                                         <a href="{{ route('pengajuans.edit', ['id' => $item->id_pengajuan]) }}"
                                             class="btn icon btn-success"><i class="bi bi-pencil"></i></a>
                                         <form id="deleteForm{{ $item->id_pengajuan }}"
@@ -87,4 +91,69 @@
             </div>
         </div>
     </section>
+
+    @foreach ($pengajuan as $item)
+        <div class="modal fade" id="exampleModal{{ $item->id_pengajuan }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="p_nama_kegiatan" class="col-form-label">Nama Kegiatan:</label>
+                                <input type="text" class="form-control" id="p_nama_kegiatan"
+                                    value="{{ $item->p_nama_kegiatan }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bpp" class="col-form-label">Badan Pengeluaran Pembantu:</label>
+                                <input type="text" class="form-control" id="bpp" value="{{ $item->bpp->nama }}"
+                                    readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="p_tanggal" class="col-form-label">Tanggal:</label>
+                                <input type="text" class="form-control" id="p_tanggal" value="{{ $item->p_tanggal }}"
+                                    readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="col-form-label">Status:</label>
+                                <div class="input-group">
+                                    <span class="form-control">
+                                        @if ($item->status == 1)
+                                            <span class="badge bg-warning">Pending Verifikasi</span>
+                                        @elseif ($item->status == 2)
+                                            <span class="badge bg-warning">Pending KPA</span>
+                                        @elseif ($item->status == 3)
+                                            <span class="badge bg-warning">Pending PA</span>
+                                        @elseif ($item->status == 4)
+                                            <span class="badge bg-success">Approve</span>
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                {{-- <a href="{{ route('export.pengajuan') }}" type="button" class="btn btn-outline-success">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </a> --}}
+                                <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-primary">
+                                    <i class="fas fa-file-word"></i> Export to Word
+                                </a>
+                                <a href="{{ route('detail.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                    type="button" class="btn btn-outline-danger" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Export to PDF
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
