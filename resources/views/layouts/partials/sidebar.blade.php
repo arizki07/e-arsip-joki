@@ -55,7 +55,7 @@
                 {{-- Admin Sidebar --}}
                 @if (Auth::user() && Auth::user()->role === 'admin')
                     <li class="sidebar-item {{ $active === 'Pengguna' ? 'active' : '' }}">
-                        <a href="{{ url('pengguna') }}" class='sidebar-link'>
+                        <a href="/pengguna" class='sidebar-link'>
                             <i class="bi bi-people-fill"></i>
                             <span>Data User</span>
                         </a>
