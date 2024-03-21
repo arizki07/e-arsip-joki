@@ -18,11 +18,11 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12">
+                    {{-- <div class="col-12 col-md-12">
                         <a type="button" href="{{ route('bukti.create') }}" class="btn btn-primary" style="float: right;">
                             <i class="bi bi-user"></i> Tambah {{ $title }}
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -55,10 +55,10 @@
                                     <td>
                                         {{-- <a href="{{ route('export.buktiPeng') }}" type="button"
                                             class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
-                                        <a href="{{ route('export.word.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                        <a href="{{ route('export.word.buktiPeng.ppk', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
-                                        <a href="{{ route('export.pdf.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                        <a href="{{ route('export.pdf.buktiPeng.ppk', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-danger"><i
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
@@ -79,16 +79,13 @@
                                             data-bs-target="#exampleModal{{ $item->id_td_bukti }}">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
-                                            class="btn icon btn-primary">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        {{-- <form id="verifikasiForm{{ $item->bukti->id_pengajuan }}"
-                                            action="{{ route('acc.kpa', ['id' => $item->bukti->id_pengajuan]) }}"
-                                            method="POST" class="d-inline">
+
+                                        <form id="verifikasiForm{{ $item->id_td_bukti }}"
+                                            action="{{ route('acc.ppk', ['id' => $item->id_td_bukti]) }}" method="POST"
+                                            class="d-inline">
                                             @csrf
                                             @method('POST')
-                                            @if ($item->bukti->status == 2)
+                                            @if ($item->status == 1)
                                                 <button type="submit" class="btn icon btn-success">
                                                     <i class="fas fa-check"></i>
                                                 </button>
@@ -97,16 +94,22 @@
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             @endif
-                                        </form> --}}
-                                        <form id="deleteForm{{ $item->id_td_bukti }}"
-                                            action="/bukti-pengeluaran/delete/{{ $item->id_td_bukti }}" method="POST"
-                                            class="d-inline">
+                                        </form>
+
+                                        <form id="rejectForm{{ $item->id_td_bukti }}"
+                                            action="{{ route('reject.ppk.document', ['id' => $item->id_td_bukti]) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
-                                            @method('DELETE')
-                                            <a href="#" class="btn icon btn-danger"
-                                                onclick="confirmDelete({{ $item->id_td_bukti }})">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
+                                            @method('POST')
+                                            @if ($item->status == 1)
+                                                <button type="submit" class="btn icon btn-danger">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @else
+                                                <button type="submit" class="btn icon btn-danger" disabled>
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            @endif
                                         </form>
                                         {{-- <a href="#" class="btn icon btn-danger"><i class="fas fa-times"></i></a> --}}
                                     </td>

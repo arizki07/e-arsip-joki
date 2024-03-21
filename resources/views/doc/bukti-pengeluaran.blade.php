@@ -296,12 +296,12 @@
                 </tr>
                 <tr>
                     <td class="content-value-ttd" style="width: 33.33%; text-decoration: underline;">{{ $data->nama_kpa }}</td>
-                    <td class="content-value-ttd" style="width: 33.33%; text-decoration: underline;">{{ $data->nama_bpp }}</td>
+                    <td class="content-value-ttd" style="width: 33.33%; text-decoration: underline;">{{ $data->nama_bp }}</td>
                     <td class="content-value-ttd" style="width: 33.33%; text-decoration: underline;">{{ $data->nama_bpp }}</td>
                 </tr>
                 <tr>
                     <td class="content-value-ttd" style="width: 33.33%;">NIP. {{ $data->nip_kpa }}</td>
-                    <td class="content-value-ttd" style="width: 33.33%;">NIP. </td>
+                    <td class="content-value-ttd" style="width: 33.33%;">NIP. {{ $data->nip_bp }} </td>
                     <td class="content-value-ttd" style="width: 33.33%;">NIP. {{ $data->nip_bpp }}</td>
                 </tr>
                 <tr>

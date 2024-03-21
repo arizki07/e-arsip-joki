@@ -53,7 +53,7 @@
 
             <div class="card-body">
                 <div id="pengajuanDetails">
-                    <form action="{{ route('bukti.store') }}" method="post">
+                    <form action="{{ route('bukti-bp.store') }}" method="post">
                         @csrf
                         <input type="hidden" id="pengajuan" name="td_id_pengajuan">
                         <div class="form-group">
@@ -129,7 +129,7 @@
                         <div class="col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a type="button" href="{{ route('bukti.pengeluaran') }}"
+                            <a type="button" href="{{ url('bukti-bp.tambah') }}"
                                 class="btn btn-warning me-1 mb-1">Kembali</a>
                         </div>
                     </form>
@@ -263,7 +263,7 @@
             if (selectedPengajuanId !== "") {
                 $.ajax({
                     type: 'GET',
-                    url: '/bukti-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
+                    url: '/bukti-bp-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
                         // "Authorization": "Bearer " + parsedObj.token.access_token

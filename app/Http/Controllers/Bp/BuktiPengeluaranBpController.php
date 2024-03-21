@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Bp;
 
 use App\Http\Controllers\Controller;
-use App\Models\NotaDinasModel;
 use Illuminate\Http\Request;
 use App\Models\BiodataModel;
 use App\Models\PengajuanModel;
@@ -14,30 +13,26 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class BuktiPengeluaranController extends Controller
+class BuktiPengeluaranBpController extends Controller
 {
-
     public function index()
     {
         $buktiPengeluarans = BuktiPengeluaranModel::all();
-        // DB::enableQueryLog();
         $pengajuans = PengajuanModel::joinBiodata()->with('buktiPengeluaran')->get();
 
-// $queryLog = DB::getQueryLog();
-// dd($queryLog);
-
-        return view('pages.admin.bukti-pengeluaran.index', [
-            'title' => 'Bukti-pengeluaran',
-            'active' => 'Bukti-pengeluaran',
+        return view('pages.bp.tanda-bukti.index', [
+            'title' => 'Bukti Pengeluaran BP',
+            'active' => 'Tanda Bukti',
             'pengajuans' => $pengajuans,
             'buktiPengeluarans' => $buktiPengeluarans
         ]);
     }
 
-    public function create()
+    public function tambah()
     {
         $pengajuans = PengajuanModel::joinBiodata()->where('status', '=', 4)->get();
-        return view('pages.admin.bukti-pengeluaran.create', [
+
+    return view('pages.bp.tanda-bukti.tambah', [
             'title' => 'Tambah Bukti Pengeluaran',
             'active' => 'Bukti-pengeluaran',
             'pengajuans' => $pengajuans,
@@ -54,7 +49,6 @@ class BuktiPengeluaranController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'td_id_pengajuan' => 'required|numeric',
@@ -100,7 +94,6 @@ class BuktiPengeluaranController extends Controller
             unset($validatedData['nd_sub_kegiatan']);
             unset($validatedData['nd_tanggal']);
 
-            // dd($validatedData);
             // Create BuktiPengeluaranModel
             BuktiPengeluaranModel::create([
                 'td_id_pengajuan' => $validatedData['td_id_pengajuan'],
@@ -115,11 +108,11 @@ class BuktiPengeluaranController extends Controller
                 'no_bukti' => $validatedData['no_bukti'],
             ]);
 
-            return redirect('/bukti-pengeluaran')->with('success', 'Data pengajuan berhasil disimpan!');
+            return redirect('/bukti-bp')->with('success', 'Data pengajuan berhasil disimpan!');
         } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
+            return redirect()->back()->withErrors($e->Errors())->withInput();
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'Gagal menyimpan data. Pastikan data KPA, PA, BP, dan BPP sudah ada.');
         }
     }
@@ -139,6 +132,14 @@ class BuktiPengeluaranController extends Controller
             }
         }
 
+        // $data = []; // Kanggo nampung array json
+        // foreach ($pengajuans as $peng) {
+        //     if ($peng->id_pengajuan == $buktiPengeluaran->td_id_pengajuan) {
+        //         $data = json_decode($buktiPengeluaran->td_uraian, true);
+        //         break;
+        //     }
+        // }
+
         $data = json_decode($buktiPengeluaran->td_uraian, true);
         $total = 0;
 
@@ -146,7 +147,9 @@ class BuktiPengeluaranController extends Controller
             $jumlah = str_replace(['Rp ', '.'], '', $item['jumlah']);
             $total += (int)$jumlah;
         }
-        return view('pages.admin.bukti-pengeluaran.edit', [
+
+
+        return view('pages.bp.tanda-bukti.edit', [
             'title' => 'Edit Bukti Pengeluaran',
             'active' => 'Bukti-pengeluaran',
             'buktiPengeluaran' => $buktiPengeluaran,
@@ -214,14 +217,13 @@ class BuktiPengeluaranController extends Controller
                 'no_bukti' => $validatedData['no_bukti'],
             ]);
 
-            return redirect('/bukti-pengeluaran')->with('success', 'Data bukti pengeluaran berhasil diperbarui!');
+            return redirect('/bukti-bp-pengeluaran')->with('success', 'Data bukti pengeluaran berhasil diperbarui!');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui data bukti pengeluaran.');
         }
     }
-
     public function destroy($id)
     {
         $buktiPeng = BuktiPengeluaranModel::find($id);

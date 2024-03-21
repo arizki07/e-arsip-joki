@@ -55,26 +55,13 @@ class PengajuanModel extends Model
             case 3:
                 return 'Pending KPA';
             case 4:
-                return 'Pending PA';
+                return 'Selesai';
             case 5:
                 return 'Reject';
-            case 6:
-                return 'Selesai';
             default:
                 return '';
         }
-        // switch ($status) {
-        //     case 1:
-        //         return '<span class="badge bg-warning">Pending Verifikasi</span>';
-        //     case 2:
-        //         return '<span class="badge bg-warning">Pending KPA</span>';
-        //     case 3:
-        //         return '<span class="badge bg-warning">Pending PA</span>';
-        //     case 4:
-        //         return '<span class="badge bg-primary">Selesai</span>';
-        //     default:
-        //         return '';
-        // }
+        
     }
 
     public function kpa()
