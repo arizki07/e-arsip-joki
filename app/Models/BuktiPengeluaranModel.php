@@ -62,4 +62,23 @@ class BuktiPengeluaranModel extends Model
     {
         return $this->belongsTo(BiodataModel::class, 'td_bp_id', 'id_biodata');
     }
+
+    public function getStatusBadge()
+    {
+        $status = $this->status;
+
+        switch ($status) {
+            case 1:
+                return 'Pending PPK';
+            case 2:
+                return 'Pending PA';
+            case 3:
+                return 'Selesai';
+            case 4:
+                return 'Reject';
+            default:
+                return '';
+        }
+
+    }
 }

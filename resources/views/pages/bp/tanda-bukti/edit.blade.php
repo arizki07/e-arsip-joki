@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
     @include('component.alerts')
-
     <div class="col-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-body">
@@ -33,10 +32,11 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <select class="form-select mt-1 getPengajuanById" name="pengajuan" id="id_pengajuan">
-                        <option disabled selected>-- Pilih Pengajuan --</option>
+                    <select class="form-select mt-1" name="td_id_pengajuan" id="id_pengajuan">
+                        <option disabled>-- Pilih Pengajuan --</option>
                         @foreach ($pengajuans as $pengajuan)
-                            <option value="{{ $pengajuan->id_pengajuan }}">{{ $pengajuan->p_nama_kegiatan }} -
+                            <option value="{{ $pengajuan->id_pengajuan }}"
+                                @if ($pengajuan->id_pengajuan == $buktiPengeluaran->td_id_pengajuan) selected @endif>{{ $pengajuan->p_nama_kegiatan }} -
                                 {{ $pengajuan->getStatusBadge() }}</option>
                         @endforeach
                     </select>
@@ -45,47 +45,45 @@
         </div>
     </div>
 
-    <section class="section" id="pengajuanDetails" style="display: none;">
+    <div class="col-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">{{ $title }}</h4>
             </div>
-
             <div class="card-body">
                 <div id="pengajuanDetails">
-                    <form action="{{ route('bukti.store') }}" method="post">
+                    <form action="{{ route('bukti-bp-pengeluaran.update', $buktiPengeluaran->id_td_bukti) }}"
+                        method="post">
                         @csrf
-                        <input type="hidden" id="pengajuan" name="td_id_pengajuan">
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="basicInput">ID Pengajuan</label>
+                            <input type="text" class="form-control mt-1" name="td_id_pengajuan"
+                                value="{{ $buktiPengeluaran->td_id_pengajuan }}" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="basicInput">Nama Kegiatan</label>
-                            <input type="text" class="form-control mt-1" name="td_nama_kegiatan" id="nd_nama_kegiatan"
-                                value="{{ old('nd_nama_kegiatan') }}" placeholder="Nama Kegiatan" readonly>
+                            <input type="text" class="form-control mt-1" name="td_nama_kegiatan"
+                                value="{{ $namaKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Sub Kegiatan</label>
-                            <input type="text" class="form-control mt-1" name="td_sub_kegiatan" id="nd_sub_kegiatan"
-                                value="{{ old('nd_sub_kegiatan') }}" placeholder="Sub Kegiatan" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="basicInput">Nomor Nota</label>
-                            <input type="text" class="form-control mt-1" name="td_nomor_nota" id="nd_nomor_nota"
-                                value="{{ old('nd_nomor_nota') }}" placeholder="Nomor Nota" readonly>
+                            <input type="text" class="form-control mt-1" name="td_sub_kegiatan"
+                                value="{{ $subKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Tanggal</label>
-                            <input type="date" class="form-control mt-1" name="td_tanggal" id="nd_tanggal"
-                                placeholder="Tanggal" value="{{ old('nd_tanggal') }}" readonly>
+                            <input type="date" class="form-control mt-1" name="td_tanggal" value="{{ $tglKegiatan }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">Jumlah Biaya</label>
-                            <input type="text" class="form-control mt-1" name="td_biaya" id="nd_jumlah_biaya"
-                                value="{{ old('nd_jumlah_biaya') }}" placeholder="Jumlah Biaya"
-                                oninput="formatRupiah(this)">
+                            <input type="text" class="form-control mt-1" name="td_biaya"
+                                value="{{ $buktiPengeluaran->td_biaya }}">
                         </div>
                         <div class="form-group">
                             <label for="basicInput">No Surat Bukti Pengeluaran</label>
                             <input type="text" class="form-control mt-1" name="no_bukti" id="no_bukti"
-                                value="{{ old('no_bukti') }}" placeholder="No Surat Bukti Pengeluaran">
+                                value="{{ $buktiPengeluaran->no_bukti }}" placeholder="No Surat Bukti Pengeluaran">
                         </div>
                         <div class="form-group mt-3" id="uraianContainer">
                             <div class="d-flex justify-content-between align-items-center">
@@ -95,18 +93,20 @@
                             </div>
                             <div class="uraian-row">
                                 <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan.0') }}</textarea>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input type="text" class="form-control mt-1 uraian-input"
-                                            name="uraian_kegiatan_jumlah[]" id="uraian_kegiatan_jumlah[]"
-                                            placeholder="Jumlah" value="{{ old('uraian_kegiatan_jumlah.0') }}"
-                                            oninput="formatRupiah(this)">
-                                    </div>
+                                    @foreach ($data as $item)
+                                        <div class="col-md-6">
+                                            <textarea rows="3" class="form-control mt-1" name="uraian_kegiatan[]" placeholder="Rincian Kode Rekening">{{ old('uraian_kegiatan', $item['uraian']) }}</textarea>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control mt-1 uraian-input"
+                                                name="uraian_kegiatan_jumlah[]" id="uraian_kegiatan_jumlah[]"
+                                                placeholder="Jumlah"
+                                                value="{{ old('uraian_kegiatan_jumlah.0', $item['jumlah']) }}">
+                                        </div>
+                                    @endforeach
                                     <div class="col-md-1">
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="removeUraianColumn(this)"><i class="bi bi-x-square"></i></button>
+                                        <button type="button" class="btn btn-danger" onclick="removeUraianColumn(this)"><i
+                                                class="bi bi-x-square"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -121,22 +121,21 @@
                                 </div>
                                 <div class="col-md-5">
                                     <input type="text" readonly class="form-control mt-1 total" id="total"
-                                        name="total" placeholder="Total Jumlah" readonly>
+                                        name="total" placeholder="Total Jumlah"
+                                        value="{{ $buktiPengeluaran->total_uraian }}" readonly>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a type="button" href="{{ route('bukti.pengeluaran') }}"
-                                class="btn btn-warning me-1 mb-1">Kembali</a>
+                            <a type="button" href="{{ url('bukti-bp') }}" class="btn btn-warning me-1 mb-1">Kembali</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
 
 @section('scripts')
@@ -144,7 +143,13 @@
         document.addEventListener("DOMContentLoaded", function() {
             // Menangani perubahan pada input jumlah uraian
             document.getElementsByName('uraian_kegiatan_jumlah[]').forEach(function(input) {
+                // Simpan nilai asli ke atribut data-original-value saat halaman dimuat
+                input.setAttribute('data-original-value', input.value);
                 input.addEventListener('change', function() {
+                    var originalValue = input.getAttribute('data-original-value');
+                    if (originalValue !== input.value) {
+                        input.value = originalValue;
+                    }
                     updateTotal();
                 });
             });
@@ -263,7 +268,7 @@
             if (selectedPengajuanId !== "") {
                 $.ajax({
                     type: 'GET',
-                    url: '/bukti-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
+                    url: '/bukti-bp-pengeluaran/getDataPengajuan/' + selectedPengajuanId,
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
                         // "Authorization": "Bearer " + parsedObj.token.access_token

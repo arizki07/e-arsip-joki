@@ -28,6 +28,7 @@ use App\Http\Controllers\Kpa\PengajuanKpaController;
 use App\Http\Controllers\Admin\DocumentBppController;
 use App\Http\Controllers\Admin\DocumentPPTKController;
 use App\Http\Controllers\Bpp\BuktiPengeluaranBppController;
+use App\Http\Controllers\ppk\BuktiPengeluaranPPKController;
 use App\Http\Controllers\Pptk\PengajuanPPTKController;
 
 /*
@@ -172,6 +173,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/bukti-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
             Route::get('/bukti-pengeluaran/edit/{id}', 'edit')->name('bukti-pengeluaran.edit');
             Route::put('/bukti-pengeluaran/{id}', 'update')->name('bukti-pengeluaran.update');
+            Route::delete('/bukti-pengeluaran/delete/{id}', 'destroy')->name('bukti-pengeluaran.destroy');
         });
 
 
@@ -212,6 +214,27 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/doc-bp', 'document')->name('doc.bp.index');
             Route::get('/detail/pengajuan/pdf/{id}', 'detailPengajuanPdf')->name('detail.pdf.pengajuan');
             Route::get('/spj', 'spj');
+        });
+
+        Route::controller(App\Http\Controllers\Bp\BuktiPengeluaranBpController::class)->group(function () {
+            Route::get('/bukti-bp', 'index');
+            Route::get('/bukti-bp/tambah', 'tambah')->name('bukti-bp.tambah');
+            Route::post('/bukti-bp/store', 'store')->name('bukti-bp.store');
+            Route::get('/bukti-bp-pengeluaran/edit/{id}', 'edit')->name('bukti-bp-pengeluaran.edit');
+            Route::put('/bukti-bp-pengeluaran/{id}', 'update')->name('bukti-bp-pengeluaran.update');
+            Route::get('/bukti-bp-pengeluaran/getDataPengajuan/{id}', 'getDataPengajuan')->name('getDataPengajuan');
+            Route::delete('/bukti-bp-pengeluaran/delete/{id}', 'destroy')->name('bukti-bp-pengeluaran.destroy');
+        });
+
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export-bp/pengajuan', 'exportPengajuan')->name('export.pengajuan.bp');
+            Route::get('/export-bp/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.bp');
+            Route::get('/export-bp/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.bp');
+            Route::get('/export-bp/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.bp');
+            Route::get('/export-bp/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.bp');
+            Route::get('/export-bp/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.bp');
+            Route::get('/spj/bp/export/document/{id}', 'export_spj');
+            Route::get('/bioSpj', 'bioSpj');
         });
     });
 
@@ -321,6 +344,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/spj-pa', 'index');
         });
 
+        Route::controller(App\Http\Controllers\Pa\BuktiPengeluaranPAContnroller::class)->group(function () {
+            Route::get('/bukti-pa', 'index');
+            Route::post('/acc-pa/{id}', 'verifikasi')->name('acc.pa');
+            Route::post('/reject-pa/{id}', 'reject')->name('reject.pa.document');
+        });
+
         Route::controller(ExportController::class)->group(function () {
             Route::get('/export-pa/pengajuan', 'exportPengajuan')->name('export.pengajuan.pa');
             Route::get('/export-pa/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.pa');
@@ -363,6 +392,23 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::controller(App\Http\Controllers\Ppk\SpjPpkController::class)->group(function () {
             Route::get('/spj-ppk', 'index');
+        });
+
+        Route::controller(App\Http\Controllers\Ppk\BuktiPengeluaranPPKContnroller::class)->group(function () {
+            Route::get('/bukti-ppk', 'index');
+            Route::post('/acc-ppk/{id}', 'verifikasi')->name('acc.ppk');
+            Route::post('/reject-ppk/{id}', 'reject')->name('reject.ppk.document');
+        });
+
+        Route::controller(ExportController::class)->group(function () {
+            Route::get('/export-ppk/pengajuan', 'exportPengajuan')->name('export.pengajuan.ppk');
+            Route::get('/export-ppk/pengajuan/word/{id}', 'exportPengajuanWord')->name('export.word.pengajuan.ppk');
+            Route::get('/export-ppk/pengajuan/pdf/{id}', 'exportPengajuanPdf')->name('export.pdf.pengajuan.ppk');
+            Route::get('/export-ppk/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.ppk');
+            Route::get('/export-ppk/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.ppk');
+            Route::get('/export-ppk/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.ppk');
+            Route::get('/spj/bp/export/document/{id}', 'export_spj');
+            Route::get('/bioSpj', 'bioSpj');
         });
     });
     Route::controller(BPController::class)->group(function () {

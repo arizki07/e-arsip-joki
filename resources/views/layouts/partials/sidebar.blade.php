@@ -202,6 +202,12 @@
                             <span>Document</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $title === 'Bukti Pengeluaran BP' ? 'active' : '' }}">
+                        <a href="/bukti-bp" class='sidebar-link'>
+                            <i class="fas fa fa-check-circle"></i>
+                            <span>Tanda Bukti</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $title === 'SPJ' ? 'active' : '' }}">
                         <a href="/spj" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
@@ -223,12 +229,12 @@
                             <span>Pengajuan (mengajukan)</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ $title === 'Bukti Pengeluaran BPP' ? 'active' : '' }}">
+                    {{-- <li class="sidebar-item {{ $title === 'Bukti Pengeluaran BPP' ? 'active' : '' }}">
                         <a href="/bukti-bpp" class='sidebar-link'>
                             <i class="fas fa fa-check-circle"></i>
                             <span>Tanda Bukti</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="sidebar-item {{ $title === 'SPJ BPP' ? 'active' : '' }}">
                         <a href="/spj-bpp" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
@@ -269,6 +275,12 @@
                             <span>Profile</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $title === 'Bukti Pengeluaran PA' ? 'active' : '' }}">
+                        <a href="/bukti-pa" class='sidebar-link'>
+                            <i class="fas fa fa-check-circle"></i>
+                            <span>Tanda Bukti</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $title === 'Pengajuan-pa' ? 'active' : '' }}">
                         <a href="/pengajuan-pa" class='sidebar-link'>
                             <i class="bi bi-box-arrow-right"></i>
@@ -305,6 +317,12 @@
                         <a href="/profile-ppk" class='sidebar-link'>
                             <i class='fas fa fa-user'></i>
                             <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $title === 'Bukti Pengeluaran PPK' ? 'active' : '' }}">
+                        <a href="/bukti-ppk" class='sidebar-link'>
+                            <i class="fas fa fa-check-circle"></i>
+                            <span>Tanda Bukti</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ $title === 'SPJ PPK' ? 'active' : '' }}">

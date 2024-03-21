@@ -19,7 +19,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
-                        <a type="button" href="{{ route('bukti.create') }}" class="btn btn-primary" style="float: right;">
+                        <a type="button" href="{{ route('bukti-bp.tambah') }}" class="btn btn-primary"
+                            style="float: right;">
                             <i class="bi bi-user"></i> Tambah {{ $title }}
                         </a>
                     </div>
@@ -36,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nomor Bukti</th>
                                 <th>Nama Kegiatan</th>
                                 <th>Badan Pengeluaran Pembantu</th>
                                 <th>Tanggal</th>
@@ -49,16 +51,17 @@
                             @foreach ($buktiPengeluarans as $item)
                                 <tr>
                                     <td><?= $i++ ?></td>
+                                    <td>{{ $item->id_td_bukti }}</td>
                                     <td>{{ $item->bukti->p_nama_kegiatan }}</td>
                                     <td>{{ $item->bpp->nama }}</td>
                                     <td>{{ $item->bukti->p_tanggal }}</td>
                                     <td>
-                                        {{-- <a href="{{ route('export.buktiPeng') }}" type="button"
-                                            class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
-                                        <a href="{{ route('export.word.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                        {{-- <a href="{{ route('export.pengajuan') }}" type="button"
+                                        class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
+                                        <a href="{{ route('export.word.buktiPeng.bp', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
-                                        <a href="{{ route('export.pdf.buktiPeng', ['id' => $item->id_td_bukti]) }}"
+                                        <a href="{{ route('export.pdf.buktiPeng.bp', ['id' => $item->id_td_bukti]) }}"
                                             type="button" class="btn btn-outline-danger"><i
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
@@ -74,12 +77,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a> --}}
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal{{ $item->id_td_bukti }}">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <a href="{{ route('bukti-pengeluaran.edit', $item->id_td_bukti) }}"
+                                        <a href="#" class="btn icon btn-secondary"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('bukti-bp-pengeluaran.edit', $item->id_td_bukti) }}"
                                             class="btn icon btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
@@ -99,7 +98,7 @@
                                             @endif
                                         </form> --}}
                                         <form id="deleteForm{{ $item->id_td_bukti }}"
-                                            action="/bukti-pengeluaran/delete/{{ $item->id_td_bukti }}" method="POST"
+                                            action="/bukti-bp-pengeluaran/delete/{{ $item->id_td_bukti }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -118,27 +117,4 @@
             </div>
         </div>
     </section>
-    <!-- Modal -->
-    @foreach ($buktiPengeluarans as $item)
-        <div class="modal fade" id="exampleModal{{ $item->id_td_bukti }}" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Detail Pengajuan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="pengajuanId">ID Pengajuan:</label>
-                            <input type="text" class="form-control" id="pengajuanId{{ $item->id_td_bukti }}"
-                                value="{{ $item->td_id_pengajuan }}" readonly>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    @endforeach
 @endsection
