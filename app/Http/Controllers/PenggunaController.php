@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,8 +13,6 @@ class PenggunaController extends Controller
     public function index()
     {
         $pengguna = User::all();
-
-
         return view('pages.admin.pengguna.index', [
             'title' => 'Pengguna',
             'active' => 'Pengguna',
@@ -65,34 +64,31 @@ class PenggunaController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validate the form data
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
+        $request->validate([
+            'name' => 'required|string',
             'email' => 'required|email',
             'role' => 'required',
-            'password' => 'required|max:13',
+            'password' => 'required|max:12',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
+        // Temukan pengguna yang ingin diperbarui berdasarkan ID
         $pengguna = User::findOrFail($id);
 
-        $pengguna->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'role' => $request->input('role'),
-            'password' => $request->input('password'),
-        ]);
+        // Perbarui informasi pengguna sesuai dengan data yang diterima dari formulir
+        $pengguna->name = $request->input('name');
+        $pengguna->email = $request->input('email');
+        $pengguna->role = $request->input('role');
+        $pengguna->password = Hash::make($request->password);
+        $pengguna->save();
 
         return redirect('/pengguna')->with('success', 'User updated successfully.');
     }
 
+
     public function destroy($id)
     {
         try {
-            $pengguna = User::find($id);
+            $pengguna = User::findOrFail($id);
 
             if (!$pengguna) {
                 return redirect('/pengguna')->with('error', 'Data pengguna tidak ditemukan.');
