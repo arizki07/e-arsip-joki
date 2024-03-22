@@ -57,10 +57,10 @@
                                     <td>
                                         {{-- <a href="{{ route('export.pengajuan') }}" type="button" --}}
                                         {{-- class="btn btn-outline-success"><i class="fas fa fa-file-excel"></i></a> --}}
-                                        <a href="{{ route('export.word.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.word.pengajuan.bpp', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-primary"><i
                                                 class="fas fa fa-file-word"></i></a>
-                                        <a href="{{ route('export.pdf.pengajuan', ['id' => $item->id_pengajuan]) }}"
+                                        <a href="{{ route('export.pdf.pengajuan.bpp', ['id' => $item->id_pengajuan]) }}"
                                             type="button" class="btn btn-outline-danger"><i
                                                 class="fas fa fa-file-pdf"></i></a>
                                     </td>
