@@ -25,8 +25,10 @@ class ExportController extends Controller
     public function exportPengajuanWord($id)
     {
         $pengajuan = PengajuanModel::findOrFail($id);
-        $notaDinas = NotaDinasModel::findOrFail($id);
+        $notaDinas = NotaDinasModel::where('id_pengajuan', $id)->first();
 
+        // var_dump($pengajuan);
+            // dd($notaDinas);
         $templatePath = public_path('dokumen/word/pengajuan/pengajuan.docx');
         $outputPath = public_path('arsip/' . $pengajuan->p_sub_kegiatan . '_' . strtoupper($pengajuan->p_tanggal) . '.docx');
 
@@ -70,6 +72,7 @@ class ExportController extends Controller
             $template->setValue('nd_jumlah_biaya', $notaDinas->nd_jumlah_biaya);
 
             // Simpan template ke arsip
+
             $template->saveAs($outputPath);
 
             return response()->download($outputPath);
@@ -80,10 +83,15 @@ class ExportController extends Controller
 
     public function exportPengajuanPdf($id)
     {
+        // $pengajuan = PengajuanModel::findOrFail($id);
+        // $notaDinas = NotaDinasModel::where('id_pengajuan', $id)->first();
         $model = new PengajuanModel();
+        $modelNota = new NotaDinasModel();
 
         $pengajuanData = $model->find($id);
+        $notaData = $modelNota->where('id_pengajuan', $id)->first();
 
+        // dd($notaData);
         if ($pengajuanData) {
             $pengajuanID = $pengajuanData['id_pengajuan'];
 
@@ -94,7 +102,10 @@ class ExportController extends Controller
                 ->where('pengajuans.id_pengajuan', $pengajuanID)
                 ->first();
 
-            $view = view('doc/nota-dinas', ['laporanPengajuan' => $laporanPengajuan]);
+            $view = view('doc/nota-dinas', [
+                'laporanPengajuan' => $laporanPengajuan,
+                'notaData' => $notaData,
+            ]);
 
             $dompdf = new Dompdf();
             $options = new \Dompdf\Options();
@@ -146,6 +157,8 @@ class ExportController extends Controller
                 'kpa.nip as nip_kpa',
                 'bpp.nama as nama_bpp',
                 'bpp.nip as nip_bpp',
+                'bp.nama as nama_bp',
+                'bp.nip as nip_bp',
                 'peng.p_nama_kegiatan',
                 'peng.p_sub_kegiatan',
                 'peng.p_tanggal',
@@ -520,43 +533,43 @@ class ExportController extends Controller
 }
 
 // JANGAN DIHAPUS (CEK QUERY SQL SPJ ALL)
-// SELECT 
-//     sp.*, 
-//     pj.*, 
-// 		ju.*, 
-// 		bku.*, 
+// SELECT
+//     sp.*,
+//     pj.*,
+// 		ju.*,
+// 		bku.*,
 // 		urbku.*,
 // 		fung.*,
 // 		urfung.*,
 // 		reg.*,
 // 		urreg.*,
 // 		bku.*,
-//     bd_kpa.nama AS nama_kpa, 
-//     bd_pa.nama AS nama_pa, 
+//     bd_kpa.nama AS nama_kpa,
+//     bd_pa.nama AS nama_pa,
 //     bd_bpp.nama AS nama_bpp
-// FROM 
+// FROM
 //     spj_surat_pengantar AS sp
-// JOIN 
+// JOIN
 //     td_bukti_pengeluarans AS pj ON sp.id_td_bukti = pj.id_td_bukti
-// LEFT JOIN 
+// LEFT JOIN
 // 		pengajuans AS ju ON pj.td_id_pengajuan = ju.id_pengajuan
-// LEFT JOIN 
+// LEFT JOIN
 //     biodatas AS bd_kpa ON pj.td_kpa_id = bd_kpa.id_biodata
-// LEFT JOIN 
+// LEFT JOIN
 //     biodatas AS bd_pa ON pj.td_pa_id = bd_pa.id_biodata
-// LEFT JOIN 
+// LEFT JOIN
 //     biodatas AS bd_bpp ON pj.td_bpp_id = bd_bpp.id_biodata
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_bku AS bku ON bku.id_surat_pengantar = sp.id_surat_pengantar
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_bku_uraian AS urbku ON urbku.id_surat_pengantar = sp.id_surat_pengantar
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_fungsional AS fung ON fung.id_surat_pengantar = sp.id_surat_pengantar
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_fungsional_uraian AS urfung ON urfung.id_surat_pengantar = sp.id_surat_pengantar
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_register_kas AS reg ON reg.id_surat_pengantar = sp.id_surat_pengantar
-// LEFT JOIN 
+// LEFT JOIN
 // 		spj_register_uraian AS urreg ON urreg.id_surat_pengantar = sp.id_surat_pengantar
-// WHERE 
+// WHERE
 //     sp.id_surat_pengantar = 'ISI PAKE ID SURAT PENGANTAR';
