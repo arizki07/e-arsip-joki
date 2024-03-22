@@ -101,14 +101,14 @@
                                 <i class="bi bi-file-earmark-spreadsheet"></i> Template (KOSONGAN)
                             </a>
                             <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-ADD-(DATA-SAMPLE).xlsx') }}" download>
-                                <i class="bi bi-file-earmark-spreadsheet"></i> Template (DATA SAMPLE)
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Template (SAMPLE)
                             </a>
-                            {{-- <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(KOSONGAN).xlsx') }}" download>
+                            <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(KOSONGAN).xlsx') }}" download>
                                 <i class="bi bi-file-earmark-spreadsheet"></i> Template Update (KOSONGAN)
                             </a>
                             <a type="button" class="dropdown-item" href="{{ asset('dokumen/excel/TEMPLATE-UPDATE-(DATA-SAMPLE).xlsx') }}" download>
                                 <i class="bi bi-file-earmark-spreadsheet"></i> Template Update (DATA SAMPLE)
-                            </a> --}}
+                            </a>
                         </div>
                     </div>
                 </div>
