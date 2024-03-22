@@ -131,13 +131,13 @@ class BPPController extends Controller
             $validatedData['p_pa_id'] = $idBiodataPA;
             $validatedData['p_bpp_id'] = $idBiodataBPP;
 
-            // Hilangkan 'p_pa_id' dan 'p_bpp_id' dari $validatedData
-            unset($validatedData['p_pa_id']);
-            unset($validatedData['p_bpp_id']);
+            // // Hilangkan 'p_pa_id' dan 'p_bpp_id' dari $validatedData
+            // unset($validatedData['p_pa_id']);
+            // unset($validatedData['p_bpp_id']);
 
-            NotaDinasModel::create($validatedData);
+            // NotaDinasModel::create($validatedData);
 
-            PengajuanModel::create([
+            $pengajuan = PengajuanModel::create([
                 'p_kpa_id' => $validatedData['nd_kpa_id'],
                 'p_pa_id'  => $idBiodataPA,
                 'p_bpp_id' => $idBiodataBPP,
@@ -145,7 +145,16 @@ class BPPController extends Controller
                 'p_sub_kegiatan' => $validatedData['nd_sub_kegiatan'],
                 'p_tanggal' => $validatedData['nd_tanggal'],
                 'p_biaya' => $validatedData['nd_jumlah_biaya'],
+                'status' => 1, // status Pending verivikasi
             ]);
+
+            $idPengajuan = $pengajuan->id_pengajuan;
+
+            $validatedData['id_pengajuan'] = $idPengajuan;
+            unset($validatedData['p_pa_id']);
+            unset($validatedData['p_bpp_id']);
+            // dd($validatedData);
+            $notaDinas = NotaDinasModel::create($validatedData);
 
             return redirect('/pengajuan-index')->with('success', 'Data pengajuan Berhasil Disimpan!');
         } catch (ValidationException $e) {
