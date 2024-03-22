@@ -19,7 +19,8 @@ class NotaDinasModel extends Model
         'nd_nomor_nota',
         'nd_uraian_kegiatan',
         'nd_tanggal',
-        'nd_jumlah_biaya'
+        'nd_jumlah_biaya',
+        'id_pengajuan'
     ];
 
     protected static function boot()
