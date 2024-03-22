@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('update-biodata', ['id' => $item->id_biodata]) }}" method="post">
+                <form action="{{ url('biodata/update-bio/' . $item->id_biodata) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="basicInput">Nama Lengkap</label>

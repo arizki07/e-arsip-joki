@@ -48,7 +48,7 @@ class BiodataController extends Controller
         $validator = \Validator::make($data, [
             'nama' => 'required|string|max:150',
             'jabatan_id' => 'required|string|max:150',
-            'nip' => 'required|string|max:12|min:12|unique:biodatas',
+            'nip' => 'required|string|max:18|min:18|unique:biodatas',
             'email' => 'required|string|max:150|unique:biodatas|unique:users',
             'tgl_lahir' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -134,6 +134,7 @@ class BiodataController extends Controller
 
         // Save the updated data
         $biodata->save();
+
 
         return redirect('/data-bp')->with('success', 'Data berhasil diperbarui.');
     }
