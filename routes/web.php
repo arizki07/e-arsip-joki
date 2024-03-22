@@ -196,7 +196,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/profile', [BPController::class, 'profile'])->name('profile');
 
         Route::controller(ExportController::class)->group(function () {
-            Route::get('/spj/export/document/{id}', 'export_spj');
+            Route::get('/spj/export-bp/document/{id}', 'export_spj');
         });
 
         Route::controller(SpjController::class)->group(function () {
@@ -357,7 +357,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-pa/buktiPeng', 'exportbuktiPeng')->name('export.buktiPeng.pa');
             Route::get('/export-pa/buktiPeng/word/{id}', 'exportbuktiPengWord')->name('export.word.buktiPeng.pa');
             Route::get('/export-pa/buktiPeng/pdf/{id}', 'exportBuktiPengPdf')->name('export.pdf.buktiPeng.pa');
-            Route::get('/spj/export/document/{id}', 'export_spj')->name('spj.print');
+            Route::get('/spj/export-pa/document/{id}', 'export_spj')->name('spj.print');
         });
     });
 

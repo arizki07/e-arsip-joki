@@ -16,11 +16,11 @@ class ImportUpdate implements WithMultipleSheets
         return [
             'SURAT PENGANTAR' => new SuratPengantarImportUpdate(),
             'BKU' => new BkuImportUpdate(),
-            // 'URAIAN BKU' => new UraianBkuImportUpdate(),
+            'URAIAN BKU' => new UraianBkuImportUpdate(),
             'SPJ FUNGSIONAL' => new SpjFungsionalImportUpdate(),
-            // 'URAIAN SPJ FUNGSIONAL' => new UraianSpjFungsionalImportUpdate(),
+            'URAIAN SPJ FUNGSIONAL' => new UraianSpjFungsionalImportUpdate(),
             'REGISTER KAS' => new RegisterKasImportUpdate(),
-            // 'URAIAN REGISTER KAS' => new UraianRegisterKasImportUpdate(),
+            'URAIAN REGISTER KAS' => new UraianRegisterKasImportUpdate(),
         ];
     }
 
