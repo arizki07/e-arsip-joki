@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PenggunaController extends Controller
 {
@@ -98,6 +99,19 @@ class PenggunaController extends Controller
             return redirect('/pengguna')->with('success', 'Data pengguna berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect('/pengguna')->with('error', 'Gagal menghapus data pengguna. Error: ' . $e->getMessage());
+        }
+    }
+
+    public function bukablokir($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->status = '1';
+            $user->save();
+
+            return redirect()->back()->with('success', 'Blokir telah dibuka');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'User tidak ditemukan!');
         }
     }
 }

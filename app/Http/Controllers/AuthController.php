@@ -41,61 +41,43 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        $failedAttempts = $request->session()->get('failed_attempts', 0);
+        $email = $credentials['email'];
+        $password = $credentials['password'];
 
-        if ($failedAttempts >= 3) {
-            $lastfailedAttempt = $request->session()->get('last_failed_attempt', 0);
-            $currentTime = time();
+        $user = User::where('email', $email)->first();
 
-            if ($currentTime - $lastfailedAttempt < 300) {
-                $remainingTime = 300 - ($currentTime - $lastfailedAttempt);
-                return redirect('/login')->with('remainingTime', $remainingTime);
-            }
-        }
+        if ($user) {
+            if ($user->status == 1) {
+                if (Auth::attempt($credentials)) {
+                    $request->session()->remove('failed_attempts');
+                    $request->session()->remove('last_failed_attempt');
 
-        try {
-            if (Auth::attempt($credentials)) {
-                $request->session()->remove('failed_attempts');
-                $request->session()->remove('last_failed_attempt');
+                    $user = Auth::user();
 
-                $user = Auth::user();
+                    if ($user->role) {
+                        return redirect()->intended('/dashboard')->with('succe', 'Login berhasil. Selamat datang!');
+                    }
 
-                //sesuaikan dengan role
-                // if ($user->role == 'admin') {
-                //     return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
-                // } elseif ($user->role == 'bp') {
-                //     return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
-                // } elseif ($user->role == 'bpp') {
-                //     return redirect()->intended('/bpp')->with('succes', 'Login berhasil. Selamat datang!');
-                // } elseif ($user->role == 'kpa') {
-                //     return redirect()->intended('/kpa')->with('succes', 'Login berhasil. Selamat datang!');
-                // } elseif ($user->role == 'pa') {
-                //     return redirect()->intended('/pa')->with('succes', 'Login berhasil. Selamat datang!');
-                // } elseif ($user->role == 'ppk') {
-                //     return redirect()->intended('/ppk')->with('succes', 'Login berhasil. Selamat Datang!');
-                // }
-                // return redirect()->intended('/');
-                if ($user->role) {
-                    return redirect()->intended('/dashboard')->with('succes', 'Login berhasil. Selamat datang!');
+                    return redirect()->intended('/');
+                } else {
+                    $failedAttempts = $request->session()->get('failed_attempts', 0);
+                    $failedAttempts++;
+                    $request->session()->put('failed_attempts', $failedAttempts);
+                    $request->session()->put('last_failed_attempt', now());
+
+                    if ($failedAttempts >= 3) {
+                        $user->update(['status' => 2]);
+                        return redirect()->back()->withErrors(['error' => 'Akun Anda telah diblokir. Harap hubungi administrator.']);
+                    }
+
+                    return redirect()->back()->withErrors(['loginError' => 'Login Gagal!'])->withInput();
                 }
-                return redirect()->intended('/');
+            } else {
+                return redirect()->back()->withErrors(['error' => 'Akun Anda belum diaktifkan.']);
             }
-        } catch (ValidationValidationException $e) {
-            return redirect()->back()->withErrors(['loginError' => 'Login Gagal!'])->withInput();
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Email tidak terdaftar.']);
         }
-
-        $failedAttempts++;
-        $request->session()->put('failed_attempts', $failedAttempts);
-        $request->session()->put('last_failed_attempt', time());
-
-        if ($failedAttempts === 1 || $failedAttempts === 2) {
-            return redirect()->back()->withErrors(['Login Error', 'Email atau Password Salah'])->withInput();
-        } elseif ($failedAttempts >= 3) {
-            $remainingTime = 300;
-            return redirect()->back()->withErrors(['error' => 'Anda telah mencapai batas percobaan login. Silahkan coba lagi dalam' . $remainingTime . ' detik.'])->withInput();
-        }
-
-        return redirect()->back()->withErrors(['error' => 'Email atau Password tidak Valid'])->withInput();
     }
 
     public function logout(Request $request)

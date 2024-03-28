@@ -49,7 +49,32 @@
                                         <div class="comment-profileName">{{ $item->name }}</div>
                                         <div class="comment-time">{{ $item->email }}</div>
                                         <div class="comment-message">{{ $item->role }}</div>
+                                        <div class="comment-message">
+                                            @if ($item->status == 1)
+                                                <span class="badge bg-primary">Aktif</span>
+                                            @elseif ($item->status == 2)
+                                                <span class="badge bg-warning">Diblok Sementara</span>
+                                            @elseif ($item->status == 3)
+                                                <span class="badge bg-danger">Tidak Aktif</span>
+                                            @endif
+                                        </div>
                                         <div class="comment-actions">
+                                            <form id="buka{{ $item->id_users }}"
+                                                action="{{ route('buka.user', ['id' => $item->id_users]) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('POST')
+                                                @if ($item->status == 2)
+                                                    <button type="submit" class="btn icon btn-success me-2 text-nowrap">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn icon btn-success me-2 text-nowrap"
+                                                        disabled>
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                @endif
+                                            </form>
                                             <button class="btn icon icon-left btn-primary me-2 text-nowrap"
                                                 data-bs-toggle="modal" data-bs-target="#showUserModal{{ $item->id_users }}">
                                                 <i class="bi bi-eye-fill"></i> Show
