@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/pengguna/edit/{id}', 'edit');
             Route::post('/pengguna/update/{id}', 'update')->name('update.users');
             Route::delete('/pengguna/destroy/{id}', 'destroy');
+            Route::post('/bukablokir/{id}', 'bukablokir')->name('buka.user');
         });
 
         Route::controller(BPController::class)->group(function () {
