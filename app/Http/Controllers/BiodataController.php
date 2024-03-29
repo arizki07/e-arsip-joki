@@ -16,10 +16,12 @@ class BiodataController extends Controller
 {
     public function index()
     {
+        $biodata = BiodataModel::select('id_biodata, qr_code, user_id, jabatan_id, nama, email, nip, tgl_lahir, alamat, foto_ttd');
+
         $biodata = BiodataModel::all();
         $jabatan = JabatanModel::all();
 
-        return view('pages.admin.biodata.bp', [
+        return view('pages.admin.biodata.bp', compact('BiodataModel'), [
             'title' => 'Biodata Pegawai BP',
             'active' => 'BP',
             'biodata' => $biodata,
@@ -44,6 +46,8 @@ class BiodataController extends Controller
         $modelUser = new User();
 
         $data = $request->all();
+        $qr_code = $modelBiodata->email . '-' . $modelBiodata->nama . '-' . $modelBiodata->nip;
+
 
         $validator = \Validator::make($data, [
             'nama' => 'required|string|max:150',
@@ -74,6 +78,7 @@ class BiodataController extends Controller
         }
 
         $modelBiodata->nama = $data['nama'];
+        $modelBiodata->qr_code = $qr_code;
         $modelBiodata->jabatan_id = $data['jabatan_id'];
         $modelBiodata->nip = $data['nip'];
         $modelBiodata->email = $data['email'];
@@ -141,8 +146,26 @@ class BiodataController extends Controller
 
     public function delete($id)
     {
-        BiodataModel::where('id_biodata', $id)->delete();
+        $biodata = BiodataModel::find($id);
 
-        return redirect('/data-bp')->with('success', 'Data berhasil diperbarui.');
+        if (!$biodata) {
+            return redirect('/data-bp')->with('error', 'Biodata not found.');
+        }
+
+        // Hapus foto ttd jika ada
+        if ($biodata->foto_ttd) {
+            Storage::disk('public')->delete($biodata->foto_ttd);
+        }
+
+        // Hapus biodata terlebih dahulu
+        $biodata->delete();
+
+        // Cari pengguna yang terkait dan hapus jika ditemukan
+        $user = User::find($biodata->user_id);
+        if ($user) {
+            $user->delete();
+        }
+
+        return redirect('/data-bp')->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -85,6 +85,26 @@
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Are you sure to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '<i class="bi bi-door-closed-fill"></i> Yes',
+                cancelButtonText: '<i class="bi bi-x-circle"></i> No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the logout form
+                    document.getElementById('logoutForm').submit();
+                }
+            });
+        });
+    });
+</script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">

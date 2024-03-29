@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('biodatas', function (Blueprint $table) {
             $table->id('id_biodata');
+            $table->string('qr_code')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('jabatan_id');
             $table->string('nama', 50);
