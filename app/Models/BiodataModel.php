@@ -15,6 +15,7 @@ class BiodataModel extends Model
     protected $primaryKey = 'id_biodata';
     protected $fillable = [
         'user_id',
+        'qr_code',
         'jabatan_id',
         'nama',
         'email',
@@ -34,7 +35,7 @@ class BiodataModel extends Model
             }
         });
     }
-    
+
     protected $keyType = 'int';
     protected $increment = 10;
 

@@ -51,11 +51,14 @@
                                         <div class="comment-message">{{ $item->role }}</div>
                                         <div class="comment-message">
                                             @if ($item->status == 1)
-                                                <span class="badge bg-primary">Aktif</span>
+                                                <span class="badge bg-success"><i class="bi bi-person-bounding-box"></i>
+                                                    Active</span>
                                             @elseif ($item->status == 2)
-                                                <span class="badge bg-warning">Diblok Sementara</span>
+                                                <span class="badge bg-primary"><i class="bi bi-person-lock"></i>
+                                                    Temporarily Blocked</span>
                                             @elseif ($item->status == 3)
-                                                <span class="badge bg-danger">Tidak Aktif</span>
+                                                <span class="badge bg-danger"><i class="bi bi-person-fill-x"></i> In
+                                                    Active</span>
                                             @endif
                                         </div>
                                         <div class="comment-actions">
@@ -65,23 +68,23 @@
                                                 @csrf
                                                 @method('POST')
                                                 @if ($item->status == 2)
-                                                    <button type="submit" class="btn icon btn-success me-2 text-nowrap">
-                                                        <i class="fas fa-check"></i>
+                                                    <button type="submit" class="btn icon btn-primary me-2 text-nowrap">
+                                                        <i class="bi bi-person-check-fill"></i>
                                                     </button>
                                                 @else
-                                                    <button type="button" class="btn icon btn-success me-2 text-nowrap"
+                                                    <button type="button" class="btn icon btn-primary me-2 text-nowrap"
                                                         disabled>
-                                                        <i class="fas fa-check"></i>
+                                                        <i class="bi bi-person-check-fill"></i>
                                                     </button>
                                                 @endif
                                             </form>
-                                            <button class="btn icon icon-left btn-primary me-2 text-nowrap"
+                                            <button class="btn icon icon-left btn-success me-2 text-nowrap"
                                                 data-bs-toggle="modal" data-bs-target="#showUserModal{{ $item->id_users }}">
-                                                <i class="bi bi-eye-fill"></i> Show
+                                                <i class="bi bi-eye-fill"></i>
                                             </button>
                                             <button class="btn icon icon-left btn-warning me-2 text-nowrap"
                                                 data-bs-toggle="modal" data-bs-target="#editUserModal{{ $item->id_users }}">
-                                                <i class="bi bi-pencil-square"></i> Edit
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
 
                                             <form id="deleteForm{{ $item->id_users }}" method="POST"
@@ -90,7 +93,7 @@
                                                 @method('DELETE')
                                                 <a href="#" class="btn icon icon-left btn-danger me-2 text-nowrap"
                                                     onclick="confirmDelete({{ $item->id_users }})"><i
-                                                        class="bi bi-x-circle"></i> Delete</a>
+                                                        class="bi bi-x-circle"></i></a>
                                             </form>
                                         </div>
                                     </div>

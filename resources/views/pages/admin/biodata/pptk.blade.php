@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Barcode</th>
                                 <th>ID</th>
                                 <th>Nama</th>
                                 <th>Jabatan</th>
@@ -67,6 +68,10 @@
                                 @if ($displayRow)
                                     <tr>
                                         <td>{{ $i++ }}</td>
+                                        <td>
+                                            {!! QrCode::size(50)->generate($item->email . '-' . $item->nama . '-' . $item->nip) !!}
+
+                                        </td>
                                         <td>PPTK-{{ $item['id_biodata'] }}</td>
                                         <td>{{ $item['nama'] }}</td>
                                         <td>{{ $kodeJabatan }}</td>

@@ -333,16 +333,16 @@
                     </li>
                 @endif
                 <li class="sidebar-item">
-                    <a href="/logout"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-door-closed-fill"></i>
-                        <span>Logout</span>
-                    </a>
-                    <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                    <form id="logoutForm" action="/logout" method="POST">
                         @csrf
+                        <button type="button" id="logoutBtn" class="dropdown-item">
+                            <i class="bi bi-door-closed-fill"></i>
+                            <span class="align-middle">Log Out</span>
+                        </button>
                     </form>
                 </li>
             </ul>
+
         </div>
     </div>
 </div>
